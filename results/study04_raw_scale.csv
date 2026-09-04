@@ -1,0 +1,5 @@
+site,crew,score_raw_inputs,score_z_inputs,ranking_on_z_inputs
+Site 1 (overtime varies widely),A,2.55,0.05625000000000002,crew A scores higher
+Site 1 (overtime varies widely),B,3.15,-0.5812499999999999,crew A scores higher
+Site 2 (overtime tightly controlled),A,2.55,3.45,crew B scores higher
+Site 2 (overtime tightly controlled),B,3.15,6.449999999999999,crew B scores higher

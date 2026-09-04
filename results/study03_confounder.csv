@@ -1,0 +1,3 @@
+fitted_model,beta_predictor_on_outcome,true_direct_effect,bias,chi_square,df,cfi,rmsea,meets_conventional_cutoffs
+confounder included,0.1729531999274978,0.2,-0.02704680007250221,28.464465322188204,24,0.9997229784336366,0.0068202988369413416,True
+confounder omitted,0.49547474249983336,0.2,0.29547474249983335,5.7020217176896235,8,1.0,0.0,True

@@ -1,0 +1,5 @@
+quantity,median,p05,p95
+max distance from the nearest 0.05 grid point (bounded above by 0.025),0.020894744498154705,0.011326749232282171,0.02470128541249516
+sum of absolute coefficients,1.1884757934674934,0.9891786059370618,1.4084463592588883
+observed fraction of 1000 replications with all four estimates within 0.005 of a twentieth,0.001,,
+expected fraction under a uniform position within cell,0.0015999999999999994,,

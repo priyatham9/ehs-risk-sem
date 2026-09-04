@@ -1,0 +1,4 @@
+estimator,mean_intercept,mean_predicted_probability,relative_error_vs_truth,n_usable_reps
+maximum likelihood,-5.669412164067226,0.004840000000000001,-0.03199999999999925,200
+King-Zeng bias corrected,-5.559849559915525,0.005356288668925819,0.07125773378516431,200
+generating model,,0.0049999999999999975,0.0,200

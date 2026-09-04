@@ -1,0 +1,10 @@
+quantity,value,note
+mean within-block indicator correlation,0.050673073146303094,formative indicators need not correlate
+composite reliability (omega) of the formative block,0.13898013112936727,"meaningless for a formative construct, but the code will compute it"
+observed composite correlation,0.36476721250623534,before correction for attenuation
+disattenuated latent correlation,1.0626865020445828,dividing by a reliability of 0.14 over-corrects without limit
+latent correlation matrix required repair,1.0,1 = the disattenuated matrix was indefinite and was projected
+"estimated beta, reflective model",0.9999999903039072,
+generating beta,0.4,
+beta using the generated construct directly,0.3937784505832045,not available in real data; shown as a reference point
+model chi-square,27.096270445991117,"df = 8, CFI = 0.997, RMSEA = 0.024"

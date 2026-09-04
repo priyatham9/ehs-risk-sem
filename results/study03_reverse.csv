@@ -1,0 +1,2 @@
+generating_structure,fitted_structure,estimated_beta,se,p_value,chi_square,df,cfi,rmsea,srmr,meets_conventional_cutoffs
+"Injuries -> Climate, beta = -0.55",Climate -> Injuries,-0.5698449757489086,0.015008077696205204,0.0,8.442381866221563,8,0.9999371861823572,0.004294033535100223,0.006726204700276599,True

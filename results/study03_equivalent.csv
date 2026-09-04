@@ -1,0 +1,3 @@
+fitted_model,beta,se,p_value,chi_square,df,cfi,rmsea,srmr,meets_conventional_cutoffs
+Cause -> Effect (correct direction),0.4927238629089846,0.01589264344648683,0.0,7.695538494917132,8,1.0,0.0,0.007858752045135007,True
+Effect -> Cause (reversed),0.4927238629089846,0.01589264344648683,0.0,7.695538494917132,8,1.0,0.0,0.007858752045135007,True

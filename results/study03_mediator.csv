@@ -1,0 +1,5 @@
+quantity,estimate,generating_value
+direct effect of X on Y (mediator in model),0.18159236442079874,0.2
+total effect of X on Y (path tracing),0.44234299691187995,0.4475
+effect of X on Y (mediator omitted),0.44234299691187995,0.4475
+indirect effect X -> M -> Y,0.2607506324910812,0.24750000000000003

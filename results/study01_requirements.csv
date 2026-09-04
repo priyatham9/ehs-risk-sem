@@ -1,0 +1,6 @@
+requirement,basis,n_required
+global fit: 80% power for the test of close fit,"MacCallum-style RMSEA power, df = 80",153
+path precision: SE = 0.05 on a single coefficient,"standardized regression SE, R^2 = 0.288, VIF = 1.28",369
+path precision: SE = 0.025 on a single coefficient,"standardized regression SE, R^2 = 0.288, VIF = 1.28",1459
+distinguish beta = 0.45 from beta = 0.30 at 80% power,"z test on the coefficient difference, correlated predictors",770
+distinguish beta = -0.25 from beta = -0.20 at 80% power,"z test on the coefficient difference, correlated predictors",6884

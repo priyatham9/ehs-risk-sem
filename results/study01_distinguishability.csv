@@ -1,0 +1,7 @@
+coefficient_a,beta_a,coefficient_b,beta_b,absolute_difference,n_for_80pct_power,se_of_difference_at_n_250
+UnsafeActs,0.45,OperationalStress,0.3,0.15000000000000002,770,0.09456170063841657
+UnsafeActs,0.45,SystemCondition,-0.25,0.7,41,0.09456170063841657
+UnsafeActs,0.45,SafetyResponseCapability,-0.2,0.65,46,0.09456170063841657
+OperationalStress,0.3,SystemCondition,-0.25,0.55,62,0.09456170063841655
+OperationalStress,0.3,SafetyResponseCapability,-0.2,0.5,74,0.09456170063841655
+SystemCondition,-0.25,SafetyResponseCapability,-0.2,0.04999999999999999,6884,0.09456170063841655

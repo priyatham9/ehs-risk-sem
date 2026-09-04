@@ -1,0 +1,4 @@
+world,fitted_coefficients,effect_of_intervening_on_UnsafeActs,note
+"1. four direct causes, correlated exogenously","[0.448, 0.306, -0.254, -0.2]",0.45,the only world in which the coefficient is an intervention effect
+2. SystemCondition also acts through UnsafeActs,"[0.453, 0.307, -0.26, -0.208]",0.45,"total effect of SystemCondition is -0.070, not -0.250; the reported coefficient is the direct effect only"
+3. an unmeasured common cause of UnsafeActs and Risk,"[0.448, 0.303, -0.246, -0.203]",0.281,"generating direct effects are [ 0.281,  0.252, -0.298, -0.248]; the population regression on the measured predictors returns the headline vector exactly"

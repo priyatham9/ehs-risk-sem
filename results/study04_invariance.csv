@@ -1,0 +1,9 @@
+quantity,value
+Site A loadings,"[0.806, 0.764, 0.769]"
+Site B loadings,"[0.774, 0.793, 0.301]"
+Site A composite reliability,0.823
+Site B composite reliability,0.675
+correlation of Site B scores under its own vs Site A's measurement model,0.9463
+share of Site B units whose top-decile flag flips when Site A's measurement model is imposed,0.046
+correlation of Site A score with the generating latent,0.9103
+correlation of Site B score with the generating latent,0.8759
