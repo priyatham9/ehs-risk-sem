@@ -7,6 +7,12 @@ Usage::
 
     python3 simulations/run_all.py            # full run, a few minutes
     python3 simulations/run_all.py --quick    # reduced replications, ~30 seconds
+
+The tables checked into ``results/`` come from the full run, and the numbers
+quoted in README.md are those. ``--quick`` therefore writes to
+``results_quick/`` instead, so that a quick run cannot silently replace the
+full-run tables with noisier ones carrying the same file names. Pass an
+explicit ``--outdir`` to override.
 """
 
 from __future__ import annotations
@@ -35,8 +41,15 @@ def main(argv: Optional[List[str]] = None) -> int:
         action="store_true",
         help="reduced replication counts; results are noisier but the structure is the same",
     )
-    parser.add_argument("--outdir", default="results")
+    parser.add_argument(
+        "--outdir",
+        default=None,
+        help="output directory (default: results/, or results_quick/ under --quick)",
+    )
     args = parser.parse_args(argv)
+
+    if args.outdir is None:
+        args.outdir = "results_quick" if args.quick else "results"
 
     silence_accelerate_matmul_warnings()
     os.makedirs(args.outdir, exist_ok=True)

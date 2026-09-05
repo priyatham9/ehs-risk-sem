@@ -29,13 +29,16 @@ Python 3.9.6 with numpy 2.0.2 and pandas 2.3.3.
 ```
 git clone <this repository>
 cd ehs-risk-sem
-python3 -m unittest discover -s tests -v     # 107 tests
-python3 simulations/run_all.py --quick       # ~16 seconds
+python3 -m unittest discover -s tests -v     # 108 tests
+python3 simulations/run_all.py --quick       # ~16 seconds, writes results_quick/
 python3 simulations/run_all.py               # ~11.5 minutes, writes results/
 ```
 
 `run_all.py` writes tables to `results/`, which is checked in so the output can
-be read without running anything.
+be read without running anything. The numbers quoted below are from the full
+run. `--quick` writes to `results_quick/` instead, so a reduced-replication run
+cannot silently replace the checked-in tables with noisier ones under the same
+file names.
 
 ---
 
@@ -197,8 +200,9 @@ published source. MacCallum, Browne and Sugawara (1996) print 154 for df = 80;
 this package returns 153, because power at N = 153 is 0.8002 and 153 is
 therefore the smallest integer attaining the target, while their interval-halving
 search stops at an approximation. `tests/test_maccallum_1996_tables.py` pins all
-257 cells of their Tables 2, 4 and 5 against the values printed in the article,
-and this is the only cell where the two conventions disagree.
+284 cells of their Tables 2, 4 and 5 against the values printed in the article
+(re-checked cell by cell against the article PDF), and this is the only cell
+where the two conventions disagree.
 
 Global fit power is satisfied first and is almost never the binding constraint.
 A study with N = 250 can pass the fit test, report the four coefficients, and
@@ -369,14 +373,36 @@ suppressed anywhere else in the package.
 
 ## References
 
-Cited in the code and in this document. Every entry below has been checked
-against the journal record or the article itself: authors, year, journal,
-volume and page range. Two are checked more strongly than that, because the
-repository uses their content rather than just their existence. MacCallum,
-Browne and Sugawara (1996) is validated cell by cell in
-`tests/test_maccallum_1996_tables.py` against Tables 2, 4 and 5 as printed in
-the article. Hopkins (2009) is quoted for the "zoom effect", which appears in
-that paper as "there is what might be called a zoom effect at work here".
+Cited in the code and in this document.
+
+Six entries have been checked against the primary source itself, not against a
+bibliographic record, because the repository uses their content rather than
+just their existence:
+
+- **MacCallum, Browne and Sugawara (1996)** — validated cell by cell in
+  `tests/test_maccallum_1996_tables.py`. All 284 published cells of Tables 2, 4
+  and 5 were read off the article PDF and are reproduced by
+  `ehs_risk_sem.power` to the precision the paper prints, with the single
+  documented exception of the df = 80 boundary cell discussed in Study 1.
+- **BLS (2026)** — the 2.3 per 100 FTE constant and the quoted sentence were
+  checked against the BLS *Economics Daily* article of 23 March 2026.
+- **Hopkins (2009)** — quoted for the "zoom effect". The verbatim wording
+  "there is what might be called a zoom effect at work here" was confirmed in
+  the author's working-paper version of this article (ANU National Research
+  Centre for OHS Regulation, Working Paper 53); the pagination given below is
+  the *Safety Science* version, whose wording at that sentence has not been
+  checked separately.
+- **Beus, Payne, Bergman and Arthur (2010)** — the direction-of-prediction
+  finding described below was confirmed against summaries of the article's own
+  results.
+- **Carriero et al. (2025)** and **Westreich and Greenland (2013)** — volume,
+  issue, article number and page range confirmed against the publishers'
+  records.
+
+The remaining entries are cited from bibliographic records (authors, year,
+journal, volume, pages) and are not claimed to have been read in full for this
+repository. Where an entry is used only to attribute an idea, the attribution
+is the claim being made and nothing in the code depends on it.
 
 - Anderson, J. C., & Gerbing, D. W. (1988). Structural equation modeling in
   practice: A review and recommended two-step approach. *Psychological

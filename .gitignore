@@ -81,3 +81,4 @@ Thumbs.db
 # Scratch output from ad-hoc runs goes here instead and is not tracked.
 scratch/
 *.log
+results_quick/

@@ -4,7 +4,10 @@ Sugawara (1996), *Psychological Methods*, 1(2), 130-149.
 This is the one test in the suite that checks the package against numbers
 printed in a peer-reviewed paper rather than against a closed form, a Monte
 Carlo draw, or itself. The values below were transcribed from the text of the
-published article (Tables 2, 4 and 5), not from a secondary reproduction.
+published article (Tables 2, 4 and 5), not from a secondary reproduction, and
+were re-checked cell by cell against the article PDF during an independent
+verification pass (every row of all three tables, including the rows that were
+originally omitted).
 
 Anchors quoted verbatim in the article's prose, which serve as a check that the
 transcription itself is right:
@@ -52,7 +55,7 @@ TABLE_5 = {
     2: (1926, 994), 4: (1194, 644), 6: (910, 502), 8: (754, 422),
     10: (651, 369), 12: (579, 332), 14: (525, 304), 16: (483, 280),
     18: (449, 262), 20: (421, 247), 25: (368, 218), 30: (329, 196),
-    40: (277, 167), 45: (258, 157), 50: (243, 148), 55: (230, 140),
+    35: (300, 180), 40: (277, 167), 45: (258, 157), 50: (243, 148), 55: (230, 140),
     60: (218, 134), 65: (209, 128), 70: (200, 123), 75: (193, 119),
     80: (186, 115), 85: (179, 111), 90: (174, 108), 95: (168, 105),
     100: (164, 102),
@@ -67,18 +70,33 @@ TABLE_2 = {
     10: ((0.169, 0.294, 0.413, 0.520, 0.612),
          (0.105, 0.191, 0.304, 0.429, 0.555),
          (0.141, 0.266, 0.406, 0.541, 0.661)),
+    15: ((0.206, 0.378, 0.533, 0.661, 0.760),
+         (0.127, 0.254, 0.414, 0.578, 0.720),
+         (0.167, 0.336, 0.516, 0.675, 0.797)),
     20: ((0.241, 0.454, 0.633, 0.766, 0.855),
          (0.148, 0.314, 0.513, 0.695, 0.830),
          (0.192, 0.400, 0.609, 0.773, 0.882)),
+    30: ((0.307, 0.585, 0.780, 0.893, 0.951),
+         (0.187, 0.424, 0.673, 0.850, 0.943),
+         (0.237, 0.512, 0.750, 0.894, 0.962)),
     40: ((0.368, 0.688, 0.872, 0.954, 0.985),
          (0.224, 0.523, 0.788, 0.930, 0.982),
          (0.279, 0.606, 0.843, 0.952, 0.988)),
+    50: ((0.424, 0.769, 0.928, 0.981, 0.995),
+         (0.261, 0.608, 0.866, 0.969, 0.995),
+         (0.319, 0.684, 0.903, 0.979, 0.997)),
     60: ((0.477, 0.831, 0.960, 0.992, 0.999),
          (0.296, 0.681, 0.917, 0.987, 0.999),
          (0.356, 0.748, 0.941, 0.991, 0.999)),
+    70: ((0.525, 0.877, 0.978, 0.997, 1.000),
+         (0.330, 0.743, 0.949, 0.994, 1.000),
+         (0.393, 0.801, 0.965, 0.996, 1.000)),
     80: ((0.570, 0.911, 0.988, 0.999, 1.000),
          (0.363, 0.794, 0.970, 0.998, 1.000),
          (0.427, 0.843, 0.979, 0.998, 1.000)),
+    90: ((0.612, 0.937, 0.994, 1.000, 1.000),
+         (0.395, 0.836, 0.982, 0.999, 1.000),
+         (0.460, 0.877, 0.988, 0.999, 1.000)),
     100: ((0.650, 0.955, 0.997, 1.000, 1.000),
           (0.426, 0.870, 0.990, 1.000, 1.000),
           (0.491, 0.904, 0.993, 1.000, 1.000)),
@@ -90,6 +108,22 @@ SAMPLE_SIZES = (100, 200, 300, 400, 500)
 def _n_tolerance(published: int) -> float:
     """One observation, or 0.25% of N, whichever is looser."""
     return max(1.0, 0.0025 * published)
+
+
+class TestPublishedCellCount(unittest.TestCase):
+    """The README quotes how many published cells this file pins.
+
+    Asserted here so the two cannot drift apart.
+    """
+
+    def test_cell_count(self) -> None:
+        n_table_2 = sum(len(col) for rows in TABLE_2.values() for col in rows)
+        n_table_4 = 2 * len(TABLE_4)
+        n_table_5 = 2 * len(TABLE_5)
+        self.assertEqual(n_table_2, 180)
+        self.assertEqual(n_table_4, 52)
+        self.assertEqual(n_table_5, 52)
+        self.assertEqual(n_table_2 + n_table_4 + n_table_5, 284)
 
 
 class TestTable2Power(unittest.TestCase):
