@@ -379,23 +379,23 @@ Six entries have been checked against the primary source itself, not against a
 bibliographic record, because the repository uses their content rather than
 just their existence:
 
-- **MacCallum, Browne and Sugawara (1996)** — validated cell by cell in
+- **MacCallum, Browne and Sugawara (1996)** - validated cell by cell in
   `tests/test_maccallum_1996_tables.py`. All 284 published cells of Tables 2, 4
   and 5 were read off the article PDF and are reproduced by
   `ehs_risk_sem.power` to the precision the paper prints, with the single
   documented exception of the df = 80 boundary cell discussed in Study 1.
-- **BLS (2026)** — the 2.3 per 100 FTE constant and the quoted sentence were
+- **BLS (2026)** - the 2.3 per 100 FTE constant and the quoted sentence were
   checked against the BLS *Economics Daily* article of 23 March 2026.
-- **Hopkins (2009)** — quoted for the "zoom effect". The verbatim wording
+- **Hopkins (2009)** - quoted for the "zoom effect". The verbatim wording
   "there is what might be called a zoom effect at work here" was confirmed in
   the author's working-paper version of this article (ANU National Research
   Centre for OHS Regulation, Working Paper 53); the pagination given below is
   the *Safety Science* version, whose wording at that sentence has not been
   checked separately.
-- **Beus, Payne, Bergman and Arthur (2010)** — the direction-of-prediction
+- **Beus, Payne, Bergman and Arthur (2010)** - the direction-of-prediction
   finding described below was confirmed against summaries of the article's own
   results.
-- **Carriero et al. (2025)** and **Westreich and Greenland (2013)** — volume,
+- **Carriero et al. (2025)** and **Westreich and Greenland (2013)** - volume,
   issue, article number and page range confirmed against the publishers'
   records.
 

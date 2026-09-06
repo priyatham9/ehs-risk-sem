@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Structural equation modelling for safety risk - ehs-risk-sem</title>
-<meta name="description" content="Simulation studies establishing what SEM can and cannot recover for safety risk modelling." />
+<meta name="description" content="Simulation studies establishing what structural equation modelling can and cannot recover for safety risk scoring. All data simulated by design." />
 <meta name="robots" content="noindex, nofollow" />
 <meta name="theme-color" content="#F7F7F3" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0A0C10" media="(prefers-color-scheme: dark)" />
@@ -15,6 +15,7 @@
 <style>
 /* ============ tokens ============ */
 :root {
+ color-scheme:light;
  --paper:#F7F7F3; --surface:#FFFFFF; --surface-2:#EFEFE9;
  --ink:#101311; --ink-2:#3A403C; --muted:#666D68;
  --rule:#101311; --rule-soft:#D6D7CE;
@@ -27,6 +28,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+ color-scheme:dark;
  --paper:#0A0C10; --surface:#12151C; --surface-2:#171B24;
  --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#838A99;
  --rule:#EAECF2; --rule-soft:#262B36;
@@ -36,6 +38,7 @@
   }
 }
 :root[data-theme="dark"] {
+ color-scheme:dark;
  --paper:#0A0C10; --surface:#12151C; --surface-2:#171B24;
  --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#838A99;
  --rule:#EAECF2; --rule-soft:#262B36;
@@ -43,17 +46,30 @@
  --warn:#E3B25F; --warn-wash:#241C0C;
  --grid-dot:rgba(234,236,242,.09); --shadow:rgba(0,0,0,.4);
 }
+:root[data-theme="light"]{color-scheme:light}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
 h1,h2,h3{margin:0;line-height:1.06;letter-spacing:-.01em}
 p{margin:0 0 1em}
 a{color:var(--accent)}
+img,svg{max-width:100%}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
 .display{font-stretch:125%;font-weight:900;text-transform:uppercase}
 .label{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ============ accessibility baseline ============ */
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--accent);color:var(--accent-ink);padding:11px 17px;font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;text-decoration:none}
+.skip:focus{left:0}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+/* long unbreakable strings (file paths, URLs, identifiers) must wrap, not overflow */
+code,.mono,.src,.f-src,.backlink{overflow-wrap:anywhere}
 
 /* ============ topbar ============ */
 .topbar{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:2px solid var(--rule)}
@@ -76,7 +92,7 @@ a{color:var(--accent)}
 .pulse{width:7px;height:7px;background:var(--accent);flex:none;animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
-.hero h1{font-size:clamp(2.4rem,6.4vw,4.6rem);max-width:16ch}
+.hero h1{font-size:clamp(2.4rem,6.4vw,4.6rem);max-width:16ch;overflow-wrap:break-word;hyphens:auto}
 .hero-role{margin-top:18px;font-size:1.05rem;color:var(--ink-2);max-width:62ch}
 .hero-lede{margin-top:14px;font-size:1rem;color:var(--muted);max-width:66ch}
 .hero-links{display:flex;flex-wrap:wrap;margin-top:30px}
@@ -148,70 +164,228 @@ a{color:var(--accent)}
 .footer-links a{font-family:var(--font-mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
 .footer-links a:hover{color:var(--accent)}
 
-.tbl-wrap{overflow-x:auto;border:2px solid var(--rule);background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-family:var(--font-mono);font-size:.75rem}
-th{text-align:left;padding:10px 13px;border-bottom:2px solid var(--rule);font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-td{padding:9px 13px;border-bottom:1px solid var(--rule-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
-tr:last-child td{border-bottom:0}
-.fig{border:2px solid var(--rule);background:var(--surface);padding:20px;margin-bottom:22px}
+/* ============ figure tokens ============ */
+:root{
+ --fig-paper:#FFFFFF; --fig-grid:#D6D7CE; --fig-axis:#3A403C; --fig-mute:#666D68;
+ --s1:#0072B2; --s2:#D55E00; --s3:#009E73; --s4:#CC79A7;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+ --fig-paper:#12151C; --fig-grid:#262B36; --fig-axis:#BFC4CF; --fig-mute:#838A99;
+ --s1:#56B4E9; --s2:#E69F00; --s3:#5ECFA6; --s4:#E58FBE;
+  }
+}
+:root[data-theme="dark"]{
+ --fig-paper:#12151C; --fig-grid:#262B36; --fig-axis:#BFC4CF; --fig-mute:#838A99;
+ --s1:#56B4E9; --s2:#E69F00; --s3:#5ECFA6; --s4:#E58FBE;
+}
+
+/* ============ accessibility ============ */
+/* Focus rings, the skip link and the reduced-motion block now live in
+   tools/shared.css so every page in the portfolio inherits them from one place.
+   What stays here is the belt-and-braces guard against a stray wide child. */
+body{overflow-x:hidden}
+
+/* ============ topbar: scroll-tracked nav ============ */
+.topnav a.is-active{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+@media(max-width:900px){
+  .topbar-inner{flex-wrap:wrap;padding:11px 30px 0}
+  .topnav{order:3;width:100%;margin:0 -30px;padding:0 30px 4px;overflow-x:auto;overscroll-behavior-x:contain;border-top:1px solid var(--rule-soft);scrollbar-width:none}
+  .topnav::-webkit-scrollbar{display:none}
+  .topnav a{white-space:nowrap;flex:none}
+}
+
+/* ============ crossbar: the six sibling projects ============ */
+.xbar{background:var(--surface-2);border-top:2px solid var(--rule)}
+.xbar-inner{max-width:var(--maxw);margin:0 auto;padding:0 30px;display:flex;align-items:stretch;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+.xbar-inner::-webkit-scrollbar{display:none}
+.xbar-tag{flex:none;display:inline-flex;align-items:center;padding:8px 14px 8px 0;font-family:var(--font-mono);font-size:.5625rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.xbar a{flex:none;display:inline-flex;align-items:center;gap:8px;padding:8px 13px;font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-left:1px solid var(--rule-soft);white-space:nowrap;transition:color .15s,background .15s}
+.xbar a:last-child{border-right:1px solid var(--rule-soft)}
+.xbar a:hover{color:var(--ink);background:var(--surface)}
+.xbar a[aria-current="page"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.xbar a[aria-current="page"] .dot{background:var(--accent-ink)}
+.dot{width:6px;height:6px;flex:none;background:var(--rule-soft)}
+.topbar{border-bottom:0}
+.hero{border-top:2px solid var(--rule)}
+
+/* ============ vertical rhythm ============ */
+.section{padding:78px 0;scroll-margin-top:112px}
+.section:nth-of-type(even){background:var(--surface-2)}
+.rail-head{margin-bottom:14px}
+.rail-head h2{max-width:22ch}
+.sec-lede{max-width:68ch;margin:0 0 34px;padding-left:18px;border-left:2px solid var(--accent);font-size:1.02rem;line-height:1.6;color:var(--ink-2)}
+.sec-lede strong{color:var(--ink);font-weight:700}
+
+/* ============ opener: why the work exists ============ */
+.opener{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);border:2px solid var(--rule);background:var(--surface)}
+.opener-main{padding:36px 34px}
+.opener-side{padding:36px 34px;border-left:2px solid var(--rule-soft);background:var(--surface-2)}
+.opener-main .big{font-size:1.22rem;line-height:1.45;color:var(--ink);font-weight:600;max-width:40ch;margin-bottom:18px}
+.opener-main p{font-size:.94rem;line-height:1.62;color:var(--ink-2);max-width:56ch}
+.opener-main p:last-child{margin-bottom:0}
+.opener-side h3{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:14px}
+.opener-side p{font-size:.875rem;line-height:1.6;color:var(--ink-2)}
+.opener-side p:last-child{margin-bottom:0}
+.opener-side ul{margin:0;padding-left:19px;font-size:.875rem;line-height:1.58;color:var(--ink-2)}
+.opener-side li{margin-bottom:9px}
+.opener-side li:last-child{margin-bottom:0}
+@media(max-width:860px){.opener{grid-template-columns:1fr}.opener-side{border-left:0;border-top:2px solid var(--rule-soft)}}
+
+/* ============ pull quote ============ */
+.pull{margin:30px 0;padding:2px 0 2px 24px;border-left:4px solid var(--accent);max-width:62ch}
+.pull p{font-size:1.06rem;line-height:1.5;color:var(--ink);font-weight:600;margin-bottom:9px}
+.pull .attrib{font-family:var(--font-mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0}
+
+/* ============ tables ============ */
+.tbl{margin:0 0 26px}
+.tbl-wrap{overflow:auto;max-height:540px;overscroll-behavior:contain;border:2px solid var(--rule);background:var(--surface)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-family:var(--font-mono);font-size:.75rem}
+thead th{position:sticky;top:0;z-index:2;text-align:left;padding:11px 14px;background:var(--surface-2);box-shadow:inset 0 -2px 0 var(--rule);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;white-space:nowrap}
+td{padding:9px 14px;box-shadow:inset 0 -1px 0 var(--rule-soft);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink-2)}
+tbody tr:nth-child(even) td{background:var(--surface-2)}
+tbody tr:hover td{background:var(--accent-wash);color:var(--ink)}
+td.t-first{color:var(--ink);font-weight:600}
+tbody tr:last-child td{box-shadow:none}
+.tbl-cap{margin-top:12px;font-size:.8125rem;line-height:1.55;color:var(--ink-2);max-width:76ch}
+.tbl-cap .src{display:block;margin-top:7px;font-family:var(--font-mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* ============ figures ============ */
+.fig{border:2px solid var(--rule);background:var(--surface);padding:22px;margin:0 0 26px}
+.fig-scroll{overflow-x:auto;overscroll-behavior-x:contain}
+.fig svg{display:block;width:100%;height:auto;max-width:100%}
 .fig img{width:100%;height:auto;display:block}
-.fig figcaption{margin-top:14px;font-size:.8125rem;color:var(--ink-2);line-height:1.55}
-.fig .label{display:block;margin-bottom:10px}
-.prose{max-width:74ch}
-.prose h3{margin-top:30px;font-size:1.05rem}
-.prose p{margin-top:10px;font-size:.9rem;color:var(--ink-2)}
-.prose ul{font-size:.9rem;color:var(--ink-2);padding-left:20px}
-.prose li{margin-bottom:7px}
+.fig figcaption{margin-top:16px;font-size:.8125rem;color:var(--ink-2);line-height:1.6;max-width:76ch}
+.fig figcaption .src{display:block;margin-top:7px;font-family:var(--font-mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fig .label{display:block;margin-bottom:12px}
+.fig-title{font-size:1.05rem;line-height:1.28;margin:0 0 7px;max-width:54ch;letter-spacing:-.01em}
+.fig-sub{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.06em;color:var(--muted);margin:0 0 20px;max-width:80ch;line-height:1.5}
+.fig-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+.fig-legend span{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.625rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fig-legend i{width:12px;height:3px;flex:none}
+
+/* ============ prose ============ */
+.prose{max-width:72ch}
+.prose h3{margin-top:34px;margin-bottom:10px;font-size:1.02rem;font-family:var(--font-mono);font-weight:700;letter-spacing:-.01em}
+.prose h3:first-child{margin-top:0}
+.prose p{margin:0 0 14px;font-size:.94rem;line-height:1.66;color:var(--ink-2)}
+.prose ul{margin:0 0 16px;font-size:.94rem;line-height:1.62;color:var(--ink-2);padding-left:20px}
+.prose li{margin-bottom:9px}
+.prose strong{color:var(--ink)}
 .prose code{font-family:var(--font-mono);font-size:.8125em;background:var(--surface-2);padding:2px 5px}
-.backlink{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
-.backlink:hover{color:var(--accent)}
+.prose a{text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:1px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 40px}
+.cols .prose{max-width:none}
+
+/* ============ definition grid ============ */
+.defs{border:2px solid var(--rule);background:var(--surface)}
+.def{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);border-top:1px solid var(--rule-soft)}
+.def:first-child{border-top:0}
+.def dt{padding:16px 20px;font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:700;background:var(--surface-2)}
+.def dd{margin:0;padding:16px 20px;font-size:.875rem;line-height:1.6;color:var(--ink-2)}
+@media(max-width:660px){.def{grid-template-columns:1fr}.def dd{padding-top:0}}
+
+/* ============ trace block ============ */
+.trace{border:2px solid var(--rule);background:var(--surface);overflow-x:auto;overscroll-behavior-x:contain}
+.trace pre{margin:0;padding:22px;font-family:var(--font-mono);font-size:.6875rem;line-height:1.7;color:var(--ink-2);white-space:pre}
+.trace-cap{margin-top:12px;font-size:.8125rem;color:var(--ink-2);line-height:1.55;max-width:76ch}
+.trace-cap .src{display:block;margin-top:7px;font-family:var(--font-mono);font-size:.625rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* ============ misc ============ */
+.notice{margin-bottom:26px}
+.notice:last-child{margin-bottom:0}
+.backlink{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--muted);border-bottom:2px solid var(--rule-soft);padding-bottom:2px}
+.backlink:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.footer{border-top:2px solid var(--rule)}
+.footer-note{margin-top:16px;font-size:.8125rem;line-height:1.6;color:var(--muted);max-width:64ch}
+.hero h1{max-width:18ch}
+.hero-role{font-size:1.08rem;max-width:64ch}
+.status{margin-top:36px}
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="#top"><span class="brand-mark"></span> ehs-risk-sem</a>
-    <nav class="topnav"><a href="#about">About</a><a href="#recovery">Recovery</a><a href="#rare">Rare events</a><a href="#misspec">Misspecification</a><a href="#limits">Limits</a></nav>
+    <nav class="topnav" aria-label="Sections on this page"><a href="#why">Why</a><a href="#recovery">Recovery</a><a href="#sizing">Sizing</a><a href="#rare">Rare events</a><a href="#zero">Zero inflation</a><a href="#misspec">Misspecification</a><a href="#meaning">Meaning</a><a href="#limits">Limits</a></nav>
     <button class="toggle" id="themeToggle" aria-label="Toggle colour scheme">
-      <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
-      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+      <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
     </button>
   </div>
+  <nav class="xbar" aria-label="Research portfolio">
+    <div class="xbar-inner">
+      <span class="xbar-tag">Portfolio</span>
+      <a href="https://github.com/priyatham9/ehs-osha-analysis"><span class="dot"></span>OSHA data quality</a><a href="https://github.com/priyatham9/ehs-ai-grounding-eval"><span class="dot"></span>Grounding benchmark</a><a href="https://github.com/priyatham9/ehs-human-factors-ontology"><span class="dot"></span>Human factors ontology</a><a href="https://github.com/priyatham9/ehs-risk-sem" aria-current="page"><span class="dot"></span>Risk SEM</a><a href="https://github.com/priyatham9/ehs-capitals-calculator"><span class="dot"></span>Capitals calculator</a><a href="https://github.com/priyatham9/ehs-benchmarks"><span class="dot"></span>EHS benchmarks</a><a href="https://github.com/priyatham9/ehs-ai-research"><span class="dot"></span>Hub</a>
+    </div>
+  </nav>
 </header>
 <section class="hero" id="top">
   <div class="wrap">
-    <div class="hero-eyebrow"><span class="pulse"></span><span class="label">Method study - simulated data throughout</span></div>
-    <h1 class="display">What SEM can and cannot tell you about safety risk</h1>
-    <p class="hero-role">A from-scratch estimator and a set of simulation studies covering coefficient recovery, sample size requirements, rare-event calibration, misspecification and model equivalence. Ground truth is known by construction, so estimator behaviour can be measured rather than assumed.</p>
+    <div class="hero-eyebrow"><span class="pulse"></span><span class="label">Method study - every number simulated by design</span></div>
+    <h1 class="display">What SEM cannot tell you about safety risk</h1>
+    <p class="hero-role">A from-scratch estimator in numpy, then simulation studies covering coefficient recovery, interval coverage, sample size, rare-event calibration, misspecification and model equivalence. Ground truth is known by construction, so estimator behaviour is measured rather than assumed. Nothing here analyses real injury data.</p>
     <div class="hero-links">
       <a class="btn btn-primary" href="https://github.com/priyatham9/ehs-risk-sem">Repository</a>
-      <a class="btn" href="#about">Read on</a>
+      <a class="btn" href="#why">Why this exists</a>
+      <a class="btn" href="https://github.com/priyatham9/ehs-ai-research">All projects</a>
     </div>
-    <div class="status"><div class="st-cell"><span class="st-k">Simulation studies</span><span class="st-v">4</span></div><div class="st-cell"><span class="st-k">Result tables</span><span class="st-v">19</span></div><div class="st-cell"><span class="st-k">Dependencies</span><span class="st-v">numpy only</span></div><div class="st-cell"><span class="st-k">Real-world claims</span><span class="st-v accent">None</span></div></div>
+    <div class="status"><div class="st-cell"><span class="st-k">Simulation studies</span><span class="st-v">4</span></div><div class="st-cell"><span class="st-k">Result tables</span><span class="st-v">19</span></div><div class="st-cell"><span class="st-k">Coefficients recovered</span><span class="st-v">Yes</span></div><div class="st-cell"><span class="st-k">Real-world claims</span><span class="st-v accent">None</span></div></div>
   </div>
 </section>
-<section class="section" id="about"><div class="wrap"><div class="rail-head"><span class="rail-num">00</span><h2 class="display">About</h2></div><div class="prose"><p>Structural equation modelling is routinely proposed for safety risk scoring, usually with illustrative path coefficients and a causal reading. This repository takes that proposal seriously enough to test it: a from-scratch estimator, then simulation studies that establish what the method can and cannot recover.</p><p>Everything here is simulated by construction. That is the point of a simulation study - ground truth is known, so estimator behaviour can be measured against it. No number on this page is a claim about any real workplace.</p></div></div></section><section class="section" id="recovery"><div class="wrap"><div class="rail-head"><span class="rail-num">01</span><h2 class="display">Can the estimator recover known truth</h2></div><div class="tbl-wrap"><table><thead><tr><th>n</th><th>predictor</th><th>true beta</th><th>mean estimate</th><th>bias</th><th>empirical sd</th><th>mean analytic se</th><th>se ratio analytic over empirical</th><th>coverage 95 analytic</th><th>rmse</th><th>improper solutions</th><th>failed fits</th><th>n reps</th></tr></thead><tbody><tr><td>100</td><td>UnsafeActs</td><td>0.45</td><td>0.4562</td><td>0.006205</td><td>0.1519</td><td>0.09585</td><td>0.6311</td><td>0.78</td><td>0.1517</td><td>0</td><td>0</td><td>300</td></tr><tr><td>100</td><td>OperationalStress</td><td>0.3</td><td>0.3074</td><td>0.007413</td><td>0.1431</td><td>0.09584</td><td>0.6696</td><td>0.7933</td><td>0.1431</td><td>0</td><td>0</td><td>300</td></tr><tr><td>100</td><td>SystemCondition</td><td>-0.25</td><td>-0.2571</td><td>-0.007051</td><td>0.1466</td><td>0.09642</td><td>0.6579</td><td>0.7967</td><td>0.1465</td><td>0</td><td>0</td><td>300</td></tr><tr><td>100</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.2021</td><td>-0.002123</td><td>0.1424</td><td>0.09607</td><td>0.6746</td><td>0.8233</td><td>0.1422</td><td>0</td><td>0</td><td>300</td></tr><tr><td>200</td><td>UnsafeActs</td><td>0.45</td><td>0.4537</td><td>0.00375</td><td>0.09747</td><td>0.06805</td><td>0.6981</td><td>0.8233</td><td>0.09738</td><td>0</td><td>0</td><td>300</td></tr><tr><td>200</td><td>OperationalStress</td><td>0.3</td><td>0.3021</td><td>0.00206</td><td>0.09338</td><td>0.06797</td><td>0.7279</td><td>0.85</td><td>0.09324</td><td>0</td><td>0</td><td>300</td></tr><tr><td>200</td><td>SystemCondition</td><td>-0.25</td><td>-0.2569</td><td>-0.006931</td><td>0.101</td><td>0.0681</td><td>0.6741</td><td>0.7933</td><td>0.1011</td><td>0</td><td>0</td><td>300</td></tr><tr><td>200</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.1951</td><td>0.004912</td><td>0.09568</td><td>0.06811</td><td>0.7118</td><td>0.8467</td><td>0.09565</td><td>0</td><td>0</td><td>300</td></tr><tr><td>500</td><td>UnsafeActs</td><td>0.45</td><td>0.4522</td><td>0.002231</td><td>0.0565</td><td>0.04278</td><td>0.7572</td><td>0.8633</td><td>0.05645</td><td>0</td><td>0</td><td>300</td></tr><tr><td>500</td><td>OperationalStress</td><td>0.3</td><td>0.3015</td><td>0.001504</td><td>0.06038</td><td>0.04276</td><td>0.7081</td><td>0.8333</td><td>0.0603</td><td>0</td><td>0</td><td>300</td></tr><tr><td>500</td><td>SystemCondition</td><td>-0.25</td><td>-0.2532</td><td>-0.003214</td><td>0.06663</td><td>0.0428</td><td>0.6424</td><td>0.7567</td><td>0.0666</td><td>0</td><td>0</td><td>300</td></tr><tr><td>500</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.2018</td><td>-0.001839</td><td>0.0583</td><td>0.04274</td><td>0.7331</td><td>0.8567</td><td>0.05823</td><td>0</td><td>0</td><td>300</td></tr></tbody></table></div><p class="label" style="margin-top:10px">Showing 12 of 24 rows - full table in the repository</p><div class="prose"><p>Data generated from a known model, then estimated. If the estimator cannot recover coefficients it generated itself, nothing downstream is trustworthy.</p></div></div></section><section class="section" id="sizing"><div class="wrap"><div class="rail-head"><span class="rail-num">02</span><h2 class="display">How much data is required</h2></div><div class="tbl-wrap"><table><thead><tr><th>requirement</th><th>basis</th><th>n required</th></tr></thead><tbody><tr><td>global fit: 80% power for the test of close fit</td><td>MacCallum-style RMSEA power, df = 80</td><td>153</td></tr><tr><td>path precision: SE = 0.05 on a single coefficient</td><td>standardized regression SE, R^2 = 0.288, VIF = 1.28</td><td>369</td></tr><tr><td>path precision: SE = 0.025 on a single coefficient</td><td>standardized regression SE, R^2 = 0.288, VIF = 1.28</td><td>1459</td></tr><tr><td>distinguish beta = 0.45 from beta = 0.30 at 80% power</td><td>z test on the coefficient difference, correlated predictors</td><td>770</td></tr><tr><td>distinguish beta = -0.25 from beta = -0.20 at 80% power</td><td>z test on the coefficient difference, correlated predictors</td><td>6884</td></tr></tbody></table></div><div class="prose"><p>Sample size needed to recover coefficients within tolerance. The answer is consistently larger than the datasets these models are proposed for.</p></div></div></section><section class="section" id="rare"><div class="wrap"><div class="rail-head"><span class="rail-num">03</span><h2 class="display">What rare events do</h2></div><div class="tbl-wrap"><table><thead><tr><th>training sample</th><th>train n</th><th>train event fraction</th><th>auc test</th><th>mean predicted test</th><th>observed rate test</th><th>overprediction ratio</th><th>calibration slope</th><th>brier</th><th>ppv at top 5pct</th></tr></thead><tbody><tr><td>none (as collected)</td><td>100,000</td><td>0.00506</td><td>0.7111</td><td>0.005072</td><td>0.00516</td><td>0.983</td><td>1.215</td><td>0.005112</td><td>0.0192</td></tr><tr><td>random undersampling of majority</td><td>1012</td><td>0.5</td><td>0.7075</td><td>0.454</td><td>0.00516</td><td>87.98</td><td>1.1</td><td>0.2303</td><td>0.0188</td></tr><tr><td>random oversampling of minority</td><td>198,988</td><td>0.5</td><td>0.7109</td><td>0.4521</td><td>0.00516</td><td>87.62</td><td>1.187</td><td>0.2263</td><td>0.0198</td></tr><tr><td>SMOTE-style interpolation</td><td>198,988</td><td>0.5</td><td>0.7108</td><td>0.4485</td><td>0.00516</td><td>86.92</td><td>1.102</td><td>0.2259</td><td>0.0198</td></tr></tbody></table></div><div class="prose"><p>Safety incidents are rare, and rare outcomes break naive estimation. Class imbalance degrades both coefficient recovery and probability calibration.</p></div></div></section><section class="section" id="calib"><div class="wrap"><div class="rail-head"><span class="rail-num">04</span><h2 class="display">Calibration under zero inflation</h2></div><div class="tbl-wrap"><table><thead><tr><th>structural zero fraction</th><th>observed zero fraction</th><th>poisson expected zero fraction</th><th>excess zeros</th><th>mean count</th><th>variance count</th><th>variance to mean ratio</th><th>ols slope on latent 1</th></tr></thead><tbody><tr><td>0</td><td>0.2367</td><td>0.2357</td><td>0.000997</td><td>1.625</td><td>2.098</td><td>1.291</td><td>0.5693</td></tr><tr><td>0.2</td><td>0.3884</td><td>0.2357</td><td>0.1527</td><td>1.31</td><td>2.109</td><td>1.61</td><td>0.5325</td></tr><tr><td>0.38</td><td>0.5204</td><td>0.2357</td><td>0.2847</td><td>1.042</td><td>2.03</td><td>1.948</td><td>0.4772</td></tr></tbody></table></div><div class="prose"><p>Zero-inflated outcomes are the norm in injury counts. Discrimination can look acceptable while calibration is badly wrong, which is the failure mode that matters operationally.</p></div></div></section><section class="section" id="misspec"><div class="wrap"><div class="rail-head"><span class="rail-num">05</span><h2 class="display">Misspecification</h2></div><div class="tbl-wrap"><table><thead><tr><th>fitted model</th><th>beta predictor on outcome</th><th>true direct effect</th><th>bias</th><th>chi square</th><th>df</th><th>cfi</th><th>rmsea</th><th>meets conventional cutoffs</th></tr></thead><tbody><tr><td>confounder included</td><td>0.173</td><td>0.2</td><td>-0.02705</td><td>28.46</td><td>24</td><td>0.9997</td><td>0.00682</td><td>True</td></tr><tr><td>confounder omitted</td><td>0.4955</td><td>0.2</td><td>0.2955</td><td>5.702</td><td>8</td><td>1</td><td>0</td><td>True</td></tr></tbody></table></div><div class="prose"><p>A model missing a confounder still fits. This is why a path coefficient is not a causal effect without an identification argument the data cannot supply.</p></div></div></section><section class="section" id="equiv"><div class="wrap"><div class="rail-head"><span class="rail-num">06</span><h2 class="display">Equivalent models</h2></div><div class="tbl-wrap"><table><thead><tr><th>fitted model</th><th>beta</th><th>se</th><th>p value</th><th>chi square</th><th>df</th><th>cfi</th><th>rmsea</th><th>srmr</th><th>meets conventional cutoffs</th></tr></thead><tbody><tr><td>Cause -> Effect (correct direction)</td><td>0.4927</td><td>0.01589</td><td>0</td><td>7.696</td><td>8</td><td>1</td><td>0</td><td>0.007859</td><td>True</td></tr><tr><td>Effect -> Cause (reversed)</td><td>0.4927</td><td>0.01589</td><td>0</td><td>7.696</td><td>8</td><td>1</td><td>0</td><td>0.007859</td><td>True</td></tr></tbody></table></div><div class="prose"><p>Distinct causal structures that fit identically. No amount of fit statistics distinguishes them; only assumptions outside the data can.</p></div></div></section><section class="section" id="limits"><div class="wrap"><div class="rail-head"><span class="rail-num">07</span><h2 class="display">What this does not establish</h2></div><div class="prose"><p>Simulation establishes estimator properties, not empirical facts. These studies show what the method does when its assumptions hold and how it fails when they do not. They say nothing about whether any particular safety programme works.</p><p>The practical conclusion is narrow and worth stating plainly: illustrative path weights of the kind that circulate in practitioner writing cannot be read causally, cannot be transferred between sites, and cannot be validated by goodness of fit.</p></div></div></section>
+<main id="main">
+<section class="section" id="why"><div class="wrap"><div class="rail-head"><span class="rail-num">01</span><h2 class="display">Why this exists</h2></div><div class="opener"><div class="opener-main"><p class="big">A formula that fits perfectly, recovers its own coefficients, and passes every conventional cutoff can still point the wrong way down its own arrows.</p><p>A particular formula circulates in practitioner writing on safety analytics: risk as a weighted sum of unsafe acts, operational stress, system condition and safety response capability, with weights around 0.45, 0.30, -0.25 and -0.20, described as a structural equation model with machine-constructed latent variables.</p><p>This repository builds the estimator that would be needed to produce that formula, from scratch in numpy, and then tests what such an estimator can support. Most of the answer is negative, and the negative results are the contribution.</p><p>The clearest one is here. Fitting the same data with the causal arrow reversed returns an identical coefficient (0.493 both ways), an identical chi-square, an identical CFI and an identical SRMR. Both models meet every conventional cutoff. Goodness of fit cannot tell you which way causation runs, because it never could.</p></div><div class="opener-side"><h3>Everything here is simulated</h3><p>Every number on this page comes from data generated by a model whose parameters were fixed in advance. That is what a simulation study is for: ground truth is known, so estimator behaviour can be measured against it rather than assumed.</p><p><strong>No number on this page is a claim about any real workplace, any real programme, or any real injury.</strong> Nothing in this repository touches real injury data at any point.</p></div></div></div></section><section class="section" id="recovery"><div class="wrap"><div class="rail-head"><span class="rail-num">02</span><h2 class="display">Recovery, and the intervals around it</h2></div><p class="sec-lede">Start with the friendliest possible test. Generate data from a known model, then estimate it. If the estimator cannot recover coefficients it generated itself, nothing downstream is worth reading.</p><figure class="fig"><div class="fig-scroll"><svg viewBox="0 0 860 420" role="img" aria-label="Interval coverage against sample size" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace"><rect x="0" y="0" width="860" height="420" fill="var(--fig-paper)"/><line x1="74" y1="368.0" x2="650" y2="368.0" stroke="var(--fig-grid)" stroke-width="1"/><text x="64.0" y="372.0" font-size="11" text-anchor="end" fill="var(--fig-mute)" font-weight="400">0.7</text><line x1="74" y1="311.7" x2="650" y2="311.7" stroke="var(--fig-grid)" stroke-width="1"/><text x="64.0" y="315.7" font-size="11" text-anchor="end" fill="var(--fig-mute)" font-weight="400">0.75</text><line x1="74" y1="255.3" x2="650" y2="255.3" stroke="var(--fig-grid)" stroke-width="1"/><text x="64.0" y="259.3" font-size="11" text-anchor="end" fill="var(--fig-mute)" font-weight="400">0.8</text><line x1="74" y1="199.0" x2="650" y2="199.0" stroke="var(--fig-grid)" stroke-width="1"/><text x="64.0" y="203.0" font-size="11" text-anchor="end" fill="var(--fig-mute)" font-weight="400">0.85</text><line x1="74" y1="142.7" x2="650" y2="142.7" stroke="var(--fig-grid)" stroke-width="1"/><text x="64.0" y="146.7" font-size="11" text-anchor="end" fill="var(--fig-mute)" font-weight="400">0.9</text><line x1="74" y1="86.3" x2="650" y2="86.3" stroke="var(--fig-grid)" stroke-width="1"/><text x="64.0" y="90.3" font-size="11" text-anchor="end" fill="var(--fig-mute)" font-weight="400">0.95</text><line x1="74" y1="30.0" x2="650" y2="30.0" stroke="var(--fig-grid)" stroke-width="1"/><text x="64.0" y="34.0" font-size="11" text-anchor="end" fill="var(--fig-mute)" font-weight="400">1</text><line x1="74" y1="86.3" x2="650" y2="86.3" stroke="var(--ink)" stroke-width="2" stroke-dasharray="7 5"/><text x="660.0" y="90.3" font-size="11" text-anchor="start" fill="var(--ink)" font-weight="700">nominal 95%</text><text x="74.0" y="392.0" font-size="11" text-anchor="middle" fill="var(--fig-mute)" font-weight="400">n=100</text><text x="189.2" y="392.0" font-size="11" text-anchor="middle" fill="var(--fig-mute)" font-weight="400">n=200</text><text x="304.4" y="392.0" font-size="11" text-anchor="middle" fill="var(--fig-mute)" font-weight="400">n=500</text><text x="419.6" y="392.0" font-size="11" text-anchor="middle" fill="var(--fig-mute)" font-weight="400">n=1,000</text><text x="534.8" y="392.0" font-size="11" text-anchor="middle" fill="var(--fig-mute)" font-weight="400">n=2,000</text><text x="650.0" y="392.0" font-size="11" text-anchor="middle" fill="var(--fig-mute)" font-weight="400">n=5,000</text><line x1="74" y1="368.0" x2="650" y2="368.0" stroke="var(--fig-axis)" stroke-width="2"/><polyline points="74.0,277.9 189.2,229.0 304.4,184.0 419.6,187.7 534.8,206.5 650.0,187.7" fill="none" stroke="var(--s1)" stroke-width="2.5"/><circle cx="74.0" cy="277.9" r="3.5" fill="var(--s1)"/><circle cx="189.2" cy="229.0" r="3.5" fill="var(--s1)"/><circle cx="304.4" cy="184.0" r="3.5" fill="var(--s1)"/><circle cx="419.6" cy="187.7" r="3.5" fill="var(--s1)"/><circle cx="534.8" cy="206.5" r="3.5" fill="var(--s1)"/><circle cx="650.0" cy="187.7" r="3.5" fill="var(--s1)"/><polyline points="74.0,262.8 189.2,199.0 304.4,217.8 419.6,247.8 534.8,229.0 650.0,214.0" fill="none" stroke="var(--s2)" stroke-width="2.5"/><circle cx="74.0" cy="262.8" r="3.5" fill="var(--s2)"/><circle cx="189.2" cy="199.0" r="3.5" fill="var(--s2)"/><circle cx="304.4" cy="217.8" r="3.5" fill="var(--s2)"/><circle cx="419.6" cy="247.8" r="3.5" fill="var(--s2)"/><circle cx="534.8" cy="229.0" r="3.5" fill="var(--s2)"/><circle cx="650.0" cy="214.0" r="3.5" fill="var(--s2)"/><polyline points="74.0,259.1 189.2,262.8 304.4,304.2 419.6,206.5 534.8,255.3 650.0,221.5" fill="none" stroke="var(--s3)" stroke-width="2.5"/><circle cx="74.0" cy="259.1" r="3.5" fill="var(--s3)"/><circle cx="189.2" cy="262.8" r="3.5" fill="var(--s3)"/><circle cx="304.4" cy="304.2" r="3.5" fill="var(--s3)"/><circle cx="419.6" cy="206.5" r="3.5" fill="var(--s3)"/><circle cx="534.8" cy="255.3" r="3.5" fill="var(--s3)"/><circle cx="650.0" cy="221.5" r="3.5" fill="var(--s3)"/><polyline points="74.0,229.0 189.2,202.8 304.4,191.5 419.6,210.3 534.8,217.8 650.0,232.8" fill="none" stroke="var(--s4)" stroke-width="2.5"/><circle cx="74.0" cy="229.0" r="3.5" fill="var(--s4)"/><circle cx="189.2" cy="202.8" r="3.5" fill="var(--s4)"/><circle cx="304.4" cy="191.5" r="3.5" fill="var(--s4)"/><circle cx="419.6" cy="210.3" r="3.5" fill="var(--s4)"/><circle cx="534.8" cy="217.8" r="3.5" fill="var(--s4)"/><circle cx="650.0" cy="232.8" r="3.5" fill="var(--s4)"/><text x="660.0" y="191.7" font-size="10" text-anchor="start" fill="var(--s1)" font-weight="600">UnsafeActs</text><text x="660.0" y="218.0" font-size="10" text-anchor="start" fill="var(--s2)" font-weight="600">OperationalStress</text><text x="660.0" y="231.0" font-size="10" text-anchor="start" fill="var(--s3)" font-weight="600">SystemCondition</text><text x="660.0" y="244.0" font-size="10" text-anchor="start" fill="var(--s4)" font-weight="600">SafetyResponse</text></svg></div><figcaption>Coverage of the nominal 95% confidence interval, by sample size, for each of the four path coefficients. Coverage should sit on the dashed line. It sits between 76% and 86% instead, and it does not improve with sample size: the analytic standard errors are 63% to 76% of the empirical ones at every n tested. The point estimates are nearly unbiased. It is the uncertainty around them that is wrong, which is the more dangerous failure, because an interval that is too narrow reads as confidence.<span class="src">Source artifact: results/study01_recovery.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>n</th><th>predictor</th><th>true beta</th><th>mean estimate</th><th>bias</th><th>empirical sd</th><th>coverage 95</th><th>SE ratio</th></tr></thead><tbody><tr><td class="t-first">100</td><td>UnsafeActs</td><td>0.45</td><td>0.4562</td><td>0.006205</td><td>0.1519</td><td>0.78</td><td>0.6311</td></tr><tr><td class="t-first">100</td><td>OperationalStress</td><td>0.3</td><td>0.3074</td><td>0.007413</td><td>0.1431</td><td>0.7933</td><td>0.6696</td></tr><tr><td class="t-first">100</td><td>SystemCondition</td><td>-0.25</td><td>-0.2571</td><td>-0.007051</td><td>0.1466</td><td>0.7967</td><td>0.6579</td></tr><tr><td class="t-first">100</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.2021</td><td>-0.002123</td><td>0.1424</td><td>0.8233</td><td>0.6746</td></tr><tr><td class="t-first">200</td><td>UnsafeActs</td><td>0.45</td><td>0.4537</td><td>0.00375</td><td>0.09747</td><td>0.8233</td><td>0.6981</td></tr><tr><td class="t-first">200</td><td>OperationalStress</td><td>0.3</td><td>0.3021</td><td>0.00206</td><td>0.09338</td><td>0.85</td><td>0.7279</td></tr><tr><td class="t-first">200</td><td>SystemCondition</td><td>-0.25</td><td>-0.2569</td><td>-0.006931</td><td>0.101</td><td>0.7933</td><td>0.6741</td></tr><tr><td class="t-first">200</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.1951</td><td>0.004912</td><td>0.09568</td><td>0.8467</td><td>0.7118</td></tr><tr><td class="t-first">500</td><td>UnsafeActs</td><td>0.45</td><td>0.4522</td><td>0.002231</td><td>0.0565</td><td>0.8633</td><td>0.7572</td></tr><tr><td class="t-first">500</td><td>OperationalStress</td><td>0.3</td><td>0.3015</td><td>0.001504</td><td>0.06038</td><td>0.8333</td><td>0.7081</td></tr><tr><td class="t-first">500</td><td>SystemCondition</td><td>-0.25</td><td>-0.2532</td><td>-0.003214</td><td>0.06663</td><td>0.7567</td><td>0.6424</td></tr><tr><td class="t-first">500</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.2018</td><td>-0.001839</td><td>0.0583</td><td>0.8567</td><td>0.7331</td></tr><tr><td class="t-first">1000</td><td>UnsafeActs</td><td>0.45</td><td>0.4509</td><td>0.0008792</td><td>0.04103</td><td>0.86</td><td>0.7357</td></tr><tr><td class="t-first">1000</td><td>OperationalStress</td><td>0.3</td><td>0.3007</td><td>0.0006662</td><td>0.04383</td><td>0.8067</td><td>0.6885</td></tr><tr><td class="t-first">1000</td><td>SystemCondition</td><td>-0.25</td><td>-0.2484</td><td>0.001632</td><td>0.04073</td><td>0.8433</td><td>0.7421</td></tr><tr><td class="t-first">1000</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.2016</td><td>-0.00155</td><td>0.04136</td><td>0.84</td><td>0.7297</td></tr><tr><td class="t-first">2000</td><td>UnsafeActs</td><td>0.45</td><td>0.4527</td><td>0.002746</td><td>0.02892</td><td>0.8433</td><td>0.7366</td></tr><tr><td class="t-first">2000</td><td>OperationalStress</td><td>0.3</td><td>0.2984</td><td>-0.001575</td><td>0.0305</td><td>0.8233</td><td>0.6988</td></tr><tr><td class="t-first">2000</td><td>SystemCondition</td><td>-0.25</td><td>-0.2503</td><td>-0.0002661</td><td>0.03195</td><td>0.8</td><td>0.6667</td></tr><tr><td class="t-first">2000</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.2013</td><td>-0.001287</td><td>0.03029</td><td>0.8333</td><td>0.703</td></tr><tr><td class="t-first">5000</td><td>UnsafeActs</td><td>0.45</td><td>0.4514</td><td>0.001357</td><td>0.01862</td><td>0.86</td><td>0.7241</td></tr><tr><td class="t-first">5000</td><td>OperationalStress</td><td>0.3</td><td>0.3002</td><td>0.000187</td><td>0.01942</td><td>0.8367</td><td>0.6939</td></tr><tr><td class="t-first">5000</td><td>SystemCondition</td><td>-0.25</td><td>-0.2514</td><td>-0.00143</td><td>0.01937</td><td>0.83</td><td>0.6964</td></tr><tr><td class="t-first">5000</td><td>SafetyResponseCapability</td><td>-0.2</td><td>-0.2</td><td>-3.099e-05</td><td>0.01955</td><td>0.82</td><td>0.6894</td></tr></tbody></table></div><figcaption class="tbl-cap">Bias, spread and interval coverage for each coefficient at each sample size, over 300 replications per cell. Bias is negligible everywhere. Coverage never reaches its nominal level anywhere.<span class="src">Source artifact: results/study01_recovery.csv</span></figcaption></figure></div></section><section class="section" id="sizing"><div class="wrap"><div class="rail-head"><span class="rail-num">03</span><h2 class="display">How much data the formula would need</h2></div><p class="sec-lede">Estimating a coefficient and being able to tell it apart from the coefficient next to it are different tasks with very different sample size requirements.</p><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>requirement</th><th>basis</th><th>n required</th></tr></thead><tbody><tr><td class="t-first">global fit: 80% power for the test of close fit</td><td>MacCallum-style RMSEA power, df = 80</td><td>153</td></tr><tr><td class="t-first">path precision: SE = 0.05 on a single coefficient</td><td>standardized regression SE, R^2 = 0.288, VIF = 1.28</td><td>369</td></tr><tr><td class="t-first">path precision: SE = 0.025 on a single coefficient</td><td>standardized regression SE, R^2 = 0.288, VIF = 1.28</td><td>1459</td></tr><tr><td class="t-first">distinguish beta = 0.45 from beta = 0.30 at 80% power</td><td>z test on the coefficient difference, correlated predictors</td><td>770</td></tr><tr><td class="t-first">distinguish beta = -0.25 from beta = -0.20 at 80% power</td><td>z test on the coefficient difference, correlated predictors</td><td>6884</td></tr></tbody></table></div><figcaption class="tbl-cap">Sample size required for each analytic goal, computed from the same generating model. Distinguishing the two negative coefficients from one another needs a sample of 6,884, which is larger than most sites will ever have. Reporting them as separate drivers at any realistic n is reporting noise.<span class="src">Source artifact: results/study01_requirements.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>coefficient a</th><th>beta a</th><th>coefficient b</th><th>beta b</th><th>absolute difference</th><th>n for 80pct power</th><th>se of difference at n 250</th></tr></thead><tbody><tr><td class="t-first">UnsafeActs</td><td>0.45</td><td>OperationalStress</td><td>0.3</td><td>0.15</td><td>770</td><td>0.09456</td></tr><tr><td class="t-first">UnsafeActs</td><td>0.45</td><td>SystemCondition</td><td>-0.25</td><td>0.7</td><td>41</td><td>0.09456</td></tr><tr><td class="t-first">UnsafeActs</td><td>0.45</td><td>SafetyResponseCapability</td><td>-0.2</td><td>0.65</td><td>46</td><td>0.09456</td></tr><tr><td class="t-first">OperationalStress</td><td>0.3</td><td>SystemCondition</td><td>-0.25</td><td>0.55</td><td>62</td><td>0.09456</td></tr><tr><td class="t-first">OperationalStress</td><td>0.3</td><td>SafetyResponseCapability</td><td>-0.2</td><td>0.5</td><td>74</td><td>0.09456</td></tr><tr><td class="t-first">SystemCondition</td><td>-0.25</td><td>SafetyResponseCapability</td><td>-0.2</td><td>0.05</td><td>6884</td><td>0.09456</td></tr></tbody></table></div><figcaption class="tbl-cap">Every pairwise comparison between coefficients, with the sample size that would be needed to separate the pair at 80% power. Ranking the drivers is a much harder task than estimating them.<span class="src">Source artifact: results/study01_distinguishability.csv</span></figcaption></figure></div></section><section class="section" id="rare"><div class="wrap"><div class="rail-head"><span class="rail-num">04</span><h2 class="display">What rare events do</h2></div><p class="sec-lede">Safety incidents are rare. Rare outcomes break naive estimation in a specific way: discrimination survives, calibration does not, and calibration is what an operational alert depends on.</p><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>training sample</th><th>train n</th><th>train event fraction</th><th>auc test</th><th>mean predicted test</th><th>observed rate test</th><th>overprediction ratio</th><th>calibration slope</th><th>ppv at top 5pct</th></tr></thead><tbody><tr><td class="t-first">none (as collected)</td><td>100,000</td><td>0.00506</td><td>0.7111</td><td>0.005072</td><td>0.00516</td><td>0.983</td><td>1.215</td><td>0.0192</td></tr><tr><td class="t-first">random undersampling of majority</td><td>1012</td><td>0.5</td><td>0.7075</td><td>0.454</td><td>0.00516</td><td>87.98</td><td>1.1</td><td>0.0188</td></tr><tr><td class="t-first">random oversampling of minority</td><td>198,988</td><td>0.5</td><td>0.7109</td><td>0.4521</td><td>0.00516</td><td>87.62</td><td>1.187</td><td>0.0198</td></tr><tr><td class="t-first">SMOTE-style interpolation</td><td>198,988</td><td>0.5</td><td>0.7108</td><td>0.4485</td><td>0.00516</td><td>86.92</td><td>1.102</td><td>0.0198</td></tr></tbody></table></div><figcaption class="tbl-cap">What resampling does to a rare-outcome model. Discrimination is essentially unchanged by rebalancing, while the predicted probabilities become meaningless: undersampling the majority class overpredicts by 88x if the intercept is not corrected.<span class="src">Source artifact: results/study02_imbalance.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>shift hours</th><th>base rate per shift</th><th>worker shifts per event</th><th>sensitivity</th><th>specificity</th><th>ppv</th><th>alerts per true event</th></tr></thead><tbody><tr><td class="t-first">8</td><td>9.2e-05</td><td>10,870</td><td>0.8</td><td>0.95</td><td>0.00147</td><td>680.3</td></tr><tr><td class="t-first">8</td><td>9.2e-05</td><td>10,870</td><td>0.8</td><td>0.99</td><td>0.007307</td><td>136.9</td></tr><tr><td class="t-first">8</td><td>9.2e-05</td><td>10,870</td><td>0.9</td><td>0.999</td><td>0.07647</td><td>13.08</td></tr><tr><td class="t-first">8</td><td>9.2e-05</td><td>10,870</td><td>0.95</td><td>0.9999</td><td>0.4664</td><td>2.144</td></tr><tr><td class="t-first">12</td><td>0.000138</td><td>7246</td><td>0.8</td><td>0.95</td><td>0.002203</td><td>453.8</td></tr><tr><td class="t-first">12</td><td>0.000138</td><td>7246</td><td>0.8</td><td>0.99</td><td>0.01092</td><td>91.57</td></tr><tr><td class="t-first">12</td><td>0.000138</td><td>7246</td><td>0.9</td><td>0.999</td><td>0.1105</td><td>9.05</td></tr><tr><td class="t-first">12</td><td>0.000138</td><td>7246</td><td>0.95</td><td>0.9999</td><td>0.5673</td><td>1.763</td></tr></tbody></table></div><figcaption class="tbl-cap">Alerts per true event at realistic base rates. This is the operational meaning of a rare outcome: at a base rate this low, even a highly specific model buries the true events under false ones, and the people receiving the alerts stop reading them.<span class="src">Source artifact: results/study02_alert_burden.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>unit of analysis</th><th>base rate</th><th>relative precision target</th><th>events required</th><th>units required</th></tr></thead><tbody><tr><td class="t-first">worker-shift (8 h)</td><td>9.2e-05</td><td>0.1</td><td>384.1</td><td>4,175,499</td></tr><tr><td class="t-first">worker-shift (8 h)</td><td>9.2e-05</td><td>0.25</td><td>61.46</td><td>668,080</td></tr><tr><td class="t-first">worker-shift (12 h)</td><td>0.000138</td><td>0.1</td><td>384.1</td><td>2,783,666</td></tr><tr><td class="t-first">worker-shift (12 h)</td><td>0.000138</td><td>0.25</td><td>61.46</td><td>445,387</td></tr><tr><td class="t-first">worker-year</td><td>0.023</td><td>0.1</td><td>384.1</td><td>16,702</td></tr><tr><td class="t-first">worker-year</td><td>0.023</td><td>0.25</td><td>61.46</td><td>2672</td></tr></tbody></table></div><figcaption class="tbl-cap">Events and units of observation required to estimate a rare-event rate to a given relative precision.<span class="src">Source artifact: results/study02_sizing.csv</span></figcaption></figure></div></section><section class="section" id="zero"><div class="wrap"><div class="rail-head"><span class="rail-num">05</span><h2 class="display">Zero inflation</h2></div><p class="sec-lede">Most establishments record no injuries in a period. That is not a small deviation from a count model, it is a different data-generating process.</p><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>structural zero fraction</th><th>observed zero fraction</th><th>poisson expected zero fraction</th><th>excess zeros</th><th>mean count</th><th>variance count</th><th>variance to mean ratio</th><th>ols slope on latent 1</th></tr></thead><tbody><tr><td class="t-first">0</td><td>0.2367</td><td>0.2357</td><td>0.000997</td><td>1.625</td><td>2.098</td><td>1.291</td><td>0.5693</td></tr><tr><td class="t-first">0.2</td><td>0.3884</td><td>0.2357</td><td>0.1527</td><td>1.31</td><td>2.109</td><td>1.61</td><td>0.5325</td></tr><tr><td class="t-first">0.38</td><td>0.5204</td><td>0.2357</td><td>0.2847</td><td>1.042</td><td>2.03</td><td>1.948</td><td>0.4772</td></tr></tbody></table></div><figcaption class="tbl-cap">Zero-inflated outcomes are the norm in injury counts. As the structural zero fraction rises, the observed zeros pull away from what a Poisson would produce and the variance-to-mean ratio climbs, while the slope on the latent variable attenuates.<span class="src">Source artifact: results/study02_zero_inflation.csv</span></figcaption></figure></div></section><section class="section" id="misspec"><div class="wrap"><div class="rail-head"><span class="rail-num">06</span><h2 class="display">Misspecification and equivalence</h2></div><p class="sec-lede">This is the section that matters. A model can be wrong in the specific way that inflates the number you care about, and still fit better than the correct one.</p><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>fitted model</th><th>beta predictor on outcome</th><th>true direct effect</th><th>bias</th><th>chi square</th><th>df</th><th>cfi</th><th>rmsea</th><th>meets conventional cutoffs</th></tr></thead><tbody><tr><td class="t-first">confounder included</td><td>0.173</td><td>0.2</td><td>-0.02705</td><td>28.46</td><td>24</td><td>0.9997</td><td>0.00682</td><td>True</td></tr><tr><td class="t-first">confounder omitted</td><td>0.4955</td><td>0.2</td><td>0.2955</td><td>5.702</td><td>8</td><td>1</td><td>0</td><td>True</td></tr></tbody></table></div><figcaption class="tbl-cap">The same data, fitted with and without a confounder. Omitting it inflates the coefficient from 0.173 to 0.495 against a true direct effect of 0.20. Both models meet every conventional fit cutoff, and the misspecified one fits better.<span class="src">Source artifact: results/study03_confounder.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>fitted model</th><th>beta</th><th>se</th><th>p value</th><th>chi square</th><th>df</th><th>cfi</th><th>rmsea</th><th>srmr</th><th>meets conventional cutoffs</th></tr></thead><tbody><tr><td class="t-first">Cause -&gt; Effect (correct direction)</td><td>0.4927</td><td>0.01589</td><td>0</td><td>7.696</td><td>8</td><td>1</td><td>0</td><td>0.007859</td><td>True</td></tr><tr><td class="t-first">Effect -&gt; Cause (reversed)</td><td>0.4927</td><td>0.01589</td><td>0</td><td>7.696</td><td>8</td><td>1</td><td>0</td><td>0.007859</td><td>True</td></tr></tbody></table></div><figcaption class="tbl-cap">Two models with opposite causal directions, fitted to the same data. Every fit statistic is identical to the last decimal place. No amount of model comparison separates them; only an assumption from outside the data can.<span class="src">Source artifact: results/study03_equivalent.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>generating structure</th><th>fitted structure</th><th>estimated beta</th><th>se</th><th>p value</th><th>chi square</th><th>df</th><th>cfi</th><th>rmsea</th><th>srmr</th><th>meets conventional cutoffs</th></tr></thead><tbody><tr><td class="t-first">Injuries -&gt; Climate, beta = -0.55</td><td>Climate -&gt; Injuries</td><td>-0.5698</td><td>0.01501</td><td>0</td><td>8.442</td><td>8</td><td>0.9999</td><td>0.004294</td><td>0.006726</td><td>True</td></tr></tbody></table></div><figcaption class="tbl-cap">Data generated with injuries driving climate, then fitted as climate driving injuries. The reversed model recovers a large, highly significant coefficient and passes every cutoff.<span class="src">Source artifact: results/study03_reverse.csv</span></figcaption></figure></div></section><section class="section" id="meaning"><div class="wrap"><div class="rail-head"><span class="rail-num">07</span><h2 class="display">What a coefficient means</h2></div><p class="sec-lede">Even a correctly estimated coefficient does not tell you what happens if you intervene, and does not survive a change of scale or a change of site.</p><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>world</th><th>fitted coefficients</th><th>effect of intervening on UnsafeActs</th><th>note</th></tr></thead><tbody><tr><td class="t-first">1. four direct causes, correlated exogenously</td><td>[0.448, 0.306, -0.254, -0.2]</td><td>0.45</td><td>the only world in which the coefficient is an intervention effect</td></tr><tr><td class="t-first">2. SystemCondition also acts through UnsafeActs</td><td>[0.453, 0.307, -0.26, -0.208]</td><td>0.45</td><td>total effect of SystemCondition is -0.070, not -0.250; the reported coefficient is the direct effect only</td></tr><tr><td class="t-first">3. an unmeasured common cause of UnsafeActs and Risk</td><td>[0.448, 0.303, -0.246, -0.203]</td><td>0.281</td><td>generating direct effects are [ 0.281,  0.252, -0.298, -0.248]; the population regression on the measured predictors returns the headline vector exactly</td></tr></tbody></table></div><figcaption class="tbl-cap">Four causal worlds that produce nearly identical fitted coefficients, and what intervening on a variable would actually do in each. The coefficient is the same. What it licenses you to do is not.<span class="src">Source artifact: results/study04_ambiguity.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>site</th><th>crew</th><th>score raw inputs</th><th>score z inputs</th><th>ranking on z inputs</th></tr></thead><tbody><tr><td class="t-first">Site 1 (overtime varies widely)</td><td>A</td><td>2.55</td><td>0.05625</td><td>crew A scores higher</td></tr><tr><td class="t-first">Site 1 (overtime varies widely)</td><td>B</td><td>3.15</td><td>-0.5812</td><td>crew A scores higher</td></tr><tr><td class="t-first">Site 2 (overtime tightly controlled)</td><td>A</td><td>2.55</td><td>3.45</td><td>crew B scores higher</td></tr><tr><td class="t-first">Site 2 (overtime tightly controlled)</td><td>B</td><td>3.15</td><td>6.45</td><td>crew B scores higher</td></tr></tbody></table></div><figcaption class="tbl-cap">Two crews carrying identical raw scores at two sites. Standardising the inputs flips the ranking at the site where overtime varies widely and leaves it intact where overtime is tightly controlled. Nothing about the crews changed between the rows; only the scaling did. A weighted-sum score is not scale-free, so the choice of scaling is a decision about who gets flagged.<span class="src">Source artifact: results/study04_raw_scale.csv</span></figcaption></figure><figure class="tbl"><div class="tbl-wrap"><table><thead><tr><th>quantity</th><th>value</th></tr></thead><tbody><tr><td class="t-first">Site A loadings</td><td>[0.806, 0.764, 0.769]</td></tr><tr><td class="t-first">Site B loadings</td><td>[0.774, 0.793, 0.301]</td></tr><tr><td class="t-first">Site A composite reliability</td><td>0.823</td></tr><tr><td class="t-first">Site B composite reliability</td><td>0.675</td></tr><tr><td class="t-first">correlation of Site B scores under its own vs Site A's measurement model</td><td>0.9463</td></tr><tr><td class="t-first">share of Site B units whose top-decile flag flips when Site A's measurement model is imposed</td><td>0.046</td></tr><tr><td class="t-first">correlation of Site A score with the generating latent</td><td>0.9103</td></tr><tr><td class="t-first">correlation of Site B score with the generating latent</td><td>0.8759</td></tr></tbody></table></div><figcaption class="tbl-cap">Measurement loadings at two sites. When an indicator loads differently between sites, the latent variable does not mean the same thing at both, and comparing their scores compares two different constructs.<span class="src">Source artifact: results/study04_invariance.csv</span></figcaption></figure></div></section><section class="section" id="limits"><div class="wrap"><div class="rail-head"><span class="rail-num">08</span><h2 class="display">Limits</h2></div><div class="notice"><h3>What this does not establish</h3><p>Simulation establishes estimator properties, not empirical facts. These studies show what the method does when its assumptions hold and how it fails when they do not. They say nothing about whether any particular safety programme works, and they are not evidence about any real site.</p><ul><li>The generating models are the author's, chosen to resemble the structure the circulating formula implies. A different generating model would give different numbers, though the identification results do not depend on the parameterisation.</li><li>Replication counts are modest in places and each table records its own. The bootstrap study runs 40 replications, which is enough to show the direction of the coverage gap and not enough to pin its size.</li><li>Nothing here has been peer reviewed.</li></ul><p>The practical conclusion is narrow and worth stating plainly: illustrative path weights of the kind that circulate in practitioner writing cannot be read causally, cannot be transferred between sites, and cannot be validated by goodness of fit.</p></div></div></section>
+</main>
 <footer class="footer">
   <div class="wrap">
     <span class="label">Priyatham Chimmani &middot; EHS data infrastructure, analytics and applied AI</span>
     <div class="footer-links">
-      <a href="https://github.com/priyatham9/ehs-risk-sem">Repository</a>
+      <a href="https://github.com/priyatham9/ehs-ai-research">Research hub</a>
+      <a href="https://priyatham9.github.io">priyatham9.github.io</a>
+      <a href="https://github.com/priyatham9/ehs-risk-sem">This repository</a>
       <a href="https://github.com/priyatham9">GitHub</a>
       <a href="https://linkedin.com/in/priyatham9">LinkedIn</a>
     </div>
+    <p class="footer-note">Every number, table and figure on this page is read from a committed
+    artifact in this repository at build time by <span class="mono">tools/build_sites.py</span>.
+    Captions name the artifact. The page cannot report a value the pipeline did not produce.</p>
   </div>
 </footer>
 <script>
 (function () {
   var root = document.documentElement, KEY = 'ehs-ai-theme';
   try { var s = localStorage.getItem(KEY); if (s) root.setAttribute('data-theme', s); } catch (e) {}
-  document.getElementById('themeToggle').addEventListener('click', function () {
+  var btn = document.getElementById('themeToggle');
+  if (btn) btn.addEventListener('click', function () {
     var c = root.getAttribute('data-theme');
     if (!c) c = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     var n = c === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', n);
     try { localStorage.setItem(KEY, n); } catch (e) {}
   });
+})();
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.topnav a[href^="#"]'));
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  var map = {}, ratio = {};
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (el) { map[el.id] = a; ratio[el.id] = 0; }
+  });
+  var ids = Object.keys(map);
+  if (!ids.length) return;
+  function paint() {
+    var best = null, bestv = 0;
+    ids.forEach(function (id) { if (ratio[id] > bestv) { bestv = ratio[id]; best = id; } });
+    links.forEach(function (a) { a.classList.remove('is-active'); a.removeAttribute('aria-current'); });
+    if (best) { map[best].classList.add('is-active'); map[best].setAttribute('aria-current', 'true'); }
+  }
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { ratio[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0; });
+    paint();
+  }, { rootMargin: '-116px 0px -50% 0px', threshold: [0, 0.05, 0.2, 0.5, 0.9] });
+  ids.forEach(function (id) { obs.observe(document.getElementById(id)); });
 })();
 </script>
 </body>
