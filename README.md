@@ -1,5 +1,7 @@
 # ehs-risk-sem
 
+[![tests](https://github.com/priyatham9/ehs-risk-sem/actions/workflows/tests.yml/badge.svg)](https://github.com/priyatham9/ehs-risk-sem/actions/workflows/tests.yml)
+
 Structural equation modelling for occupational safety risk, implemented in numpy,
 together with the simulation studies that show where the method breaks.
 
