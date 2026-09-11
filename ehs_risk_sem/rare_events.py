@@ -28,7 +28,6 @@ the constant and a different industry or year can be substituted freely.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 import numpy as np
 

@@ -27,7 +27,7 @@ report a coefficient ordering, and have no basis at all for that ordering.
 
 from __future__ import annotations
 
-from typing import Optional, Sequence
+from typing import Optional
 
 import numpy as np
 
