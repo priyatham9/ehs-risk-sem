@@ -68,8 +68,9 @@ code,.mono{overflow-wrap:anywhere}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-decoration:none}
 .brand-mark{width:14px;height:14px;background:var(--accent);flex:none}
 .topnav{display:flex;align-items:center;gap:2px}
-.topnav a{text-decoration:none;padding:7px 11px;font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);transition:color .15s,background .15s}
+.topnav a{text-decoration:none;padding:7px 11px;font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);transition:color .15s,background .15s}
 .topnav a:hover{color:var(--ink);background:var(--surface-2)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .topnav a{color:var(--muted)}}
 .toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;background:var(--paper);border:2px solid var(--rule);border-radius:0;color:var(--ink);cursor:pointer}
 .toggle:hover{background:var(--surface-2)}
 .icon-moon{display:none}
