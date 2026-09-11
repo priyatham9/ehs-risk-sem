@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>API: rare_events - ehs-risk-sem</title>
+<meta name="description" content="API documentation for ehs_risk_sem.rare_events" />
+<link rel="canonical" href="https://priyatham9.github.io/ehs-risk-sem/api/rare_events.html" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" />
+<style>
+/* ============ tokens ============ */
+:root {
+ color-scheme:light;
+ --paper:#F7F7F3; --surface:#FFFFFF; --surface-2:#EFEFE9;
+ --ink:#101311; --ink-2:#3A403C; --muted:#666D68;
+ --rule:#101311; --rule-soft:#D6D7CE;
+ --accent:#1E40AF; --accent-2:#17307F; --accent-ink:#FFFFFF; --accent-wash:#E2E8FB;
+ --warn:#8A5A00; --warn-wash:#FBF0DC;
+ --grid-dot:rgba(16,19,17,.10); --shadow:rgba(16,19,17,.08);
+ --font-sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+ --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+ --maxw:1180px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+ color-scheme:dark;
+ --paper:#0A0C10; --surface:#12151C; --surface-2:#171B24;
+ --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#838A99;
+ --rule:#EAECF2; --rule-soft:#262B36;
+ --accent:#7C9EFF; --accent-2:#5B7FE8; --accent-ink:#06101F; --accent-wash:#151C33;
+ --warn:#E3B25F; --warn-wash:#241C0C;
+ --grid-dot:rgba(234,236,242,.09); --shadow:rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"] {
+ color-scheme:dark;
+ --paper:#0A0C10; --surface:#12151C; --surface-2:#171B24;
+ --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#838A99;
+ --rule:#EAECF2; --rule-soft:#262B36;
+ --accent:#7C9EFF; --accent-2:#5B7FE8; --accent-ink:#06101F; --accent-wash:#151C33;
+ --warn:#E3B25F; --warn-wash:#241C0C;
+ --grid-dot:rgba(234,236,242,.09); --shadow:rgba(0,0,0,.4);
+}
+:root[data-theme="light"]{color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;line-height:1.06;letter-spacing:-.01em}
+p{margin:0 0 1em}
+a{color:var(--accent)}
+img,svg{max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+.label{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+code,.mono{overflow-wrap:anywhere}
+@media print{
+  .topbar,footer{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  a{color:#000!important;text-decoration:underline}
+  .wrap{max-width:none}
+}
+.topbar{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:2px solid var(--rule)}
+.topbar-inner{max-width:var(--maxw);margin:0 auto;padding:13px 30px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.brand-mark{width:14px;height:14px;background:var(--accent);flex:none}
+.topnav{display:flex;align-items:center;gap:2px}
+.topnav a{text-decoration:none;padding:7px 11px;font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);transition:color .15s,background .15s}
+.topnav a:hover{color:var(--ink);background:var(--surface-2)}
+.toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;background:var(--paper);border:2px solid var(--rule);border-radius:0;color:var(--ink);cursor:pointer}
+.toggle:hover{background:var(--surface-2)}
+.icon-moon{display:none}
+:root[data-theme="dark"] .icon-moon{display:block}
+:root[data-theme="dark"] .icon-sun{display:none}
+.api-container{display:flex;gap:30px;min-height:calc(100vh - 80px)}
+.api-sidebar{flex:0 0 220px;padding:30px 0;border-right:2px solid var(--rule);max-height:calc(100vh - 80px);overflow-y:auto}
+.api-main{flex:1;padding:30px 0}
+.api-nav-item{padding:8px 0;font-family:var(--font-mono);font-size:.875rem;color:var(--muted);text-decoration:none;display:block}
+.api-nav-item:hover{color:var(--ink)}
+.api-nav-item.active{color:var(--accent);font-weight:600}
+.api-symbol{margin-bottom:48px;padding-bottom:30px;border-bottom:2px solid var(--rule-soft)}
+.api-symbol:last-child{border-bottom:0}
+.api-sig{font-family:var(--font-mono);font-size:.9rem;background:var(--surface);padding:12px 16px;border:2px solid var(--rule-soft);overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.api-doc{margin-top:12px;color:var(--ink-2);line-height:1.6}
+.api-doc p{margin-bottom:.8em}
+.api-doc ul{margin-bottom:.8em;padding-left:1.5em}
+.api-doc li{margin-bottom:.3em}
+.api-used-by{margin-top:12px;padding:10px 12px;background:var(--surface-2);font-family:var(--font-mono);font-size:.8rem;color:var(--ink-2)}
+.api-used-by strong{color:var(--ink)}
+footer{padding:30px;text-align:center;font-size:.875rem;color:var(--muted);border-top:2px solid var(--rule)}
+.back-link{display:inline-block;margin-bottom:20px;padding:8px 0;font-family:var(--font-mono);font-size:.875rem;color:var(--accent);text-decoration:none}
+.back-link:hover{text-decoration:underline}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  const theme=localStorage.getItem('theme')||'system';
+  if(theme==='system'){
+    if(window.matchMedia('(prefers-color-scheme:dark)').matches){
+      document.documentElement.setAttribute('data-theme','dark');
+    }
+  }else{
+    document.documentElement.setAttribute('data-theme',theme);
+  }
+});
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span> ehs-risk-sem</a>
+    <nav class="topnav">
+      <a href="../index.html">Home</a>
+      <a href="index.html">API</a>
+    </nav>
+    <button class="toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg class="icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10 1v3M10 16v3M1 10h3M16 10h3M3.64 3.64l2.12 2.12M14.24 14.24l2.12 2.12M16.36 3.64l-2.12 2.12M5.76 14.24l-2.12 2.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <svg class="icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.5 10.5c0-1.04-.16-2.04-.47-3 .68.24 1.32.58 1.9 1.01.7.52 1.26 1.18 1.65 1.95-.32.02-.64.04-.96.04-1.5 0-2.95-.31-4.27-.88.05.3.15.59.15.88 0 2.76-2.24 5-5 5s-5-2.24-5-5c0-.29.1-.58.15-.88C3.31 10.69 1.86 11 .36 11c-.32 0-.64-.02-.96-.04.39-.77.95-1.43 1.65-1.95.58-.43 1.22-.77 1.9-1.01-.31.96-.47 1.96-.47 3 0 4.97 4.03 9 9 9 1.04 0 2.04-.16 3-.47-.24.68-.58 1.32-1.01 1.9-.52.7-1.18 1.26-1.95 1.65.02-.32.04-.64.04-.96 0-1.5-.31-2.95-.88-4.27.3.05.59.15.88.15 2.76 0 5-2.24 5-5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+<main class="wrap">
+  <a href="../index.html" class="back-link">Back to ehs-risk-sem</a>
+  <div class="api-container">
+    <nav class="api-sidebar">
+      <a href="calibration.html" class="api-nav-item">calibration</a>
+<a href="compat.html" class="api-nav-item">compat</a>
+<a href="diagnostics.html" class="api-nav-item">diagnostics</a>
+<a href="fit_indices.html" class="api-nav-item">fit_indices</a>
+<a href="glm.html" class="api-nav-item">glm</a>
+<a href="identification.html" class="api-nav-item">identification</a>
+<a href="linalg.html" class="api-nav-item">linalg</a>
+<a href="measurement.html" class="api-nav-item">measurement</a>
+<a href="model.html" class="api-nav-item">model</a>
+<a href="power.html" class="api-nav-item">power</a>
+<a href="rare_events.html" class="api-nav-item active">rare_events</a>
+<a href="special.html" class="api-nav-item">special</a>
+<a href="structural.html" class="api-nav-item">structural</a>
+    </nav>
+    <article class="api-main">
+      <h1>rare_events</h1>
+<div class="api-symbol">
+<h3>ExposureModel</h3>
+<div class="api-sig">ExposureModel(trir: &#39;float&#39; = 2.3, shift_hours: &#39;float&#39; = 8.0, base_hours: &#39;float&#39; = 200000.0) -&gt; None</div>
+<div class="api-doc"><p>Translate an establishment-level incidence rate into unit-level risk.</p>
+<p>Parameters
+----------
+trir
+Total recordable incidence rate per ``base_hours`` hours.
+shift_hours
+Length of the exposure window that a score would be attached to.
+base_hours
+Denominator of the incidence rate; 200,000 for OSHA-style rates.</p>
+<p>The class exists to make one point explicit: a risk score has no meaning
+until the unit of analysis and the exposure window are named. &quot;This crew is
+at elevated risk&quot; is not a claim until it says elevated over what period,
+relative to what denominator.</p></div>
+<div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
+</div>
+<div class="api-symbol">
+<h3>alerts_per_true_event</h3>
+<div class="api-sig">alerts_per_true_event(sensitivity: &#39;float&#39;, specificity: &#39;float&#39;, prevalence: &#39;float&#39;) -&gt; &#39;float&#39;</div>
+<div class="api-doc"><p>Number of alerts raised per true event detected, ``1 / PPV``.</p>
+<p>This is the quantity that determines whether an operational alerting system
+will be believed. It is reported instead of, not alongside, a bare PPV in
+most of this repository&#39;s output because the reciprocal is the form people
+can act on.</p></div>
+<div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
+</div>
+<div class="api-symbol">
+<h3>events_for_relative_precision</h3>
+<div class="api-sig">events_for_relative_precision(rel_precision: &#39;float&#39; = 0.1, z: &#39;float&#39; = 1.959963985) -&gt; &#39;float&#39;</div>
+<div class="api-doc"><p>Number of events (not observations) needed for a given relative precision.</p>
+<p>``events = z^2 / rel^2``, approximately, since ``n * p`` at small ``p``. At
+10% relative precision this is about 384 events, whatever the base rate.</p></div>
+</div>
+<div class="api-symbol">
+<h3>n_for_relative_precision</h3>
+<div class="api-sig">n_for_relative_precision(p: &#39;float&#39;, rel_precision: &#39;float&#39; = 0.1, z: &#39;float&#39; = 1.959963985) -&gt; &#39;float&#39;</div>
+<div class="api-doc"><p>Sample size needed to estimate a proportion to a relative precision.</p>
+<p>``n = z^2 (1 - p) / (rel^2 * p)``</p>
+<p>At ``p = 9.2e-5`` (one recordable per 8-hour shift at TRIR 2.3) and 10%
+relative precision this is roughly 4.2 million worker-shifts. Below that
+sample size, calibration-in-the-large cannot be estimated, let alone a
+calibration curve.</p></div>
+</div>
+<div class="api-symbol">
+<h3>ppv_from_sens_spec</h3>
+<div class="api-sig">ppv_from_sens_spec(sensitivity: &#39;float&#39;, specificity: &#39;float&#39;, prevalence: &#39;float&#39;) -&gt; &#39;float&#39;</div>
+<div class="api-doc"><p>Positive predictive value from sensitivity, specificity and prevalence.</p>
+<p>``PPV = sens * prev / (sens * prev + (1 - spec) * (1 - prev))``</p></div>
+</div>
+<div class="api-symbol">
+<h3>probability_per_shift</h3>
+<div class="api-sig">probability_per_shift(trir: &#39;float&#39;, shift_hours: &#39;float&#39; = 8.0, base_hours: &#39;float&#39; = 200000.0) -&gt; &#39;float&#39;</div>
+<div class="api-doc"><p>Probability that a given worker-shift contains a recordable case.</p>
+<p>Uses the rate directly rather than a Poisson exceedance probability, since
+at these rates the two agree to seven decimal places and the linear form is
+the one a reader can check by hand.</p></div>
+</div>
+<div class="api-symbol">
+<h3>rate_per_hour</h3>
+<div class="api-sig">rate_per_hour(trir: &#39;float&#39;, base_hours: &#39;float&#39; = 200000.0) -&gt; &#39;float&#39;</div>
+<div class="api-doc"><p>Convert an OSHA-style incidence rate to a rate per worker-hour.</p>
+<p>``TRIR`` is cases per ``base_hours`` hours worked. At TRIR 2.3 this is
+1.15e-5 per worker-hour.</p></div>
+</div>
+<div class="api-symbol">
+<h3>rate_ratio_ci</h3>
+<div class="api-sig">rate_ratio_ci(events_a: &#39;int&#39;, exposure_a: &#39;float&#39;, events_b: &#39;int&#39;, exposure_b: &#39;float&#39;, z: &#39;float&#39; = 1.959963985) -&gt; &#39;dict&#39;</div>
+<div class="api-doc"><p>Confidence interval for a ratio of two Poisson rates.</p>
+<p>Included because comparing an establishment or a shift against a benchmark
+is the operational use of these rates, and the interval is usually wide
+enough at realistic event counts to make the comparison uninformative --
+which is worth showing rather than asserting.</p></div>
+</div>
+<div class="api-symbol">
+<h3>shifts_per_event</h3>
+<div class="api-sig">shifts_per_event(trir: &#39;float&#39;, shift_hours: &#39;float&#39; = 8.0, base_hours: &#39;float&#39; = 200000.0) -&gt; &#39;float&#39;</div>
+<div class="api-doc"><p>Expected number of worker-shifts between recordable cases.</p></div>
+<div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
+</div>
+<div class="api-symbol">
+<h3>worker_shifts_for_calibration</h3>
+<div class="api-sig">worker_shifts_for_calibration(trir: &#39;float&#39; = 2.3, shift_hours: &#39;float&#39; = 8.0, rel_precision: &#39;float&#39; = 0.1) -&gt; &#39;dict&#39;</div>
+<div class="api-doc"><p>Sample size needed to calibrate a shift-level risk model.</p>
+<p>Returns both the required number of worker-shifts and the number of events
+those shifts are expected to contain.</p></div>
+<div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
+</div>
+    </article>
+  </div>
+</main>
+<footer>Generated API reference for ehs-risk-sem</footer>
+<script>
+document.getElementById('theme-toggle').addEventListener('click',function(){
+  const current=document.documentElement.getAttribute('data-theme')||'system';
+  const next=current==='light'?'dark':current==='dark'?'system':'light';
+  if(next==='system'){
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.removeItem('theme');
+  }else{
+    document.documentElement.setAttribute('data-theme',next);
+    localStorage.setItem('theme',next);
+  }
+});
+</script>
+</body>
+</html>

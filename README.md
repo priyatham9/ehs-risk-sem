@@ -42,6 +42,8 @@ run. `--quick` writes to `results_quick/` instead, so a reduced-replication run
 cannot silently replace the checked-in tables with noisier ones under the same
 file names.
 
+API documentation is at <https://priyatham9.github.io/ehs-risk-sem/api/>.
+
 ---
 
 ## Worked example
