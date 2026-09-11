@@ -2,8 +2,7 @@
 
 [![tests](https://github.com/priyatham9/ehs-risk-sem/actions/workflows/tests.yml/badge.svg)](https://github.com/priyatham9/ehs-risk-sem/actions/workflows/tests.yml)
 
-Structural equation modelling for occupational safety risk, implemented in numpy,
-together with the simulation studies that show where the method breaks.
+Structural equation modelling for occupational safety risk, implemented in numpy. Simulation studies show where the method breaks, demonstrating that parameter estimates are imprecise despite good fit quality across conventional cutoffs. Nothing here analyses real injury data; every number comes from generated data with known parameters.
 
 The package exists because a particular kind of formula circulates in practitioner
 writing on safety analytics:
@@ -31,7 +30,7 @@ Python 3.9.6 with numpy 2.0.2 and pandas 2.3.3.
 ```
 git clone <this repository>
 cd ehs-risk-sem
-python3 -m unittest discover -s tests -v     # 108 tests
+python3 -m unittest discover -s tests -v     # 114 tests
 python3 simulations/run_all.py --quick       # ~16 seconds, writes results_quick/
 python3 simulations/run_all.py               # ~11.5 minutes, writes results/
 ```
