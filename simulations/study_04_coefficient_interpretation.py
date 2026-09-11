@@ -265,7 +265,6 @@ def raw_scale_demonstration(seed: int = 21) -> pd.DataFrame:
     is whatever the units happen to be, so the same crew scores differently at
     two sites and the ranking between crews can invert.
     """
-    rng = np.random.default_rng(seed)
     # Two crews, identical in every physical respect.
     crews = pd.DataFrame(
         {

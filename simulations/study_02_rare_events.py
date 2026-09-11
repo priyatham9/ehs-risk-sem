@@ -45,7 +45,6 @@ from ehs_risk_sem.calibration import (
     brier_decomposition,
     calibration_intercept_slope,
     confusion_at_threshold,
-    decision_curve,
 )
 from ehs_risk_sem.compat import silence_accelerate_matmul_warnings
 from ehs_risk_sem.glm import king_zeng_correction, logistic_irls, predict_proba
@@ -53,7 +52,6 @@ from ehs_risk_sem.rare_events import (
     BLS_PRIVATE_TRC_RATE_2024,
     BLS_SOURCE_NOTE,
     ExposureModel,
-    alerts_per_true_event,
     worker_shifts_for_calibration,
 )
 from simulations.dgp import (
@@ -157,7 +155,6 @@ def king_zeng_demo(
 ) -> pd.DataFrame:
     """Bias in the maximum-likelihood intercept at a low base rate, and its correction."""
     model = make_four_factor_model()
-    rng = np.random.default_rng(seed)
     _, eta = generate_dataset(model, n, seed=seed)
     x = eta[:, :4]
 

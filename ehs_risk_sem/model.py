@@ -266,7 +266,7 @@ class SEMResults:
                 f"omega={sol.omega:.3f}, alpha={sol.alpha:.3f}, AVE={sol.ave:.3f}"
             )
             lines.append(
-                f"      loadings: " + ", ".join(f"{v:.3f}" for v in sol.loadings)
+                "      loadings: " + ", ".join(f"{v:.3f}" for v in sol.loadings)
             )
             lines.append(
                 f"      factor score determinacy {sol.determinacy:.3f}; two equally "

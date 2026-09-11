@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 """Generate API documentation for ehs_risk_sem."""
 
-import ast
 import importlib
 import inspect
-import json
-import os
 import sys
 from pathlib import Path
 
@@ -295,7 +292,7 @@ def generate_module_page(module_name):
         doc = inspect.getdoc(obj)
         used_by = find_used_by(module_name, symbol_name)
 
-        html_parts.append(f'<div class="api-symbol">')
+        html_parts.append('<div class="api-symbol">')
         html_parts.append(f'<h3>{symbol_name}</h3>')
         html_parts.append(f'<div class="api-sig">{symbol_name}{escape_html(sig)}</div>')
 
@@ -475,7 +472,7 @@ def main():
 
     canonical = "https://priyatham9.github.io/ehs-risk-sem/api/"
     description = f"Complete API reference for {PKG_NAME} package"
-    title = f"API Reference - ehs-risk-sem"
+    title = "API Reference - ehs-risk-sem"
 
     html = generate_html_page(
         title=title,

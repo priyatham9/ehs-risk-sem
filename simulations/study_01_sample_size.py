@@ -257,7 +257,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     print(__doc__)
     print("=" * 78)
     print("SIMULATED DATA. Generating model:")
-    print(f"  four correlated exogenous latents (r = 0.35), loadings 0.75, 3 indicators each")
+    print("  four correlated exogenous latents (r = 0.35), loadings 0.75, 3 indicators each")
     print(f"  true standardized paths: {dict(zip(['UnsafeActs','OperationalStress','SystemCondition','SafetyResponseCapability'], TRUE_BETA))}")
     print("=" * 78)
 
