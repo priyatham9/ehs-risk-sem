@@ -197,7 +197,8 @@ body{overflow-x:clip}
 /* ---------- charts ---------- */
 .st-chart{display:block;width:100%;overflow:visible;font-family:var(--font-sans)}
 .st-chart.st-in-stage{height:min(66vh,720px);max-height:66vh}
-.st-chart text{font-family:var(--font-mono);fill:var(--muted);font-variant-numeric:tabular-nums}
+.st-chart text{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.st-chart text:not([fill]){fill:var(--muted)}
 .st-chart text:not([font-size]){font-size:14px}
 .st-chart .st-axis-line{stroke:var(--rule-soft);stroke-width:1.5}
 .st-chart .st-grid{stroke:var(--rule-soft);stroke-width:1;stroke-dasharray:2 4}
@@ -391,6 +392,20 @@ html{scroll-padding-top:16px}
 }
 .st-presenting .rs-header,.st-presenting .footer,.st-presenting .st-chapter,.st-presenting .st-findings{display:none!important}
 .st-presenting nav.pgm,.st-presenting .story-nav,.st-presenting .story-hero{display:none!important}
+
+/* forced reduced motion (testing hook ?reduced=1) mirrors the media query */
+.st-reduced *,.st-reduced *::before,.st-reduced *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+/* v1.2.5 phone: cap any stage figure, however deeply nested, so it fits the pinned half-screen stage; presenter on phones falls back to normal reading */
+@media(max-width:800px){
+  .st-stage-inner svg,.st-stage-inner canvas:not(.st-orb){max-height:40vh;max-height:40svh}
+  .st-presenting .st-step{min-height:80vh}
+}
+/* forced reduced motion gets the same end states as the media query */
+.st-reduced .st-reveal{opacity:1!important;transform:none!important;transition:none!important}
+.st-reduced .st-step{opacity:1!important;transition:none!important}
+.st-reduced .st-scene.st-flow .st-step > *{opacity:1!important;transform:none!important;transition:none!important}
+.st-reduced .st-stage-inner.st-layers > [data-show]{transition:none!important}
+.st-reduced .st-companion .st-companion-cap{transition:none!important}
 /*STORY_CSS_END*/
 /* ---------- story page ---------- */
 .hero.st-hero{display:block;padding:clamp(48px,7vh,90px) 0 clamp(44px,6vh,72px);min-height:88vh;min-height:88svh}
@@ -411,11 +426,10 @@ html{scroll-padding-top:16px}
 .crumb a{color:var(--muted)}
 .crumb a:hover{color:var(--accent)}
 .crumb b{color:var(--ink);font-weight:700}
-.next-card{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto);gap:30px;align-items:center;margin-top:44px;padding:clamp(24px,3vw,44px);border:2px solid var(--rule);background:var(--surface);overflow:hidden}
-.next-card .nc-orb{width:clamp(150px,15vw,210px);aspect-ratio:1/1;line-height:0}
+.next-card{position:relative;display:block;margin-top:44px;padding:clamp(24px,3vw,44px);border:2px solid var(--rule);background:var(--surface);overflow:hidden}
 .next-card h3{font-size:clamp(1.5rem,3.4vw,2.4rem);margin:.2em 0 .3em;line-height:1.05}
 .next-card p{margin:0 0 16px;color:var(--ink-2);max-width:52ch}
-@media(max-width:700px){.next-card{grid-template-columns:1fr}.next-card .nc-orb{width:min(46vw,190px)}}
+@media(max-width:700px){.next-card{grid-template-columns:1fr}}
 
 .scene-wrap{padding:44px 0 0;border-bottom:2px solid var(--rule)}
 .scene-wrap > .wrap{max-width:min(1800px,97vw)}
@@ -434,9 +448,6 @@ html{scroll-padding-top:16px}
 .seg{font-family:var(--font-mono);font-size:.6875rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:9px 13px;border:2px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer;margin:0 -2px 0 0}
 .seg.is-on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 
-.st-scene .st-stage .st-companion{left:auto;right:2px;top:104px;align-items:flex-end;--st-comp:128px}
-.st-scene .st-stage .st-companion .st-companion-cap{font-size:.6875rem;letter-spacing:.2em}
-@media(max-width:1000px){.st-scene .st-stage .st-companion{top:8px;--st-comp:72px}}
 .st-chart .p-node{fill:var(--surface);stroke:var(--rule);stroke-width:2}
 .st-chart .p-node.is-out{fill:var(--accent-wash);stroke:var(--accent)}
 .st-chart .p-name{fill:var(--ink);font-size:16px;font-weight:700}
@@ -475,16 +486,28 @@ html{scroll-padding-top:16px}
 
 .st-presenting .scene-head{position:static}
 .st-presenting .hero-note{display:none}
+.st-presenting .hero-links,.st-presenting .st-scene-rail{display:none!important}
 .st-figure figcaption{text-transform:none;letter-spacing:.02em;font-size:.6875rem;line-height:1.5}
+
+/* phone: the engine pins the figure in a 50svh stage, so every figure switches
+   to a narrower viewBox with larger type and fewer secondary labels */
 @media(max-width:800px){
-  /* phone: the engine pins the figure above the steps so it changes as you read */
+  .scene-wrap{padding:22px 0 0}
+  .scene-head{margin-bottom:6px;padding:8px 0 6px}
+  .st-figure > svg.st-chart{max-height:33svh}
+  .st-figure figcaption{font-size:.625rem;line-height:1.35;margin-top:4px}
+  .ctrl{margin-top:8px;gap:8px}
+  .ctrl .ctrl-hint{display:none}
+  .seg{padding:7px 9px;font-size:.625rem;letter-spacing:.06em}
 }
-.st-presenting .rs-header,.st-presenting .footer,.st-presenting .hero-links,.st-presenting .st-scene-rail{display:none!important}
-.st-presenting .st-step{opacity:1;min-height:0;padding:18px 0}
-.st-presenting .st-scene,.st-presenting .st-scene[data-side="left"]{grid-template-columns:1fr}
-.st-presenting .st-stage,.st-presenting .st-scene[data-side="left"] .st-stage{position:static;height:auto;order:0;padding:8px 0;border:0}
-.st-presenting .st-steps,.st-presenting .st-scene[data-side="left"] .st-steps{order:1}
-.st-presenting .section{padding:34px 0}
+.st-chart.is-ph .v-num{font-size:15px}
+.st-chart.is-ph .row-lab{font-size:14px}
+.st-chart.is-ph .row-sub{font-size:12px}
+.st-chart.is-ph .p-name{font-size:14px}
+.st-chart.is-ph .big{font-size:58px}
+.st-chart.is-ph .big-sub{font-size:13px}
+.st-chart.is-ph .hi{font-size:14px}
+.st-chart.is-ph .st-caption{font-size:12px}
 </style>
 <script id="rs-theme-init">try{var t=localStorage.getItem("pc-theme")||localStorage.getItem("ehs-ai-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><style id="rs-header-css">
 .rs-header{
@@ -592,7 +615,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="rs-header" id="rs-header"><div class="rs-bar"><div class="rs-row"><a class="rs-brand" href="https://priyatham9.github.io/grounded/" aria-label="Grounded research hub"><span class="rs-mark" aria-hidden="true"></span>Grounded</a><a class="rs-author" href="https://priyatham9.github.io/">Priyatham Chimmani&nbsp;&#8599;</a><nav class="rs-nav" aria-label="Research site"><a class="rs-item" href="https://priyatham9.github.io/grounded/">Overview</a><a class="rs-item" href="https://priyatham9.github.io/grounded/start.html">Start here</a><a class="rs-item" href="https://priyatham9.github.io/grounded/observatory.html">Observatory</a><details class="rs-menu" data-current="true"><summary class="rs-item" aria-haspopup="true">Projects<span class="rs-caret" aria-hidden="true"></span></summary><div class="rs-panel"><a class="rs-opt" href="https://priyatham9.github.io/ehs-osha-analysis/"><span class="rs-t">OSHA data quality</span><span class="rs-n">2.8M real filings</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-ai-grounding-eval/"><span class="rs-t">Grounding benchmark</span><span class="rs-n">first baselines</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-human-factors-ontology/"><span class="rs-t">Human factors ontology</span><span class="rs-n">derivation traces</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-risk-sem/" aria-current="true"><span class="rs-t">SEM for safety risk</span><span class="rs-n">simulation studies</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-capitals-calculator/"><span class="rs-t">Cost-benefit calculator</span><span class="rs-n">interactive tool</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-benchmarks/"><span class="rs-t">OSHA benchmarks</span><span class="rs-n">TRIR/DART library</span></a></div></details><details class="rs-menu"><summary class="rs-item" aria-haspopup="true">Papers<span class="rs-caret" aria-hidden="true"></span></summary><div class="rs-panel"><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper.html"><span class="rs-t">Grounded reasoning for safety-critical AI</span><span class="rs-n">bundled draft</span></a><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper-osha.html"><span class="rs-t">The hours denominator</span><span class="rs-n">standalone OSHA paper</span></a></div></details></nav><span class="rs-sep" aria-hidden="true"></span><button class="rs-btn" id="rs-theme" type="button" aria-label="Toggle colour theme"><svg class="rs-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg><svg class="rs-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button><button class="rs-btn rs-burger" id="rs-menu-btn" type="button" aria-expanded="false" aria-controls="rs-sheet" aria-label="Open menu"><i></i></button></div></div><div class="rs-sub"><div class="rs-row rs-subrow"><span class="rs-sublabel">On this page</span><nav class="rs-sections" id="rs-sections" aria-label="On this page"><a class="rs-sec" href="#scene-1">Recovery is not the problem</a><a class="rs-sec" href="#scene-2">The interval lies</a><a class="rs-sec" href="#scene-3">How large the study has to be</a><a class="rs-sec" href="#scene-4">A wrong model passes the fit test</a><a class="rs-sec" href="#scene-5">Rare events break the scoreboard</a><a class="rs-sec" href="#scene-6">The coefficient is not the intervention</a><a class="rs-sec" href="#honesty">What this does not establish</a><a class="rs-sec" href="#monday">One thing to do on Monday</a></nav><button class="rs-subbtn" id="rs-subbtn" type="button" aria-expanded="false" aria-controls="rs-sublist">On this page:<b id="rs-now">Recovery is not the problem</b><span class="rs-caret" aria-hidden="true"></span></button></div><nav class="rs-sublist" id="rs-sublist" aria-label="On this page (list)" hidden><a class="rs-sec" href="#scene-1">Recovery is not the problem</a><a class="rs-sec" href="#scene-2">The interval lies</a><a class="rs-sec" href="#scene-3">How large the study has to be</a><a class="rs-sec" href="#scene-4">A wrong model passes the fit test</a><a class="rs-sec" href="#scene-5">Rare events break the scoreboard</a><a class="rs-sec" href="#scene-6">The coefficient is not the intervention</a><a class="rs-sec" href="#honesty">What this does not establish</a><a class="rs-sec" href="#monday">One thing to do on Monday</a></nav></div><div class="rs-sheet" id="rs-sheet" hidden><a class="rs-item" href="https://priyatham9.github.io/grounded/">Overview</a><a class="rs-item" href="https://priyatham9.github.io/grounded/start.html">Start here</a><a class="rs-item" href="https://priyatham9.github.io/grounded/observatory.html">Observatory</a><span class="rs-group">Projects</span><a class="rs-opt" href="https://priyatham9.github.io/ehs-osha-analysis/"><span class="rs-t">OSHA data quality</span><span class="rs-n">2.8M real filings</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-ai-grounding-eval/"><span class="rs-t">Grounding benchmark</span><span class="rs-n">first baselines</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-human-factors-ontology/"><span class="rs-t">Human factors ontology</span><span class="rs-n">derivation traces</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-risk-sem/" aria-current="true"><span class="rs-t">SEM for safety risk</span><span class="rs-n">simulation studies</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-capitals-calculator/"><span class="rs-t">Cost-benefit calculator</span><span class="rs-n">interactive tool</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-benchmarks/"><span class="rs-t">OSHA benchmarks</span><span class="rs-n">TRIR/DART library</span></a><span class="rs-group">Papers</span><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper.html"><span class="rs-t">Grounded reasoning for safety-critical AI</span><span class="rs-n">bundled draft</span></a><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper-osha.html"><span class="rs-t">The hours denominator</span><span class="rs-n">standalone OSHA paper</span></a><a class="rs-sheet-author" href="https://priyatham9.github.io/">Priyatham Chimmani&nbsp;&#8599;</a></div><span class="rs-progress" aria-hidden="true"></span></header>
+<header class="rs-header" id="rs-header"><div class="rs-bar"><div class="rs-row"><a class="rs-brand" href="https://priyatham9.github.io/grounded/" aria-label="Grounded research hub"><span class="rs-mark" aria-hidden="true"></span>Grounded</a><a class="rs-author" href="https://priyatham9.github.io/">Priyatham Chimmani&nbsp;&#8599;</a><nav class="rs-nav" aria-label="Research site"><a class="rs-item" href="https://priyatham9.github.io/grounded/">Overview</a><a class="rs-item" href="https://priyatham9.github.io/grounded/start.html">Start here</a><a class="rs-item" href="https://priyatham9.github.io/grounded/observatory.html">Observatory</a><details class="rs-menu" data-current="true"><summary class="rs-item" aria-haspopup="true">Projects<span class="rs-caret" aria-hidden="true"></span></summary><div class="rs-panel"><a class="rs-opt" href="https://priyatham9.github.io/ehs-osha-analysis/"><span class="rs-t">OSHA data quality</span><span class="rs-n">2.8M real filings</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-ai-grounding-eval/"><span class="rs-t">Grounding benchmark</span><span class="rs-n">first baselines</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-human-factors-ontology/"><span class="rs-t">Human factors ontology</span><span class="rs-n">derivation traces</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-risk-sem/" aria-current="true"><span class="rs-t">SEM for safety risk</span><span class="rs-n">simulation studies</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-capitals-calculator/"><span class="rs-t">Cost-benefit calculator</span><span class="rs-n">interactive tool</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-benchmarks/"><span class="rs-t">OSHA benchmarks</span><span class="rs-n">TRIR/DART library</span></a></div></details><details class="rs-menu"><summary class="rs-item" aria-haspopup="true">Papers<span class="rs-caret" aria-hidden="true"></span></summary><div class="rs-panel"><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper.html"><span class="rs-t">Grounded reasoning for safety-critical AI</span><span class="rs-n">bundled draft</span></a><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper-osha.html"><span class="rs-t">The hours denominator</span><span class="rs-n">standalone OSHA paper</span></a></div></details></nav><span class="rs-sep" aria-hidden="true"></span><button class="rs-btn" id="rs-theme" type="button" aria-label="Toggle colour theme"><svg class="rs-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg><svg class="rs-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button><button class="rs-btn rs-burger" id="rs-menu-btn" type="button" aria-expanded="false" aria-controls="rs-sheet" aria-label="Open menu"><i></i></button></div></div><div class="rs-sub"><div class="rs-row rs-subrow"><span class="rs-sublabel">On this page</span><nav class="rs-sections" id="rs-sections" aria-label="On this page"><a class="rs-sec" href="#scene-1">On average the method is right (bias 0.007), but one study can miss by 0.152</a><a class="rs-sec" href="#scene-2">The textbook 95 percent interval holds only 82 times in 100</a><a class="rs-sec" href="#scene-3">A passing fit needs 153 units. Naming the bigger driver needs 6,884.</a><a class="rs-sec" href="#scene-4">Leave out one common cause and a true 0.20 reads 0.495, with a perfect fit</a><a class="rs-sec" href="#scene-5">With rare events, 680 alerts for every real one</a><a class="rs-sec" href="#scene-6">The same fitted coefficients can mean an effect of 0.45 or of 0.281</a><a class="rs-sec" href="#honesty">What this does not establish</a><a class="rs-sec" href="#monday">One thing to do on Monday</a></nav><button class="rs-subbtn" id="rs-subbtn" type="button" aria-expanded="false" aria-controls="rs-sublist">On this page:<b id="rs-now">On average the method is right (bias 0.007), but one study can miss by 0.152</b><span class="rs-caret" aria-hidden="true"></span></button></div><nav class="rs-sublist" id="rs-sublist" aria-label="On this page (list)" hidden><a class="rs-sec" href="#scene-1">On average the method is right (bias 0.007), but one study can miss by 0.152</a><a class="rs-sec" href="#scene-2">The textbook 95 percent interval holds only 82 times in 100</a><a class="rs-sec" href="#scene-3">A passing fit needs 153 units. Naming the bigger driver needs 6,884.</a><a class="rs-sec" href="#scene-4">Leave out one common cause and a true 0.20 reads 0.495, with a perfect fit</a><a class="rs-sec" href="#scene-5">With rare events, 680 alerts for every real one</a><a class="rs-sec" href="#scene-6">The same fitted coefficients can mean an effect of 0.45 or of 0.281</a><a class="rs-sec" href="#honesty">What this does not establish</a><a class="rs-sec" href="#monday">One thing to do on Monday</a></nav></div><div class="rs-sheet" id="rs-sheet" hidden><a class="rs-item" href="https://priyatham9.github.io/grounded/">Overview</a><a class="rs-item" href="https://priyatham9.github.io/grounded/start.html">Start here</a><a class="rs-item" href="https://priyatham9.github.io/grounded/observatory.html">Observatory</a><span class="rs-group">Projects</span><a class="rs-opt" href="https://priyatham9.github.io/ehs-osha-analysis/"><span class="rs-t">OSHA data quality</span><span class="rs-n">2.8M real filings</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-ai-grounding-eval/"><span class="rs-t">Grounding benchmark</span><span class="rs-n">first baselines</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-human-factors-ontology/"><span class="rs-t">Human factors ontology</span><span class="rs-n">derivation traces</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-risk-sem/" aria-current="true"><span class="rs-t">SEM for safety risk</span><span class="rs-n">simulation studies</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-capitals-calculator/"><span class="rs-t">Cost-benefit calculator</span><span class="rs-n">interactive tool</span></a><a class="rs-opt" href="https://priyatham9.github.io/ehs-benchmarks/"><span class="rs-t">OSHA benchmarks</span><span class="rs-n">TRIR/DART library</span></a><span class="rs-group">Papers</span><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper.html"><span class="rs-t">Grounded reasoning for safety-critical AI</span><span class="rs-n">bundled draft</span></a><a class="rs-opt" href="https://priyatham9.github.io/grounded/paper-osha.html"><span class="rs-t">The hours denominator</span><span class="rs-n">standalone OSHA paper</span></a><a class="rs-sheet-author" href="https://priyatham9.github.io/">Priyatham Chimmani&nbsp;&#8599;</a></div><span class="rs-progress" aria-hidden="true"></span></header>
 <main id="main">
 
 <section class="hero st-hero">
@@ -611,20 +634,20 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     </div>
     <div class="hero-orb">
       <div class="st-orb-wrap" id="heroOrbWrap"><canvas class="st-orb" id="heroOrb" width="420" height="420" role="img" aria-label="Animated dotted sphere representing the model under review"></canvas></div>
-      <p class="orb-cap label" id="orbCap">Idle</p>
+      <p class="orb-cap label" id="orbCap">The model under review</p>
     </div>
   </div>
 </section>
 
-<section class="st-chapter" data-num="01" data-orb="searching" aria-label="Chapter 01, Recovery is not the problem">
-  <h2>Recovery is not the problem</h2>
-  <p>The coefficients come back right. The spread around them is what nobody puts on the slide.</p>
+<section class="st-chapter" data-num="01" data-orb="searching" aria-label="Chapter 01, On average the method is right (bias 0.007), but one study can miss by 0.152">
+  <h2>On average the method is right (bias 0.007), but one study can miss by 0.152</h2>
+  <p>The estimator recovers the coefficients. A single study still lands anywhere inside a band the slide never shows.</p>
 </section>
 
 <!-- ===================== SCENE 1 ===================== -->
 <section class="section scene-wrap" id="scene-1">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 01</span><h2 class="display">Recovery is not the problem</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 01</span><h2 class="display">On average the method is right (bias 0.007), but one study can miss by 0.152</h2></div>
   <div class="st-scene" data-scene="1">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -641,33 +664,33 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       <div class="st-scene-rail" aria-hidden="true"></div>
       <div class="st-step" data-orb="idle" data-step="1">
         <span class="label">The model</span>
-        <h3>Four predictors, one risk score</h3>
-        <p>Unsafe acts, operational stress, system condition and safety response capability each load on a latent and each points at a latent risk score. The generating coefficients are 0.45, 0.30, -0.25 and -0.20. The estimator does not know them.</p>
+        <h3>Four predictors generate the data at 0.45, 0.30, -0.25 and -0.20</h3>
+        <p>Unsafe acts, operational stress, system condition and safety response capability each load on a latent and each points at a latent risk score. Those four generating values are known here and hidden from the estimator, which is the only reason the rest of this page is measurable.</p>
       </div>
       <div class="st-step" data-orb="solving" data-step="2">
         <span class="label">The estimates</span>
-        <h3>The point estimates are fine</h3>
-        <p>At n = 100 the largest bias across the four paths is 0.007. At n = 5000 it is 0.0014. No improper solutions and no failed fits at any sample size across 300 replications. Whatever goes wrong later, it is not bias in the coefficients.</p>
+        <h3>Largest bias across the four paths is 0.007</h3>
+        <p>That is at n = 100; at n = 5000 the largest bias is 0.0014. Across 300 replications there were no improper solutions and no failed fits at any sample size. Whatever goes wrong later is not bias in the coefficients.</p>
       </div>
       <div class="st-step" data-orb="working" data-step="3">
         <span class="label">The spread</span>
-        <h3>The spread is the story</h3>
-        <p>Drag the slider. At n = 100 the empirical standard deviation on the 0.45 path is 0.152, so a single study lands anywhere from about 0.15 to 0.76. At n = 1000 it is 0.041. A single study is one draw from that band, and the slide only ever shows the draw.</p>
+        <h3>At n = 100 a single study lands between 0.15 and 0.76</h3>
+        <p>The empirical standard deviation on the 0.45 path is 0.152 at n = 100 and 0.041 at n = 1000. Drag the slider to watch the band close. Your report is one draw from that band, and the slide only ever shows the draw.</p>
       </div>
     </div>
   </div>
  </div>
 </section>
 
-<section class="st-chapter" data-num="02" data-orb="wrong" aria-label="Chapter 02, The interval lies">
-  <h2>The interval lies</h2>
-  <p>A nominal 95 percent interval holds the truth about 82 times in 100, and more data does not fix it.</p>
+<section class="st-chapter" data-num="02" data-orb="wrong" aria-label="Chapter 02, The textbook 95 percent interval holds only 82 times in 100">
+  <h2>The textbook 95 percent interval holds only 82 times in 100</h2>
+  <p>Every range your team reports from the analytic formula is about a third too narrow, and a larger sample does not close it.</p>
 </section>
 
 <!-- ===================== SCENE 2 ===================== -->
 <section class="section scene-wrap" id="scene-2">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 02</span><h2 class="display">The interval lies</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 02</span><h2 class="display">The textbook 95 percent interval holds only 82 times in 100</h2></div>
   <div class="st-scene" data-side="left" data-scene="2">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -679,33 +702,33 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       <div class="st-scene-rail" aria-hidden="true"></div>
       <div class="st-step" data-orb="searching" data-step="1">
         <span class="label">The claim</span>
-        <h3>A 95 percent interval should contain the truth 95 times in 100</h3>
-        <p>That is the entire contract. It is the reason a coefficient gets reported with a range instead of alone.</p>
+        <h3>A 95 percent interval promises 95 hits in 100</h3>
+        <p>That promise is the whole reason a coefficient is reported with a range instead of alone.</p>
       </div>
       <div class="st-step" data-orb="wrong" data-step="2">
         <span class="label">The measurement</span>
-        <h3>It contains the truth about 82 times in 100</h3>
-        <p>Across 300 replications, analytic coverage runs from 0.757 to 0.863 and does not climb toward 0.95 as n grows. The analytic standard error is roughly two thirds of the real spread: the ratio is 0.63 at n = 100 and 0.72 at n = 5000. More data does not fix it, because the error is in what the formula conditions on, not in the sample.</p>
+        <h3>Measured coverage runs 0.757 to 0.863 at every sample size</h3>
+        <p>Across 300 replications the analytic interval never climbs toward 0.95 as n grows. The analytic standard error is about two thirds of the real spread: the ratio is 0.63 at n = 100 and 0.72 at n = 5000. More data does not fix it, because the error is in what the formula conditions on.</p>
       </div>
       <div class="st-step" data-orb="grounded" data-step="3">
         <span class="label">The fix</span>
-        <h3>A nonparametric bootstrap restores it</h3>
-        <p>At n = 500 the bootstrap interval covers between 0.925 and 0.975 across the four paths, against 0.775 to 0.85 for the analytic interval, and it is about 40 percent wider. That extra width is not a loss of precision. It is the precision you actually had.</p>
+        <h3>The bootstrap covers 0.925 to 0.975 at n = 500</h3>
+        <p>The analytic interval covers 0.775 to 0.85 on the same data. The bootstrap interval is about 40 percent wider. Ask for the wider one: it reports the precision you actually had.</p>
       </div>
     </div>
   </div>
  </div>
 </section>
 
-<section class="st-chapter" data-num="03" data-orb="working" aria-label="Chapter 03, How large the study has to be">
-  <h2>How large the study has to be</h2>
-  <p>Fit costs 153 units. Naming the dominant driver costs 6,884.</p>
+<section class="st-chapter" data-num="03" data-orb="working" aria-label="Chapter 03, A passing fit needs 153 units. Naming the bigger driver needs 6,884.">
+  <h2>A passing fit needs 153 units. Naming the bigger driver needs 6,884.</h2>
+  <p>Most safety models are sized for the cheapest claim and then used to make the most expensive one.</p>
 </section>
 
 <!-- ===================== SCENE 3 ===================== -->
 <section class="section scene-wrap" id="scene-3">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 03</span><h2 class="display">How large the study has to be</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 03</span><h2 class="display">A passing fit needs 153 units. Naming the bigger driver needs 6,884.</h2></div>
   <div class="st-scene" data-scene="3">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -717,33 +740,33 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       <div class="st-scene-rail" aria-hidden="true"></div>
       <div class="st-step" data-orb="working" data-step="1">
         <span class="label">Fit</span>
-        <h3>153 units buy you a fit statistic</h3>
-        <p>Eighty percent power for the test of close fit at df = 80 needs 153 units. This is the number most study designs are sized against, and it is the cheapest claim on the list.</p>
+        <h3>153 units buy a fit statistic</h3>
+        <p>Eighty percent power for the test of close fit at df = 80 needs 153 units. Most study designs are sized against this number, and it is the cheapest claim on the list.</p>
       </div>
       <div class="st-step" data-orb="solving" data-step="2">
         <span class="label">Precision</span>
-        <h3>369 for a usable coefficient, 1459 for a sharp one</h3>
-        <p>A standard error of 0.05 on one standardized path needs 369 units. Halving that to 0.025 needs 1459. Precision is quadratic in cost and fit is not, which is why so many models are fit on samples that can only support the fit claim.</p>
+        <h3>369 units buy a usable coefficient, 1,459 a sharp one</h3>
+        <p>A standard error of 0.05 on one standardized path needs 369 units, and halving it to 0.025 needs 1,459. Precision costs four times as much every time you halve it, so a sample sized for fit cannot carry a coefficient claim.</p>
       </div>
       <div class="st-step" data-orb="wrong" data-step="3">
         <span class="label">Ranking</span>
-        <h3>6884 before you can name the dominant driver</h3>
-        <p>Separating 0.45 from 0.30 at 80 percent power takes 770 units. Separating -0.25 from -0.20 takes 6884. The sentence &quot;unsafe acts matter more than system condition&quot; is a different claim from &quot;both paths are non-zero&quot;, and it costs an order of magnitude more data. It is almost always asserted on the smaller sample.</p>
+        <h3>6,884 units before you can name the bigger driver</h3>
+        <p>Separating 0.45 from 0.30 at 80 percent power takes 770 units; separating -0.25 from -0.20 takes 6,884. &quot;Unsafe acts matter more than system condition&quot; is a different claim from &quot;both paths are non-zero&quot; and costs 45 times the data. Before you rank drivers in a steering meeting, get the n.</p>
       </div>
     </div>
   </div>
  </div>
 </section>
 
-<section class="st-chapter" data-num="04" data-orb="wrong" aria-label="Chapter 04, A wrong model passes the fit test">
-  <h2>A wrong model passes the fit test</h2>
-  <p>Four wrong models, every one of them inside the conventional cutoffs.</p>
+<section class="st-chapter" data-num="04" data-orb="wrong" aria-label="Chapter 04, Leave out one common cause and a true 0.20 reads 0.495, with a perfect fit">
+  <h2>Leave out one common cause and a true 0.20 reads 0.495, with a perfect fit</h2>
+  <p>Four models with the wrong causal structure all clear the fit cutoffs, and one of them inflates a coefficient by 0.295.</p>
 </section>
 
 <!-- ===================== SCENE 4 ===================== -->
 <section class="section scene-wrap" id="scene-4">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 04</span><h2 class="display">A wrong model passes the fit test</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 04</span><h2 class="display">Leave out one common cause and a true 0.20 reads 0.495, with a perfect fit</h2></div>
   <div class="st-scene" data-side="left" data-scene="4">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -755,33 +778,33 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       <div class="st-scene-rail" aria-hidden="true"></div>
       <div class="st-step" data-orb="searching" data-step="1">
         <span class="label">Omitted confounder</span>
-        <h3>Drop one common cause, and 0.20 becomes 0.50</h3>
-        <p>With the confounder in the model the path is estimated at 0.173 against a true 0.20; drop it and the same path reads 0.495, a bias of +0.295. The trimmed model has CFI 1.000 and RMSEA 0.000, so it fits better than the correct one.</p>
+        <h3>Drop one common cause and 0.173 becomes 0.495</h3>
+        <p>The true path is 0.20. With the confounder in the model it is estimated at 0.173; drop the confounder and the same path reads 0.495, a bias of +0.295. The trimmed model has CFI 1.000 and RMSEA 0.000, so it fits better than the correct one.</p>
       </div>
       <div class="st-step" data-orb="wrong" data-step="2">
         <span class="label">Direction and equivalence</span>
-        <h3>Point the arrow backwards and nothing complains</h3>
-        <p>Data generated as injuries driving climate, fitted the other way round, returns -0.570 with p below 0.001, CFI 0.9999 and RMSEA 0.004. Cause to effect and effect to cause give identical output, beta 0.4927, SE 0.0159, chi-square 7.696 on 8 df.</p>
+        <h3>Reverse the arrow and the fit is CFI 0.9999</h3>
+        <p>Data generated as injuries driving climate, fitted the other way round, returns -0.570 with p below 0.001 and RMSEA 0.004. Cause to effect and effect to cause give identical output: beta 0.4927, SE 0.0159, chi-square 7.696 on 8 df.</p>
       </div>
       <div class="st-step" data-orb="grounded" data-step="3">
         <span class="label">What this means</span>
-        <h3>Fit indices test covariance, not causation</h3>
-        <p>All four clear the conventional cutoffs, and omitting a mediator moves the same coefficient from the direct effect 0.182 to the total effect 0.442. A fit index says the implied covariance matrix is close to the observed one, and several causal structures imply the same matrix.</p>
+        <h3>All four wrong models clear the conventional cutoffs</h3>
+        <p>Omitting a mediator moves the same coefficient from the direct effect 0.182 to the total effect 0.442, and the fit still passes. A fit index only says the implied covariance matrix is close to the observed one, and several causal structures imply the same matrix. A good fit is not evidence that the structure is right.</p>
       </div>
     </div>
   </div>
  </div>
 </section>
 
-<section class="st-chapter" data-num="05" data-orb="solving" aria-label="Chapter 05, Rare events break the scoreboard">
-  <h2>Rare events break the scoreboard</h2>
-  <p>At a 9.2 per 100,000 base rate the scoreboard metric and the deployed tool part company.</p>
+<section class="st-chapter" data-num="05" data-orb="solving" aria-label="Chapter 05, 680 alerts for every real event">
+  <h2>With rare events, 680 alerts for every real one</h2>
+  <p>At a base rate of 9.2 events per 100,000 worker-shifts, the metric on the scoreboard and the experience of the supervisor stop agreeing.</p>
 </section>
 
 <!-- ===================== SCENE 5 ===================== -->
 <section class="section scene-wrap" id="scene-5">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 05</span><h2 class="display">Rare events break the scoreboard</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 05</span><h2 class="display">With rare events, 680 alerts for every real one</h2></div>
   <div class="st-scene" data-scene="5">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -798,33 +821,33 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       <div class="st-scene-rail" aria-hidden="true"></div>
       <div class="st-step" data-orb="working" data-step="1">
         <span class="label">Burden</span>
-        <h3>680 alerts for one real event</h3>
-        <p>At a recordable rate of 9.2 events per 100,000 worker-shifts, a model with 80 percent sensitivity and 95 percent specificity raises 680 alerts per true event. Push specificity to 99.99 percent and it falls to 2.1.</p>
+        <h3>680 alerts for every one real event</h3>
+        <p>That is a model with 80 percent sensitivity and 95 percent specificity at a recordable rate of 9.2 events per 100,000 worker-shifts. Push specificity to 99.99 percent and the burden falls to 2.1 alerts per event.</p>
       </div>
       <div class="st-step" data-orb="searching" data-step="2">
         <span class="label">Base rate</span>
-        <h3>Identical discrimination, unusable output</h3>
-        <p>The same generating signal gives AUC 0.685 at a 30 percent base rate and 0.692 at 0.5 percent, so the AUC barely moves. Precision in the top five percent falls from 0.629 to 0.016 and alerts per true event climb from 1.6 to 62.</p>
+        <h3>AUC moves 0.007 while alerts per event move 39-fold</h3>
+        <p>The same generating signal gives AUC 0.685 at a 30 percent base rate and 0.692 at 0.5 percent. Precision in the top five percent falls from 0.629 to 0.016 and alerts per true event climb from 1.6 to 62. AUC cannot see the base rate your sites actually have.</p>
       </div>
       <div class="st-step" data-orb="wrong" data-step="3">
         <span class="label">Rebalancing and sizing</span>
-        <h3>Undersampling costs calibration and buys no discrimination</h3>
-        <p>Trained as collected, AUC is 0.711 and predicted risk matches observed to within two percent; undersample to a 50 percent event rate and AUC is 0.707, unchanged, while predicted risk overshoots by a factor of 88 and the Brier score goes from 0.005 to 0.230. Sizing is the same story: 384 events, or 4,175,499 worker-shifts, buy ten percent relative precision, and 668,080 buy twenty-five percent.</p>
+        <h3>Undersampling overstates risk by a factor of 88</h3>
+        <p>Trained as collected, AUC is 0.711 and predicted risk matches observed to within two percent. Undersample to a 50 percent event rate and AUC is 0.707, unchanged, while the Brier score goes from 0.005 to 0.230. Sizing is the same story: ten percent relative precision needs 384 events, or 4,175,499 worker-shifts. Ask any alerting vendor for alerts per true event, not AUC.</p>
       </div>
     </div>
   </div>
  </div>
 </section>
 
-<section class="st-chapter" data-num="06" data-orb="connecting" aria-label="Chapter 06, The coefficient is not the intervention">
-  <h2>The coefficient is not the intervention</h2>
-  <p>Three different causal worlds return the same four numbers and three different decisions.</p>
+<section class="st-chapter" data-num="06" data-orb="connecting" aria-label="Chapter 06, The same fitted coefficients can mean an effect of 0.45 or of 0.281">
+  <h2>The same fitted coefficients can mean an effect of 0.45 or of 0.281</h2>
+  <p>Three causal structures return the same fitted numbers and three different answers to what happens if you act.</p>
 </section>
 
 <!-- ===================== SCENE 6 ===================== -->
 <section class="section scene-wrap" id="scene-6">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 06</span><h2 class="display">The coefficient is not the intervention</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 06</span><h2 class="display">The same fitted coefficients can mean an effect of 0.45 or of 0.281</h2></div>
   <div class="st-scene" data-side="left" data-scene="6">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -841,18 +864,18 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       <div class="st-scene-rail" aria-hidden="true"></div>
       <div class="st-step" data-orb="connecting" data-step="1">
         <span class="label">Three worlds</span>
-        <h3>Same four numbers, three different worlds</h3>
-        <p>The fitted vector is [0.448, 0.306, -0.254, -0.200] in world one, [0.453, 0.307, -0.260, -0.208] in world two and [0.448, 0.303, -0.246, -0.203] in world three. Round them for a slide and they are the same slide.</p>
+        <h3>Three worlds return the same four coefficients</h3>
+        <p>The fitted vector is [0.448, 0.306, -0.254, -0.200] in world one, [0.453, 0.307, -0.260, -0.208] in world two and [0.448, 0.303, -0.246, -0.203] in world three. Rounded for a slide, all three are the same slide.</p>
       </div>
       <div class="st-step" data-orb="wrong" data-step="2">
         <span class="label">Different answers</span>
-        <h3>The number you act on is 0.45 or 0.281</h3>
-        <p>Only in world one is the coefficient on unsafe acts the effect of intervening on unsafe acts. In world two the reported -0.250 on system condition is a direct effect; the total effect is -0.070. In world three an unmeasured common cause sits behind unsafe acts and risk, and intervening returns 0.281 while the regression still prints 0.448.</p>
+        <h3>The effect of acting is 0.45 in world one and 0.281 in world three</h3>
+        <p>Only in world one is the coefficient on unsafe acts the effect of intervening on unsafe acts. In world two the reported -0.260 on system condition is a direct effect and the total effect is -0.070. In world three an unmeasured common cause sits behind unsafe acts and risk, so intervening returns 0.281 while the regression still prints 0.448.</p>
       </div>
       <div class="st-step" data-orb="grounded" data-step="3">
         <span class="label">Scale and instrument</span>
-        <h3>The ranking flips with the scale you standardize on</h3>
-        <p>Crew A scores 2.55 and crew B 3.15 on the same raw inputs at both sites, yet standardizing within site puts crew A ahead at site 1 and crew B ahead at site 2, purely because overtime varies more at one of them. Fit the measurement model by site and one loading drops from 0.769 to 0.301, composite reliability from 0.823 to 0.675, and forcing site A's model onto site B moves 4.6 percent of units across the top-decile flag that dispatches an audit.</p>
+        <h3>4.6 percent of units cross the audit flag when the scale changes</h3>
+        <p>Crew A scores 2.55 and crew B 3.15 on the same raw inputs at both sites, yet standardizing within site puts crew A ahead at site 1 and crew B ahead at site 2, because overtime varies more at one of them. Fit the measurement model by site and one loading drops from 0.769 to 0.301 and composite reliability from 0.823 to 0.675. Forcing site A's model onto site B sends audits to a different 4.6 percent of units.</p>
       </div>
     </div>
   </div>
@@ -894,7 +917,6 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
         <a class="btn" id="openMap" href="#map">or open the map</a>
       </div>
     </div>
-    <div class="nc-orb"><canvas id="nextOrb" role="img" aria-label="Dotted sphere, resolved state"></canvas></div>
   </div>
  </div>
 </section>
@@ -994,7 +1016,10 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
      0. small utilities
      --------------------------------------------------------- */
   var mqReduce = global.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : null;
-  function reduced() { return !!(mqReduce && mqReduce.matches); }
+  // ?reduced=1 forces the reduced-motion path so it can be tested without changing OS settings
+  var forceReduced = /[?&]reduced=1/.test(location.search);
+  if (forceReduced) document.documentElement.classList.add("st-reduced");
+  function reduced() { return forceReduced || !!(mqReduce && mqReduce.matches); }
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function isEl(x) { return x && x.nodeType === 1; }
@@ -3277,17 +3302,21 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 /*STORY_JS_END*/</script>
 <script>
 /* story.html page script - ehs-risk-sem
-   Charts and scene logic for this page. Uses window.Story (shared engine) when
-   it is present, and falls back to the local implementations below when it is
-   not, so the page never depends on the engine being inlined. */
+   Figures and scene wiring for this page. The shared engine (window.Story) is
+   inlined above and owns the orbs, the scene observer, presenter mode, the
+   findings grid and the bottom bar. This file draws the six figures only. */
 (function () {
   'use strict';
-  var RM = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
   var NS = 'http://www.w3.org/2000/svg';
   var S = window.Story || null;
+  var RMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false, addEventListener: null };
+  var PHQ = window.matchMedia ? matchMedia('(max-width:800px)') : { matches: false, addEventListener: null };
+  function rm() { return (S && S.reduced ? S.reduced() : false) || RMQ.matches; }
+  function PH() { return PHQ.matches; }
 
   /* ---------------- data (every value read from a committed result file) --- */
   var PRED = ['Unsafe acts', 'Operational stress', 'System condition', 'Safety response'];
+  var PRED_SHORT = ['Unsafe acts', 'Op. stress', 'System cond.', 'Safety resp.'];
   var TRUE_B = [0.45, 0.30, -0.25, -0.20];
   /* results/study01_recovery.csv */
   var NS_LIST = [100, 200, 500, 1000, 2000, 5000];
@@ -3303,19 +3332,19 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   var BOOT = { analytic: [0.850, 0.850, 0.775, 0.825], boot: [0.925, 0.975, 0.950, 0.925] };
   /* results/study01_requirements.csv + study01_distinguishability.csv */
   var REQ = [
-    { k: 'Test of close fit, df = 80', n: 153 },
-    { k: 'SE = 0.05 on one path', n: 369 },
-    { k: 'Separate 0.45 from 0.30', n: 770 },
-    { k: 'SE = 0.025 on one path', n: 1459 },
-    { k: 'Separate -0.25 from -0.20', n: 6884 }
+    { k: 'Test of close fit, df = 80', s: 'Close-fit test', n: 153 },
+    { k: 'SE = 0.05 on one path', s: 'SE 0.05 on a path', n: 369 },
+    { k: 'Separate 0.45 from 0.30', s: '0.45 vs 0.30', n: 770 },
+    { k: 'SE = 0.025 on one path', s: 'SE 0.025 on a path', n: 1459 },
+    { k: 'Separate -0.25 from -0.20', s: '-0.25 vs -0.20', n: 6884 }
   ];
   /* results/study03_*.csv */
   var MIS = [
-    { k: 'Confounder in the model', gap: 0.027, fit: 'CFI 1.000  RMSEA 0.007', warn: false },
-    { k: 'Direction reversed', gap: 0.020, fit: 'CFI 1.000  RMSEA 0.004', warn: true },
-    { k: 'Equivalent model', gap: 0.000, fit: 'CFI 1.000  RMSEA 0.000', warn: true },
-    { k: 'Mediator omitted', gap: 0.242, fit: 'total effect, not direct', warn: true },
-    { k: 'Confounder omitted', gap: 0.295, fit: 'CFI 1.000  RMSEA 0.000', warn: true }
+    { k: 'Confounder in the model', s: 'Confounder in model', gap: 0.027, fit: 'CFI 1.000  RMSEA 0.007', warn: false },
+    { k: 'Direction reversed', s: 'Direction reversed', gap: 0.020, fit: 'CFI 1.000  RMSEA 0.004', warn: true },
+    { k: 'Equivalent model', s: 'Equivalent model', gap: 0.000, fit: 'CFI 1.000  RMSEA 0.000', warn: true },
+    { k: 'Mediator omitted', s: 'Mediator omitted', gap: 0.242, fit: 'total effect, not direct', warn: true },
+    { k: 'Confounder omitted', s: 'Confounder omitted', gap: 0.295, fit: 'CFI 1.000  RMSEA 0.000', warn: true }
   ];
   /* results/study02_*.csv */
   var RARE = {
@@ -3345,10 +3374,10 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
   function fmt(v, d) { return (v < 0 ? '-' : '') + Math.abs(v).toFixed(d == null ? 3 : d); }
   /* Final state first, then animate towards it. A page loaded in a hidden or
-     backgrounded tab therefore still renders every bar at full size. */
+     backgrounded tab, or with reduced motion on, therefore renders complete. */
   function tween(dur, step) {
     step(1);
-    if (RM.matches || document.hidden) return;
+    if (rm() || document.hidden) return;
     var t0 = 0;
     function fr(t) {
       if (!t0) t0 = t;
@@ -3375,118 +3404,47 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     out.forEach(function (l, k) { txt(svg, x, y + k * (lh || 22), l, cls); });
     return out.length;
   }
-
-  /* ---------------- orb ---------------------------------------------------- */
-  /* Dotted monochrome orb. Vanilla canvas port of the look documented in
-     Jakub Antalik's thinking-orbs project (MIT licence). */
-  var ORB_STATES = {
-    idle:       { turb: 0.06, spin: 0.10, tint: null, label: 'Idle' },
-    breathing:  { turb: 0.06, spin: 0.10, tint: null, label: 'Breathing' },
-    working:    { turb: 0.30, spin: 0.42, tint: null, label: 'Working' },
-    solving:    { turb: 0.22, spin: 0.30, tint: null, label: 'Solving' },
-    searching:  { turb: 0.38, spin: 0.55, tint: null, label: 'Searching' },
-    connecting: { turb: 0.16, spin: 0.24, tint: null, label: 'Connecting' },
-    shaping:    { turb: 0.20, spin: 0.18, tint: null, label: 'Shaping' },
-    wrong:      { turb: 0.75, spin: 0.62, tint: 'warn', label: 'Wrong' },
-    grounded:   { turb: 0.03, spin: 0.06, tint: 'accent', label: 'Grounded' },
-    resolved:   { turb: 0.03, spin: 0.05, tint: 'accent', label: 'Resolved' }
-  };
-  function makeOrb(canvas, n) {
-    var ctx = canvas.getContext('2d'), pts = [], i, running = false, raf = 0;
-    var state = ORB_STATES.idle, cur = { turb: 0.06, spin: 0.10 }, t = 0, lit = 0, litT = 0;
-    n = n || 900;
-    for (i = 0; i < n; i++) {
-      var u = Math.acos(1 - 2 * (i + 0.5) / n), th = Math.PI * (1 + Math.sqrt(5)) * i;
-      pts.push({ x: Math.sin(u) * Math.cos(th), y: Math.sin(u) * Math.sin(th), z: Math.cos(u), s: Math.random() });
-    }
-    function tone(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#333'; }
-    function size() {
-      var r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
-      canvas.width = Math.max(1, Math.round(r.width * dpr)); canvas.height = Math.max(1, Math.round(r.height * dpr));
-      return dpr;
-    }
-    function draw() {
-      var dpr = Math.min(2, window.devicePixelRatio || 1);
-      var w = canvas.width, h = canvas.height, cx = w / 2, cy = h / 2, R = Math.min(w, h) * 0.38;
-      ctx.clearRect(0, 0, w, h);
-      cur.turb += (state.turb - cur.turb) * 0.06; cur.spin += (state.spin - cur.spin) * 0.06;
-      litT += (lit - litT) * 0.08;
-      var ink = tone('--ink'), acc = tone('--accent'), wrn = tone('--warn');
-      var breathe = 1 + Math.sin(t * 0.9) * 0.022;
-      for (var i = 0; i < pts.length; i++) {
-        var p = pts[i];
-        var a = t * cur.spin + p.s * 6.2831;
-        var wob = cur.turb * (Math.sin(a * 1.7 + p.z * 4) * 0.5 + Math.sin(a * 0.9 + p.x * 5) * 0.5);
-        var ca = Math.cos(t * cur.spin), sa = Math.sin(t * cur.spin);
-        var x = p.x * ca - p.z * sa, z = p.x * sa + p.z * ca, y = p.y;
-        var rr = R * breathe * (1 + wob * 0.34);
-        var sx = cx + x * rr, sy = cy + y * rr;
-        var depth = (z + 1) / 2;
-        var rad = (0.7 + depth * 1.5) * dpr;
-        var al = 0.10 + depth * 0.62;
-        var col = ink;
-        if (litT > 0.02) { col = state.tint === 'warn' ? wrn : (state.tint === 'accent' ? acc : ink); al *= (1 - litT * 0.25); }
-        ctx.beginPath(); ctx.arc(sx, sy, rad, 0, 6.2832);
-        ctx.fillStyle = col; ctx.globalAlpha = al; ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      t += RM.matches ? 0 : 0.016;
-    }
-    function loop() { draw(); if (running) raf = requestAnimationFrame(loop); }
-    function start() { if (running || RM.matches) return; running = true; raf = requestAnimationFrame(loop); }
-    function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
-    size(); draw();
-    window.addEventListener('resize', function () { size(); draw(); });
-    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else start(); });
-    if (window.IntersectionObserver) {
-      new IntersectionObserver(function (es) { es[0].isIntersecting ? start() : stop(); }, { threshold: 0.01 })
-        .observe(canvas.parentNode || canvas);
-    } else start();
-    document.addEventListener('rs-themechange', function () { draw(); });
-    return {
-      setState: function (name) {
-        var s = ORB_STATES[name] || ORB_STATES.idle;
-        state = s; lit = s.tint ? 1 : 0;
-        var wrap = canvas.parentNode; if (wrap) wrap.setAttribute('data-state', name);
-        var cap = document.getElementById('orbCap'); if (cap) cap.textContent = s.label;
-        canvas.setAttribute('aria-label', 'Model state: ' + s.label.toLowerCase());
-        if (RM.matches) draw();
-      }
-    };
+  /* phone rendering: a 360 x 348 viewBox renders about 315 px wide at 375 px,
+     so type set at 14-15 units lands at 12-13 real pixels and stays readable. */
+  var PW = 360, PHT = 348;
+  function box(svg) {
+    var ph = PH();
+    svg.setAttribute('viewBox', ph ? ('0 0 ' + PW + ' ' + PHT) : '0 0 1000 600');
+    svg.classList.toggle('is-ph', ph);
+    return ph;
   }
-
-  /* ---------------- scene driver ------------------------------------------ */
-  function scenes(root, onStep) {
-    var steps = [].slice.call(root.querySelectorAll('.st-step')), active = -1, ticking = false;
-    function measure() {
-      var mid = window.innerHeight * 0.45, best = 0, bd = 1e9;
-      for (var i = 0; i < steps.length; i++) {
-        var r = steps[i].getBoundingClientRect(), d = Math.abs((r.top + r.height / 2) - mid);
-        if (d < bd) { bd = d; best = i; }
-      }
-      if (best !== active) {
-        active = best;
-        for (var j = 0; j < steps.length; j++) steps[j].classList.toggle('is-active', j === active);
-        onStep(active, steps[active]);
-      }
-      var rr = root.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (window.innerHeight * 0.5 - rr.top) / Math.max(1, rr.height)));
-      root.style.setProperty('--p', p.toFixed(3));
-      ticking = false;
+  function phNote(svg, text) {
+    var words = text.split(' '), line = '', out = [], i;
+    for (i = 0; i < words.length; i++) {
+      var probe = line ? line + ' ' + words[i] : words[i];
+      if (probe.length > 40 && line) { out.push(line); line = words[i]; } else line = probe;
     }
-    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(measure); } }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    measure();
-    return { steps: steps, refresh: measure };
+    if (line) out.push(line);
+    var y0 = PHT - 8 - (out.length - 1) * 17;
+    out.forEach(function (l, k) { txt(svg, 0, y0 + k * 17, l, 'hi'); });
+  }
+  function phBig(svg, val, sub, warn) {
+    txt(svg, 0, 58, val, 'big' + (warn ? ' is-warn' : ''));
+    wrapText(svg, 0, 82, sub, 'big-sub', 38, 16);
+  }
+  function phRows(svg, rows, T, rowH, barW, fmtVal) {
+    rows.forEach(function (r, i) {
+      var y = T + i * rowH;
+      txt(svg, 0, y, r.k, 'row-lab');
+      var w = Math.max(3, r.w);
+      var rect = el('rect', { x: 0, y: y + 8, width: 0, height: 15, tabindex: '0', class: 'st-bar' + (r.cls || '') }, svg);
+      tip(rect, r.tip || (r.k + ': ' + fmtVal(r)));
+      tween(560, function (t) { rect.setAttribute('width', w * t); });
+      txt(svg, w + 9, y + 21, fmtVal(r), 'v-num');
+    });
   }
 
   /* ---------------- chart 1: path diagram --------------------------------- */
-  /* Stage geometry: every figure on this page uses a 1000 x 600 viewBox so that
-     one SVG user unit renders as about one CSS pixel at desktop width. Type set
-     in the stylesheet at 15-17px therefore reads at 15-17px on screen. */
+  /* Desktop stage geometry: 1000 x 600 viewBox, so one SVG unit renders as
+     about one CSS pixel and type set at 15-17 units reads at 15-17 px. */
   var pathParts = null;
   function drawPath(svg, nKey, emph) {
+    if (box(svg)) return drawPathPh(svg, nKey, emph);
     var H = 600, ROWS = 4, top = 236, gap = 84, boxW = 190;
     var ax0 = 214, ax1 = 554, nodeX = 858, nodeW = 142, nodeY = 356;
     clear(svg); pathParts = [];
@@ -3513,20 +3471,39 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       tip(band, PRED[i] + ': one empirical SD is ' + fmt(d.sd[i]) + ', so the band runs ' + fmt(d.est[i] - d.sd[i]) + ' to ' + fmt(d.est[i] + d.sd[i]));
       var est = el('line', { x1: sx(d.est[i]), y1: y - 24, x2: sx(d.est[i]), y2: y + 24, class: 'p-est' }, svg);
       el('line', { x1: sx(TRUE_B[i]), y1: y - 30, x2: sx(TRUE_B[i]), y2: y + 30, class: 'p-true' }, svg);
-      var lab = txt(svg, 578, y + 7, fmt(d.est[i]), 'v-num');
-      var sub = txt(svg, 668, y + 6, 'true ' + fmt(TRUE_B[i], 2) + '   sd ' + fmt(d.sd[i]), 'row-sub');
+      var lab = txt(svg, 566, y + 7, fmt(d.est[i]), 'v-num');
+      var sub = txt(svg, 638, y + 6, 'true ' + fmt(TRUE_B[i], 2) + '   sd ' + fmt(d.sd[i]), 'row-sub');
       el('path', {
-        d: 'M' + 820 + ',' + y + ' C' + 838 + ',' + y + ' ' + 842 + ',' + nodeY + ' ' + (nodeX - 4) + ',' + nodeY,
+        d: 'M' + 832 + ',' + y + ' C' + 846 + ',' + y + ' ' + 848 + ',' + nodeY + ' ' + (nodeX - 4) + ',' + nodeY,
         class: 'st-path-edge', 'marker-end': 'url(#s4-arrow)',
         'stroke-width': (1.6 + Math.abs(d.est[i]) * 6).toFixed(1)
       }, svg);
       pathParts.push({ band: band, est: est, lab: lab, sub: sub, sx: sx, i: i });
     }
     txt(svg, 0, H - 40, 'Solid tick = mean estimate. Dashed tick = generating value. Band = one empirical SD across 300 replications.', 'row-sub');
-    txt(svg, 0, H - 14, emph >= 3 ? 'A single study is one draw from that band, and the slide only ever shows the draw.' : 'Largest bias across the four paths is 0.007 at n = 100 and 0.0014 at n = 5000.', 'hi');
+    txt(svg, 0, H - 14, emph >= 3 ? 'Your study is one draw from that band, and the slide only ever shows the draw.' : 'Largest bias across the four paths is 0.007 at n = 100 and 0.0014 at n = 5000.', 'hi');
+  }
+  function drawPathPh(svg, nKey, emph) {
+    clear(svg); pathParts = null;
+    var d = REC[nKey], top = 152, gap = 44, x0 = 146, x1 = 296;
+    phBig(svg, fmt(d.sd[0]), 'SD ON THE 0.45 PATH AT n = ' + nKey.toLocaleString(), nKey <= 200);
+    var sx = function (v) { return x0 + (v + 0.4) / 1.0 * (x1 - x0); };
+    el('line', { x1: sx(0), y1: top - 24, x2: sx(0), y2: top + gap * 3 + 24, class: 'st-grid' }, svg);
+    for (var i = 0; i < 4; i++) {
+      var y = top + gap * i;
+      txt(svg, 0, y + 5, PRED_SHORT[i], 'row-lab');
+      var a = sx(d.est[i] - d.sd[i]), b = sx(d.est[i] + d.sd[i]);
+      var band = el('rect', { x: a, y: y - 11, width: Math.max(2, b - a), height: 22, class: 'p-band' }, svg);
+      tip(band, PRED[i] + ': one empirical SD is ' + fmt(d.sd[i]));
+      el('line', { x1: sx(d.est[i]), y1: y - 16, x2: sx(d.est[i]), y2: y + 16, class: 'p-est' }, svg);
+      el('line', { x1: sx(TRUE_B[i]), y1: y - 19, x2: sx(TRUE_B[i]), y2: y + 19, class: 'p-true' }, svg);
+      txt(svg, PW, y + 6, fmt(d.est[i]), 'v-num', 'end');
+    }
+    txt(svg, 0, top + gap * 3 + 42, 'Solid tick = estimate, dashed = true value, band = one SD.', 'row-sub');
+    phNote(svg, emph >= 3 ? 'Your study is one draw from that band.' : 'Largest bias is 0.007 at n = 100.');
   }
   function updatePath(svg, nKey) {
-    if (!pathParts) { drawPath(svg, nKey); return; }
+    if (PH() || !pathParts) { drawPath(svg, nKey, 1); return; }
     var d = REC[nKey];
     var from = pathParts.map(function (p) { return { x1: +p.band.getAttribute('x'), w: +p.band.getAttribute('width'), e: +p.est.getAttribute('x1') }; });
     var to = pathParts.map(function (p, i) { var a = p.sx(d.est[i] - d.sd[i]), b = p.sx(d.est[i] + d.sd[i]); return { x1: a, w: Math.max(2, b - a), e: p.sx(d.est[i]) }; });
@@ -3552,6 +3529,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 
   /* ---------------- chart 2: coverage ------------------------------------- */
   function drawCoverage(svg, step) {
+    if (box(svg)) return drawCovPh(svg, step);
     var H = 600, L = 96, T = 216, BTM = 512, RIGHT = 768;
     clear(svg);
     var x = function (i) { return L + i * (RIGHT - L) / (NS_LIST.length - 1); };
@@ -3589,7 +3567,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
         var c = el('circle', { cx: x(i), cy: y(REC[n].cov[k]), r: 4.5, fill: 'var(--ink-2)' }, svg);
         tip(c, PRED[k] + ', n = ' + n.toLocaleString() + ': coverage ' + REC[n].cov[k].toFixed(3));
       });
-      if (!RM.matches && !document.hidden) {
+      if (!rm() && !document.hidden) {
         var len = pth.getTotalLength();
         pth.setAttribute('stroke-dasharray', len); pth.setAttribute('stroke-dashoffset', len);
         (function (pp, ll, delay) { setTimeout(function () { tween(700, function (tt) { pp.setAttribute('stroke-dashoffset', ll * (1 - tt)); }); }, delay); })(pth, len, k * 110);
@@ -3610,10 +3588,48 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       txt(svg, 0, H - 14, 'Analytic coverage runs 0.757 to 0.863 and never climbs toward the line as n grows.', 'hi');
     }
   }
+  function drawCovPh(svg, step) {
+    clear(svg);
+    var L = 44, R = 336, T = 154, B = 262;
+    var x = function (i) { return L + i * (R - L) / (NS_LIST.length - 1); };
+    var y = function (v) { return T + (1.00 - v) / 0.30 * (B - T); };
+    phBig(svg, '82%', 'HOW OFTEN A NOMINAL 95% INTERVAL HOLDS', true);
+    [0.80, 0.90, 1.00].forEach(function (g) {
+      el('line', { x1: L, y1: y(g), x2: R, y2: y(g), class: 'st-grid' }, svg);
+      txt(svg, L - 6, y(g) + 4, (g * 100).toFixed(0), 'row-sub', 'end');
+    });
+    var dTop = [], dBot = [];
+    NS_LIST.forEach(function (n, i) {
+      dTop.push((i ? 'L' : 'M') + x(i) + ',' + y(0.95));
+      var j = NS_LIST.length - 1 - i;
+      dBot.push('L' + x(j) + ',' + y(Math.min.apply(null, REC[NS_LIST[j]].cov)));
+    });
+    el('path', { d: dTop.join('') + dBot.join('') + 'Z', class: 'cov-band' }, svg);
+    el('line', { x1: L, y1: y(0.95), x2: R, y2: y(0.95), class: 'ref-line' }, svg);
+    txt(svg, R, y(0.95) - 7, 'NOMINAL 95%', 'st-caption', 'end');
+    for (var k = 0; k < 4; k++) {
+      var d = '';
+      NS_LIST.forEach(function (n, i) { d += (i ? 'L' : 'M') + x(i) + ',' + y(REC[n].cov[k]); });
+      el('path', { d: d, class: 'st-series-line', stroke: 'var(--ink-2)', opacity: 0.9 }, svg);
+    }
+    txt(svg, L, B + 20, 'n = 100', 'row-sub');
+    txt(svg, R, B + 20, 'n = 5,000', 'row-sub', 'end');
+    if (step >= 3) {
+      var xi = x(2);
+      BOOT.analytic.forEach(function (v) { el('circle', { cx: xi - 7, cy: y(v), r: 4.5, class: 'boot-dot', fill: 'var(--warn)' }, svg); });
+      BOOT.boot.forEach(function (v) { el('circle', { cx: xi + 7, cy: y(v), r: 4.5, class: 'boot-dot' }, svg); });
+      txt(svg, 0, B + 48, 'Bootstrap at n = 500 covers 0.925 to 0.975.', 'hi');
+      phNote(svg, 'It is 40 percent wider, and that width is real.');
+    } else {
+      txt(svg, 0, B + 48, 'All four paths: 0.757 to 0.863.', 'hi');
+      phNote(svg, 'More data never lifts them to the line.');
+    }
+  }
 
   /* ---------------- chart 3: requirements --------------------------------- */
   function drawReq(svg, step) {
-    var H = 600, T = 232, rowH = 74, barX = 400, barW = 440;
+    if (box(svg)) return drawReqPh(svg, step);
+    var H = 600, T = 226, rowH = 70, barX = 400, barW = 440;
     clear(svg);
     txt(svg, 0, 24, 'SAMPLE SIZE REQUIRED FOR EACH CLAIM, LOG SCALE', 'st-caption');
     bignum(svg, 0, 132, '6,884', 'UNITS BEFORE YOU CAN SAY WHICH PATH IS LARGER', true);
@@ -3634,13 +3650,25 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       tween(600, function (t) { rect.setAttribute('width', target * t); });
       txt(svg, barX + target + 14, y + 8, r.n.toLocaleString(), 'v-num');
     });
-    txt(svg, 0, H - 40, 'Source: results/study01_requirements.csv and results/study01_distinguishability.csv. Eighty percent power throughout.', 'row-sub');
     txt(svg, 0, H - 14, 'Fit is the cheapest claim on the list. Ranking is the most expensive, by a factor of 45.', 'hi');
+  }
+  function drawReqPh(svg, step) {
+    clear(svg);
+    phBig(svg, '6,884', 'UNITS TO SAY WHICH PATH IS LARGER', true);
+    var T = 124, rowH = 38, barW = 215;
+    var max = Math.log10(8000), min = Math.log10(100);
+    var bw = function (n) { return Math.max(4, (Math.log10(n) - min) / (max - min) * barW); };
+    phRows(svg, REQ.map(function (r, i) {
+      var hot = (step === 1 && i === 0) || (step === 2 && (i === 1 || i === 3)) || (step === 3 && (i === 2 || i === 4));
+      return { k: r.s, w: bw(r.n), n: r.n, cls: hot ? (i >= 2 ? ' is-warn' : '') : ' is-mute', tip: r.k + ': ' + r.n.toLocaleString() + ' units' };
+    }), T, rowH, barW, function (r) { return r.n.toLocaleString(); });
+    phNote(svg, 'Log scale. Ranking costs 45 times what fit costs.');
   }
 
   /* ---------------- chart 4: misspecification ----------------------------- */
   function drawMis(svg, step) {
-    var H = 600, T = 226, rowH = 74, barX = 430, barW = 400;
+    if (box(svg)) return drawMisPh(svg, step);
+    var H = 600, T = 222, rowH = 70, barX = 430, barW = 400;
     clear(svg);
     txt(svg, 0, 24, 'GAP BETWEEN THE REPORTED NUMBER AND THE EFFECT IT IS READ AS', 'st-caption');
     bignum(svg, 0, 132, '0.295', 'LARGEST GAP, AND ITS MODEL HAS CFI 1.000 AND RMSEA 0.000', true);
@@ -3660,8 +3688,17 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       tween(650, function (t) { rect.setAttribute('width', w * t); });
       txt(svg, barX + w + 14, y + 6, m.gap.toFixed(3), 'v-num');
     });
-    txt(svg, 0, H - 40, 'Source: results/study03_confounder.csv, study03_reverse.csv, study03_equivalent.csv, study03_mediator.csv.', 'row-sub');
     txt(svg, 0, H - 14, 'Every one of these models meets the conventional fit cutoffs.', 'hi');
+  }
+  function drawMisPh(svg, step) {
+    clear(svg);
+    phBig(svg, '0.295', 'LARGEST GAP, AT CFI 1.000 AND RMSEA 0.000', true);
+    var T = 124, rowH = 38, barW = 215;
+    var order = MIS.slice().sort(function (a, b) { return a.gap - b.gap; });
+    phRows(svg, order.map(function (m) {
+      return { k: m.s, w: Math.max(3, m.gap / 0.30 * barW), gap: m.gap, cls: m.warn ? ' is-warn' : '', tip: m.k + ': gap ' + m.gap.toFixed(3) + '. ' + m.fit };
+    }), T, rowH, barW, function (r) { return r.gap.toFixed(3); });
+    phNote(svg, 'Gap in the coefficient. All five pass the fit test.');
   }
 
   /* ---------------- chart 5: rare events ---------------------------------- */
@@ -3670,7 +3707,18 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     disc: ['62', 'ALERTS PER TRUE EVENT AT A 0.5% BASE RATE, AUC UNCHANGED'],
     bal: ['88x', 'PREDICTED RISK OVER OBSERVED RISK AFTER UNDERSAMPLING']
   };
+  var RARE_BIG_PH = {
+    burden: ['680', 'ALERTS PER TRUE EVENT AT 95% SPECIFICITY'],
+    disc: ['62', 'ALERTS PER TRUE EVENT AT A 0.5% BASE RATE'],
+    bal: ['88x', 'PREDICTED OVER OBSERVED RISK AFTER UNDERSAMPLING']
+  };
+  var RARE_SO = {
+    burden: 'Everything above 2.1 trains a supervisor to ignore the tool.',
+    disc: 'AUC moves 0.007. The burden moves 39-fold.',
+    bal: 'Rebalancing keeps AUC and destroys the calibration.'
+  };
   function drawRare(svg, view) {
+    if (box(svg)) return drawRarePh(svg, view);
     var H = 600, T = 244, barX = 470, barW = 380;
     var cfg = RARE[view] || RARE.burden, big = RARE_BIG[view] || RARE_BIG.burden;
     clear(svg);
@@ -3696,14 +3744,25 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       txt(svg, barX + w + 14, y + 8, (r.v >= 10 ? Math.round(r.v).toLocaleString() : r.v.toFixed(1)) + cfg.unit, 'v-num');
     });
     txt(svg, 0, H - 40, 'Log scale. Base rate 9.2 recordable events per 100,000 worker-shifts. Source: results/study02_*.csv.', 'row-sub');
-    txt(svg, 0, H - 14, view === 'disc' ? 'AUC moves by 0.007. Alerts per true event move by a factor of 39.'
-      : (view === 'bal' ? 'Rebalancing leaves AUC at 0.707 against 0.711 and destroys the calibration.'
-        : 'Everything between 680 and 2.1 is a supervisor learning to ignore the tool.'), 'hi');
+    txt(svg, 0, H - 14, RARE_SO[view] || RARE_SO.burden, 'hi');
+  }
+  function drawRarePh(svg, view) {
+    clear(svg);
+    var cfg = RARE[view] || RARE.burden, big = RARE_BIG_PH[view] || RARE_BIG_PH.burden;
+    phBig(svg, big[0], big[1], true);
+    var T = 132, rowH = 44, barW = 195;
+    var max = Math.max.apply(null, cfg.rows.map(function (r) { return r.v; }));
+    var scale = function (v) { return Math.max(3, Math.log10(Math.max(v, 0.9) + 1) / Math.log10(max + 1) * barW); };
+    phRows(svg, cfg.rows.map(function (r) {
+      return { k: r.k, w: scale(r.v), v: r.v, u: cfg.unit, cls: r.v > 10 ? ' is-warn' : '', tip: r.k + ': ' + r.v + cfg.unit };
+    }), T, rowH, barW, function (r) { return (r.v >= 10 ? Math.round(r.v).toLocaleString() : r.v.toFixed(1)) + r.u; });
+    phNote(svg, RARE_SO[view] || RARE_SO.burden);
   }
 
   /* ---------------- chart 6: three worlds --------------------------------- */
   var worldParts = null, worldIdx = 0;
   function drawWorld(svg, idx) {
+    if (box(svg)) return drawWorldPh(svg, idx);
     var H = 600, T = 268, rowH = 62, mid = 620, unit = 300;
     clear(svg); worldParts = [];
     var w = WORLDS[idx];
@@ -3724,11 +3783,27 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     wrapText(svg, 0, H - 58, w.note, 'hi', 96, 24);
     txt(svg, 0, H - 12, 'Source: results/study04_ambiguity.csv. Rounded for a slide, all three worlds are the same slide.', 'row-sub');
   }
+  function drawWorldPh(svg, idx) {
+    clear(svg); worldParts = null;
+    var w = WORLDS[idx], T = 150, rowH = 36, mid = 180, unit = 150;
+    phBig(svg, w.eff.toFixed(3), 'EFFECT OF INTERVENING ON UNSAFE ACTS', w.eff !== 0.45);
+    txt(svg, 0, 126, 'WORLD ' + (idx + 1) + ' OF 3', 'st-caption');
+    el('line', { x1: mid, y1: T - 14, x2: mid, y2: T + rowH * 3 + 26, class: 'st-axis-line' }, svg);
+    for (var i = 0; i < 4; i++) {
+      var y = T + i * rowH;
+      txt(svg, 0, y, PRED_SHORT[i], 'row-lab');
+      var v = w.c[i], bw = Math.abs(v) * unit;
+      var rect = el('rect', { x: v < 0 ? mid - bw : mid, y: y + 8, width: bw, height: 15, tabindex: '0', class: 'st-bar' }, svg);
+      tip(rect, PRED[i] + ' in world ' + (idx + 1) + ': ' + fmt(v));
+      txt(svg, v < 0 ? mid - bw - 8 : mid + bw + 8, y + 21, fmt(v), 'v-num', v < 0 ? 'end' : 'start');
+    }
+    phNote(svg, w.note);
+  }
   function setWorld(svg, idx) {
-    if (idx === worldIdx && worldParts) return;
+    if (idx === worldIdx && (worldParts || PH())) { if (PH()) drawWorld(svg, idx); return; }
     var from = worldParts ? worldParts.map(function (p) { return p.v; }) : null;
     worldIdx = idx;
-    if (!from || RM.matches || document.hidden) { drawWorld(svg, idx); return; }
+    if (!from || PH() || rm() || document.hidden) { drawWorld(svg, idx); return; }
     var to = WORLDS[idx].c, parts = worldParts, mid = 620, unit = 300;
     tween(400, function (t) {
       parts.forEach(function (p, i) {
@@ -3740,72 +3815,12 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     });
   }
 
-  /* ---------------- presenter mode ---------------------------------------- */
-  function presenter() {
-    var on = false, dots = null, stops = [];
-    function collect() { stops = [].slice.call(document.querySelectorAll('.st-step, .hero-text h1, #honesty h2, #monday h2')); }
-    function build() {
-      dots = document.createElement('div'); dots.className = 'st-present-dots';
-      collect();
-      stops.forEach(function () { dots.appendChild(document.createElement('b')); });
-      document.body.appendChild(dots);
-      var hint = document.createElement('div'); hint.className = 'st-present-hint st-present-el';
-      hint.textContent = 'arrows to step  ·  P to exit'; document.body.appendChild(hint);
-      dots.classList.add('st-present-el');
-    }
-    function idx() {
-      var mid = innerHeight * 0.4, best = 0, bd = 1e9;
-      stops.forEach(function (s, i) { var r = s.getBoundingClientRect(), d = Math.abs(r.top - mid); if (d < bd) { bd = d; best = i; } });
-      return best;
-    }
-    function mark() { if (!dots) return; var a = idx(); [].forEach.call(dots.children, function (b, i) { b.classList.toggle('is-on', i === a); }); }
-    function toggle(force) {
-      on = force == null ? !on : force;
-      document.documentElement.classList.toggle('st-presenting', on);
-      document.body.classList.toggle('st-presenting', on);
-      if (on) { if (!dots) build(); else [].forEach.call(document.querySelectorAll('.st-present-el'), function (e) { e.style.display = ''; }); mark(); }
-      else [].forEach.call(document.querySelectorAll('.st-present-el'), function (e) { e.style.display = 'none'; });
-    }
-    document.addEventListener('keydown', function (e) {
-      var tag = (e.target && e.target.tagName || '').toLowerCase();
-      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
-      if (e.key === 'p' || e.key === 'P') { toggle(); return; }
-      if (!on) return;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
-        e.preventDefault(); var n = Math.min(stops.length - 1, idx() + 1); stops[n].scrollIntoView({ block: 'center', behavior: RM.matches ? 'auto' : 'smooth' });
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault(); var p = Math.max(0, idx() - 1); stops[p].scrollIntoView({ block: 'center', behavior: RM.matches ? 'auto' : 'smooth' });
-      } else if (e.key === 'Escape') toggle(false);
-    });
-    window.addEventListener('scroll', function () { if (on) mark(); }, { passive: true });
-    try { if (new URLSearchParams(location.search).get('present') === '1') toggle(true); } catch (e) {}
-  }
-
-  /* ---------------- progress bar ------------------------------------------ */
-  function progressBar() {
-    var bar = document.createElement('div'); bar.className = 'st-progress';
-    var i = document.createElement('i'); bar.appendChild(i); document.body.appendChild(bar);
-    var t = false;
-    function up() {
-      var h = document.documentElement.scrollHeight - innerHeight;
-      i.style.width = (h > 0 ? Math.min(1, scrollY / h) * 100 : 0).toFixed(2) + '%'; t = false;
-    }
-    addEventListener('scroll', function () { if (!t) { t = true; requestAnimationFrame(up); } }, { passive: true });
-    up();
-  }
-
   /* ---------------- wire it up -------------------------------------------- */
   function init() {
-    var orb = (S && S.orb) ? S.orb(document.getElementById('heroOrb'), { density: 900 }) : makeOrb(document.getElementById('heroOrb'), 900);
-    orb.setState('idle');
-
-    /* ambient dot field behind the hero, and a resolved orb on the next card */
+    var heroCanvas = document.getElementById('heroOrb');
+    if (S && S.orb && heroCanvas) S.orb(heroCanvas, { density: 900, state: 'breathing' });
     if (S && S.field) { try { S.field(document.getElementById('heroField'), { density: 0.9 }); } catch (e) {} }
-    var nx = document.getElementById('nextOrb');
-    if (nx) {
-      var nOrb = (S && S.orb) ? S.orb(nx, { density: 620, parallax: false }) : makeOrb(nx, 620);
-      nOrb.setState('resolved');
-    }
+
     var mapBtn = document.getElementById('openMap');
     if (mapBtn) mapBtn.addEventListener('click', function (e) {
       var btns = [].slice.call(document.querySelectorAll('.st-way .st-way-btn'));
@@ -3813,6 +3828,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       if (b) { e.preventDefault(); b.click(); }
     });
 
+    var rareView = 'burden';
     var charts = {
       1: { svg: document.getElementById('pathSvg'), draw: function (s) { drawPath(this.svg, NS_LIST[+document.getElementById('nSlider').value], s); } },
       2: { svg: document.getElementById('covSvg'), draw: function (s) { drawCoverage(this.svg, s); } },
@@ -3821,37 +3837,24 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       5: { svg: document.getElementById('rareSvg'), draw: function () { drawRare(this.svg, rareView); } },
       6: { svg: document.getElementById('worldSvg'), draw: function () { drawWorld(this.svg, worldIdx); } }
     };
-    var rareView = 'burden';
     var drawn = {};
-
-    [].forEach.call(document.querySelectorAll('.st-scene'), function (sc) {
-      var id = sc.getAttribute('data-scene');
-      var c = charts[id];
-      var mk = (S && S.scenes) ? function (cb) { return S.scenes(sc, { onStep: function (i, e) { cb(e); } }); } : null;
-      function onStep(elStep) {
-        if (!elStep) return;
-        var vis = sc.getBoundingClientRect();
-        var inView = vis.top < window.innerHeight * 0.75 && vis.bottom > window.innerHeight * 0.25;
-        var st = elStep.getAttribute('data-orb');
-        if (st && inView) {
-          orb.setState(st);
-          var cap = document.getElementById('orbCap');
-          var lbl = (ORB_STATES[st] || ORB_STATES.idle).label;
-          if (cap) cap.textContent = lbl;
-          var oc = document.getElementById('heroOrb');
-          if (oc) oc.setAttribute('aria-label', 'Model state: ' + lbl.toLowerCase());
-        }
-        var n = +elStep.getAttribute('data-step');
-        if (id === '5') { rareView = n === 3 ? 'bal' : (n === 2 ? 'disc' : 'burden'); setSeg('[data-rare]', 'rare', rareView); }
-        if (id === '6' && n >= 1) { var wi = n === 1 ? 0 : (n === 2 ? 2 : worldIdx); if (n <= 2) { setWorld(c.svg, wi); setSeg('[data-world]', 'world', String(wi)); } }
-        if (c && drawn[id] !== n) { drawn[id] = n; c.draw(n); }
-      }
-      if (mk) mk(onStep); else scenes(sc, function (i, e) { onStep(e); });
-    });
 
     function setSeg(sel, attr, val) {
       [].forEach.call(document.querySelectorAll(sel), function (b) { b.classList.toggle('is-on', b.getAttribute('data-' + attr) === val); });
     }
+    function onStep(id, c, elStep) {
+      if (!elStep) return;
+      var n = +elStep.getAttribute('data-step');
+      if (id === '5') { rareView = n === 3 ? 'bal' : (n === 2 ? 'disc' : 'burden'); setSeg('[data-rare]', 'rare', rareView); }
+      if (id === '6') { var wi = n === 1 ? 0 : 2; setSeg('[data-world]', 'world', String(wi)); setWorld(c.svg, wi); }
+      if (c && drawn[id] !== n) { drawn[id] = n; c.draw(n); }
+    }
+    [].forEach.call(document.querySelectorAll('.st-scene'), function (sc) {
+      var id = sc.getAttribute('data-scene'), c = charts[id];
+      if (S && S.scenes) S.scenes(sc, { onStep: function (i, e) { onStep(id, c, e); } });
+      else { var first = sc.querySelector('.st-step'); onStep(id, c, first); }
+    });
+
     [].forEach.call(document.querySelectorAll('[data-rare]'), function (b) {
       b.addEventListener('click', function () { rareView = b.getAttribute('data-rare'); setSeg('[data-rare]', 'rare', rareView); drawRare(charts[5].svg, rareView); });
     });
@@ -3864,21 +3867,21 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     sl.addEventListener('input', syncN);
     out.textContent = NS_LIST[+sl.value].toLocaleString();
 
-    /* first paint for every chart so nothing is blank before scroll */
-    drawPath(charts[1].svg, NS_LIST[+sl.value], 1);
-    drawCoverage(charts[2].svg, 1);
-    drawReq(charts[3].svg, 1);
-    drawMis(charts[4].svg, 1);
-    drawRare(charts[5].svg, 'burden');
-    drawWorld(charts[6].svg, 0);
+    /* first paint for every figure so nothing is blank before scroll */
+    function paintAll() {
+      drawPath(charts[1].svg, NS_LIST[+sl.value], drawn['1'] || 1);
+      drawCoverage(charts[2].svg, drawn['2'] || 1);
+      drawReq(charts[3].svg, drawn['3'] || 1);
+      drawMis(charts[4].svg, drawn['4'] || 1);
+      drawRare(charts[5].svg, rareView);
+      drawWorld(charts[6].svg, worldIdx);
+    }
+    paintAll();
 
-    if (S && S.progressBar) S.progressBar(); else progressBar();
-    presenter();
-    document.addEventListener('rs-themechange', function () {
-      drawCoverage(charts[2].svg, 3); drawReq(charts[3].svg, 3); drawMis(charts[4].svg, 4);
-      drawRare(charts[5].svg, rareView); drawWorld(charts[6].svg, worldIdx);
-      drawPath(charts[1].svg, NS_LIST[+sl.value], 1);
-    });
+    /* the phone figures are separate drawings, so re-render on a width change */
+    if (PHQ.addEventListener) PHQ.addEventListener('change', paintAll);
+    else if (PHQ.addListener) PHQ.addListener(paintAll);
+    document.addEventListener('rs-themechange', paintAll);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
