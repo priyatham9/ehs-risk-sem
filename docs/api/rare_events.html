@@ -6,6 +6,9 @@
 <title>API: rare_events - ehs-risk-sem</title>
 <meta name="description" content="API documentation for ehs_risk_sem.rare_events" />
 <link rel="canonical" href="https://priyatham9.github.io/ehs-risk-sem/api/rare_events.html" />
+<meta name="theme-color" content="#F7F7F3" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0A0C10" media="(prefers-color-scheme: dark)" />
+<script>try{var t=localStorage.getItem("pc-theme")||localStorage.getItem("ehs-ai-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" />
@@ -14,244 +17,403 @@
 :root {
  color-scheme:light;
  --paper:#F7F7F3; --surface:#FFFFFF; --surface-2:#EFEFE9;
- --ink:#101311; --ink-2:#3A403C; --muted:#666D68;
+ --ink:#101311; --ink-2:#3A403C; --muted:#5F665F;
  --rule:#101311; --rule-soft:#D6D7CE;
  --accent:#1E40AF; --accent-2:#17307F; --accent-ink:#FFFFFF; --accent-wash:#E2E8FB;
- --warn:#8A5A00; --warn-wash:#FBF0DC;
- --grid-dot:rgba(16,19,17,.10); --shadow:rgba(16,19,17,.08);
+ --code-bg:#F1F2EC; --code-ink:#1A1F1C; --mark:#FFE9A8;
  --font-sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
  --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
- --maxw:1180px;
+ --maxw:1240px; --bar:58px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
  color-scheme:dark;
  --paper:#0A0C10; --surface:#12151C; --surface-2:#171B24;
- --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#838A99;
+ --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#9097A6;
  --rule:#EAECF2; --rule-soft:#262B36;
  --accent:#7C9EFF; --accent-2:#5B7FE8; --accent-ink:#06101F; --accent-wash:#151C33;
- --warn:#E3B25F; --warn-wash:#241C0C;
- --grid-dot:rgba(234,236,242,.09); --shadow:rgba(0,0,0,.4);
+ --code-bg:#0F1218; --code-ink:#DDE2EE; --mark:#4A3B0C;
   }
 }
 :root[data-theme="dark"] {
  color-scheme:dark;
  --paper:#0A0C10; --surface:#12151C; --surface-2:#171B24;
- --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#838A99;
+ --ink:#EAECF2; --ink-2:#BFC4CF; --muted:#9097A6;
  --rule:#EAECF2; --rule-soft:#262B36;
  --accent:#7C9EFF; --accent-2:#5B7FE8; --accent-ink:#06101F; --accent-wash:#151C33;
- --warn:#E3B25F; --warn-wash:#241C0C;
- --grid-dot:rgba(234,236,242,.09); --shadow:rgba(0,0,0,.4);
+ --code-bg:#0F1218; --code-ink:#DDE2EE; --mark:#4A3B0C;
 }
 :root[data-theme="light"]{color-scheme:light}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
-h1,h2,h3{margin:0;line-height:1.06;letter-spacing:-.01em}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--bar) + 16px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,h3,h4{margin:0;line-height:1.1;letter-spacing:-.01em}
 p{margin:0 0 1em}
 a{color:var(--accent)}
-img,svg{max-width:100%}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
-.label{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-code,.mono{overflow-wrap:anywhere}
-@media print{
-  .topbar,footer{display:none!important}
-  body{background:#fff!important;color:#000!important}
-  a{color:#000!important;text-decoration:underline}
-  .wrap{max-width:none}
-}
+code,pre,kbd{font-family:var(--font-mono);font-size:.875em}
+code{overflow-wrap:anywhere;word-break:break-word}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+pre code{white-space:inherit}
+.lede pre{margin:0 0 1em;padding:10px 12px;background:var(--code-bg);color:var(--code-ink);border:2px solid var(--rule-soft);font-size:.8125rem}
+.lede pre code{padding:0;border:0;background:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--accent);color:var(--accent-ink);padding:11px 17px;font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;text-decoration:none}
+.skip:focus{left:0}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ============ top bar ============ */
 .topbar{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:2px solid var(--rule)}
-.topbar-inner{max-width:var(--maxw);margin:0 auto;padding:13px 30px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.topbar-inner{max-width:var(--maxw);height:var(--bar);margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-decoration:none;white-space:nowrap}
 .brand-mark{width:14px;height:14px;background:var(--accent);flex:none}
-.topnav{display:flex;align-items:center;gap:2px}
-.topnav a{text-decoration:none;padding:7px 11px;font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);transition:color .15s,background .15s}
+.brand small{font-size:inherit;font-weight:500;color:var(--muted)}
+.topnav{display:flex;align-items:center;gap:2px;margin-left:auto}
+.topnav a{text-decoration:none;padding:7px 11px;font-family:var(--font-mono);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
 .topnav a:hover{color:var(--ink);background:var(--surface-2)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .topnav a{color:var(--muted)}}
-.toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;flex:none;background:var(--paper);border:2px solid var(--rule);border-radius:0;color:var(--ink);cursor:pointer}
+.topnav a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+.toggle{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;flex:none;background:var(--paper);border:2px solid var(--rule);border-radius:0;color:var(--ink);cursor:pointer}
 .toggle:hover{background:var(--surface-2)}
+.toggle svg{width:18px;height:18px}
 .icon-moon{display:none}
 :root[data-theme="dark"] .icon-moon{display:block}
 :root[data-theme="dark"] .icon-sun{display:none}
-.api-container{display:flex;gap:30px;min-height:calc(100vh - 80px)}
-.api-sidebar{flex:0 0 220px;padding:30px 0;border-right:2px solid var(--rule);max-height:calc(100vh - 80px);overflow-y:auto}
-.api-main{flex:1;padding:30px 0}
-.api-nav-item{padding:8px 0;font-family:var(--font-mono);font-size:.875rem;color:var(--muted);text-decoration:none;display:block}
-.api-nav-item:hover{color:var(--ink)}
-.api-nav-item.active{color:var(--accent);font-weight:600}
-.api-symbol{margin-bottom:48px;padding-bottom:30px;border-bottom:2px solid var(--rule-soft)}
-.api-symbol:last-child{border-bottom:0}
-.api-sig{font-family:var(--font-mono);font-size:.9rem;background:var(--surface);padding:12px 16px;border:2px solid var(--rule-soft);overflow-x:auto;white-space:pre-wrap;word-break:break-word}
-.api-doc{margin-top:12px;color:var(--ink-2);line-height:1.6}
-.api-doc p{margin-bottom:.8em}
-.api-doc ul{margin-bottom:.8em;padding-left:1.5em}
+@media (prefers-color-scheme: dark){:root:not([data-theme]) .icon-moon{display:block}:root:not([data-theme]) .icon-sun{display:none}}
+
+/* ============ layout ============ */
+.layout{max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px}
+.side{position:sticky;top:var(--bar);align-self:start;max-height:calc(100vh - var(--bar));overflow-y:auto;padding:24px 4px 40px 0;border-right:2px solid var(--rule);scrollbar-width:thin}
+.side > summary{display:none}
+.side-k{display:block;margin:22px 0 6px;font-family:var(--font-mono);font-size:.6875rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.side ul{list-style:none;margin:0;padding:0}
+.side a{display:block;padding:5px 10px;border-left:3px solid transparent;font-family:var(--font-mono);font-size:.8125rem;color:var(--ink-2);text-decoration:none;overflow-wrap:anywhere}
+.side a:hover{color:var(--ink);background:var(--surface-2)}
+.side a[aria-current="page"],.side a.is-here{color:var(--accent);border-left-color:var(--accent);font-weight:700;background:var(--accent-wash)}
+.side .toc a{font-size:.75rem;padding:3px 10px 3px 16px}
+.side .toc .kind{color:var(--muted);font-weight:400}
+.main{padding:28px 0 64px;min-width:0}
+
+/* ============ search ============ */
+.search{position:relative}
+.search label{display:block;margin-bottom:6px;font-family:var(--font-mono);font-size:.6875rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.search input{width:100%;height:42px;padding:0 38px 0 12px;border:2px solid var(--rule);border-radius:0;background:var(--surface);color:var(--ink);font:500 .875rem var(--font-mono)}
+.search input::placeholder{color:var(--muted)}
+.search kbd{position:absolute;right:10px;top:31px;padding:0 5px;border:1px solid var(--rule-soft);font-size:.6875rem;color:var(--muted);pointer-events:none}
+.results{list-style:none;margin:6px 0 0;padding:0;border:2px solid var(--rule);background:var(--surface);max-height:60vh;overflow-y:auto}
+.results[hidden]{display:none}
+.side .results a{display:block;padding:8px 10px;border-bottom:1px solid var(--rule-soft);border-left:0;font-size:.8125rem;color:var(--ink)}
+.side .results a:hover,.side .results a.is-active{background:var(--accent-wash)}
+.results b{color:var(--accent)}
+.results small{display:block;margin-top:2px;font-family:var(--font-sans);font-size:.75rem;line-height:1.35;color:var(--ink-2)}
+.results .none{padding:8px 10px;font-size:.8125rem;color:var(--muted)}
+mark{background:var(--mark);color:inherit;padding:0}
+
+/* ============ content ============ */
+.crumbs{margin:0 0 14px;font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.crumbs a{color:var(--muted)}
+.main h1{font-size:clamp(1.9rem,4.4vw,2.8rem);font-stretch:112%;font-weight:900;overflow-wrap:anywhere}
+.main h1 code{font-size:1em}
+.lede{margin:14px 0 0;max-width:72ch;color:var(--ink-2)}
+.lede p{margin:0 0 .8em}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 8px}
+.chip{display:inline-block;padding:4px 9px;border:2px solid var(--rule-soft);font-family:var(--font-mono);font-size:.6875rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);overflow-wrap:anywhere}
+.api-symbol{margin-top:40px;padding-top:28px;border-top:2px solid var(--rule)}
+.sym-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px}
+.sym-head h2{font-family:var(--font-mono);font-size:clamp(1.15rem,2.4vw,1.45rem);font-weight:700;overflow-wrap:anywhere}
+.kind{font-family:var(--font-mono);font-size:.625rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.anchor{margin-left:auto;font-family:var(--font-mono);font-size:.75rem;color:var(--muted);text-decoration:none}
+.anchor:hover{color:var(--accent)}
+.api-sig,.api-doc pre{margin:12px 0 0;padding:12px 14px;background:var(--code-bg);color:var(--code-ink);border:2px solid var(--rule-soft);border-left:4px solid var(--accent);font-size:.8125rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:4}
+.api-sig code,.api-doc pre code{font-size:inherit;padding:0;background:none;border:0}
+.api-doc pre{border-left-color:var(--rule-soft);margin-bottom:1em}
+.api-doc{margin-top:14px;color:var(--ink-2);max-width:78ch}
+.api-doc p{margin-bottom:.85em}
+.api-doc ul{margin:0 0 .85em;padding-left:1.3em}
 .api-doc li{margin-bottom:.3em}
-.api-used-by{margin-top:12px;padding:10px 12px;background:var(--surface-2);font-family:var(--font-mono);font-size:.8rem;color:var(--ink-2)}
+.api-doc code,.lede code{padding:.05em .3em;background:var(--code-bg);color:var(--code-ink);border:1px solid var(--rule-soft);overflow-wrap:anywhere}
+.api-doc h4{margin:1.3em 0 .5em;font-family:var(--font-mono);font-size:.6875rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.api-doc dl{margin:0 0 1em;border-top:1px solid var(--rule-soft)}
+.api-doc dt{padding-top:8px;font-family:var(--font-mono);font-size:.875rem;font-weight:700;color:var(--ink);overflow-wrap:anywhere}
+.api-doc dd{margin:2px 0 0;padding:0 0 8px 14px;border-bottom:1px solid var(--rule-soft)}
+.api-doc dd p{margin-bottom:.4em}
+.methods{margin-top:18px;padding-left:14px;border-left:2px solid var(--rule-soft)}
+.methods h3{margin-top:18px;font-family:var(--font-mono);font-size:1rem;overflow-wrap:anywhere}
+.api-used-by{margin-top:14px;padding:10px 12px;background:var(--surface-2);font-family:var(--font-mono);font-size:.75rem;color:var(--ink-2);overflow-wrap:anywhere}
 .api-used-by strong{color:var(--ink)}
-footer{padding:30px;text-align:center;font-size:.875rem;color:var(--muted);border-top:2px solid var(--rule)}
-.back-link{display:inline-block;margin-bottom:20px;padding:8px 0;font-family:var(--font-mono);font-size:.875rem;color:var(--accent);text-decoration:none}
-.back-link:hover{text-decoration:underline}
+.to-top{display:inline-block;margin-top:12px;font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.to-top:hover{color:var(--accent)}
+.mods{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:2px solid var(--rule);border-left:2px solid var(--rule)}
+.mods li{border-right:2px solid var(--rule);border-bottom:2px solid var(--rule);background:var(--surface)}
+.mods a{display:flex;flex-direction:column;gap:6px;height:100%;padding:16px 18px;color:var(--ink);text-decoration:none}
+.mods a:hover{background:var(--surface-2)}
+.mods b{font-family:var(--font-mono);font-size:1rem;color:var(--accent)}
+.mods span{font-size:.875rem;line-height:1.45;color:var(--ink-2)}
+.mods small{margin-top:auto;font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+footer{border-top:2px solid var(--rule);padding:26px 24px 40px;text-align:center;font-family:var(--font-mono);font-size:.75rem;color:var(--muted)}
+footer a{color:var(--muted)}
+
+/* ============ phone ============ */
+@media (max-width: 860px){
+  .topbar-inner{padding:0 16px;gap:8px}
+  .brand small,.topnav a.hide-sm{display:none}
+  .layout{grid-template-columns:minmax(0,1fr);gap:0;padding:0 16px}
+  .side{position:static;max-height:none;overflow:visible;padding:14px 0 0;border-right:0;border-bottom:2px solid var(--rule)}
+  .side > summary{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:0 12px;border:2px solid var(--rule);background:var(--surface);font-family:var(--font-mono);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;list-style:none}
+  .side > summary::-webkit-details-marker{display:none}
+  .side > summary::after{content:"+";font-size:1.1rem}
+  .side[open] > summary::after{content:"\2212"}
+  .side[open]{padding-bottom:16px}
+  .side:not([open]){padding-bottom:14px}
+  .side-body{padding-top:12px}
+  .search kbd{display:none}
+  .main{padding-top:18px}
+  .api-sig,.api-doc pre{font-size:.75rem;padding:10px 11px}
+}
+@media print{
+  .topbar,.side,footer,.to-top,.anchor{display:none!important}
+  .layout{display:block}
+  body{background:#fff!important;color:#000!important}
+}
 </style>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  const theme=localStorage.getItem('theme')||'system';
-  if(theme==='system'){
-    if(window.matchMedia('(prefers-color-scheme:dark)').matches){
-      document.documentElement.setAttribute('data-theme','dark');
-    }
-  }else{
-    document.documentElement.setAttribute('data-theme',theme);
-  }
-});
-</script>
+<script src="search-index.js" defer></script>
 </head>
-<body>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
 <header class="topbar">
   <div class="topbar-inner">
-    <a href="../index.html" class="brand"><span class="brand-mark"></span> ehs-risk-sem</a>
-    <nav class="topnav">
-      <a href="../index.html">Home</a>
+    <a href="../index.html" class="brand"><span class="brand-mark"></span> ehs-risk-sem <small>/ API</small></a>
+    <nav class="topnav" aria-label="Site">
+      <a href="../index.html" class="hide-sm">Project</a>
+      <a href="../story.html" class="hide-sm">Story</a>
       <a href="index.html">API</a>
     </nav>
-    <button class="toggle" id="theme-toggle" aria-label="Toggle theme">
-      <svg class="icon-sun" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M10 1v3M10 16v3M1 10h3M16 10h3M3.64 3.64l2.12 2.12M14.24 14.24l2.12 2.12M16.36 3.64l-2.12 2.12M5.76 14.24l-2.12 2.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <svg class="icon-moon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.5 10.5c0-1.04-.16-2.04-.47-3 .68.24 1.32.58 1.9 1.01.7.52 1.26 1.18 1.65 1.95-.32.02-.64.04-.96.04-1.5 0-2.95-.31-4.27-.88.05.3.15.59.15.88 0 2.76-2.24 5-5 5s-5-2.24-5-5c0-.29.1-.58.15-.88C3.31 10.69 1.86 11 .36 11c-.32 0-.64-.02-.96-.04.39-.77.95-1.43 1.65-1.95.58-.43 1.22-.77 1.9-1.01-.31.96-.47 1.96-.47 3 0 4.97 4.03 9 9 9 1.04 0 2.04-.16 3-.47-.24.68-.58 1.32-1.01 1.9-.52.7-1.18 1.26-1.95 1.65.02-.32.04-.64.04-.96 0-1.5-.31-2.95-.88-4.27.3.05.59.15.88.15 2.76 0 5-2.24 5-5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
+    <button class="toggle" id="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="false"><svg class="icon-sun" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M10 1v3M10 16v3M1 10h3M16 10h3M3.64 3.64l2.12 2.12M14.24 14.24l2.12 2.12M16.36 3.64l-2.12 2.12M5.76 14.24l-2.12 2.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="icon-moon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16.5 12.6A7 7 0 0 1 7.4 3.5a7 7 0 1 0 9.1 9.1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
   </div>
 </header>
-<main class="wrap">
-  <a href="../index.html" class="back-link">Back to ehs-risk-sem</a>
-  <div class="api-container">
-    <nav class="api-sidebar">
-      <a href="calibration.html" class="api-nav-item">calibration</a>
-<a href="compat.html" class="api-nav-item">compat</a>
-<a href="diagnostics.html" class="api-nav-item">diagnostics</a>
-<a href="fit_indices.html" class="api-nav-item">fit_indices</a>
-<a href="glm.html" class="api-nav-item">glm</a>
-<a href="identification.html" class="api-nav-item">identification</a>
-<a href="linalg.html" class="api-nav-item">linalg</a>
-<a href="measurement.html" class="api-nav-item">measurement</a>
-<a href="model.html" class="api-nav-item">model</a>
-<a href="power.html" class="api-nav-item">power</a>
-<a href="rare_events.html" class="api-nav-item active">rare_events</a>
-<a href="special.html" class="api-nav-item">special</a>
-<a href="structural.html" class="api-nav-item">structural</a>
+<div class="layout">
+  <details class="side" id="side" open>
+    <summary>Modules and contents</summary>
+    <nav class="side-body" aria-label="API reference">
+    <div class="search" role="search">
+      <label for="api-q">Search all modules</label>
+      <input id="api-q" type="search" placeholder="e.g. rmsea, bootstrap" autocomplete="off"
+        spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false"
+        aria-controls="api-results" />
+      <kbd aria-hidden="true">/</kbd>
+      <ul class="results" id="api-results" role="listbox" aria-label="Search results" hidden></ul>
+    </div>
+    <span class="side-k" id="mods-h">Modules</span>
+    <ul aria-labelledby="mods-h"><li><a href="calibration.html">calibration</a></li><li><a href="compat.html">compat</a></li><li><a href="diagnostics.html">diagnostics</a></li><li><a href="fit_indices.html">fit_indices</a></li><li><a href="glm.html">glm</a></li><li><a href="identification.html">identification</a></li><li><a href="linalg.html">linalg</a></li><li><a href="measurement.html">measurement</a></li><li><a href="model.html">model</a></li><li><a href="power.html">power</a></li><li><a href="rare_events.html" aria-current="page">rare_events</a></li><li><a href="special.html">special</a></li><li><a href="structural.html">structural</a></li></ul>
+    <span class="side-k" id="toc-h">On this page</span><ul class="toc" aria-labelledby="toc-h"><li><a href="#ExposureModel">ExposureModel <span class="kind">class</span></a></li><li><a href="#alerts_per_true_event">alerts_per_true_event <span class="kind">fn</span></a></li><li><a href="#events_for_relative_precision">events_for_relative_precision <span class="kind">fn</span></a></li><li><a href="#n_for_relative_precision">n_for_relative_precision <span class="kind">fn</span></a></li><li><a href="#ppv_from_sens_spec">ppv_from_sens_spec <span class="kind">fn</span></a></li><li><a href="#probability_per_shift">probability_per_shift <span class="kind">fn</span></a></li><li><a href="#rate_per_hour">rate_per_hour <span class="kind">fn</span></a></li><li><a href="#rate_ratio_ci">rate_ratio_ci <span class="kind">fn</span></a></li><li><a href="#shifts_per_event">shifts_per_event <span class="kind">fn</span></a></li><li><a href="#worker_shifts_for_calibration">worker_shifts_for_calibration <span class="kind">fn</span></a></li></ul>
     </nav>
-    <article class="api-main">
-      <h1>rare_events</h1>
-<div class="api-symbol">
-<h3>ExposureModel</h3>
-<div class="api-sig">ExposureModel(trir: &#39;float&#39; = 2.3, shift_hours: &#39;float&#39; = 8.0, base_hours: &#39;float&#39; = 200000.0) -&gt; None</div>
+  </details>
+  <main class="main" id="main">
+<p class="crumbs"><a href="index.html">API</a> / ehs_risk_sem.rare_events</p>
+<h1>rare_events</h1>
+<div class="lede"><p>Base-rate arithmetic for occupational injury prediction.</p>
+<p>Everything in this module is elementary. It is here because the elementary arithmetic is what determines whether a real-time safety risk score can work at all, and it is routinely skipped.</p>
+<p>The recurring result: at occupational injury base rates, discrimination is nearly meaningless as a decision criterion. A classifier with 80% sensitivity and 95% specificity, applied per worker-shift, produces roughly one true event per several hundred alerts. Raising specificity to 99.9% still leaves more than ten alerts per event.</p>
+<p>Hopkins (2009) reached the same conclusion without any statistics, calling it the &quot;zoom effect&quot;: a rate is meaningful at the level of aggregation where enough events occur to form one, and meaningless below it.</p>
+<p>Note on the base rate constant below. <code>BLS_PRIVATE_TRC_RATE_2024 = 2.3</code> per 100 full-time-equivalent workers is the sole real-world quantity in this package. It is verified against the primary BLS source, which states: &quot;The 2024 incidence rate of total recordable cases in private industry was 2.3 cases per 100 full-time equivalent workers, down from 2.4 in 2023.&quot; (US Bureau of Labor Statistics, *The Economics Daily*, 23 March 2026, drawn from the Employer-Reported Workplace Injuries and Illnesses program.) Every function here still takes the rate as an argument, so nothing in the package depends on the constant and a different industry or year can be substituted freely.</p></div>
+<div class="meta"><span class="chip">10 public symbols</span><span class="chip">1 class</span><span class="chip">ehs_risk_sem.rare_events</span></div>
+<section class="api-symbol" id="ExposureModel">
+<div class="sym-head"><span class="kind">class</span><h2>ExposureModel</h2><a class="anchor" href="#ExposureModel" aria-label="Link to ExposureModel">#</a></div>
+<pre class="api-sig"><code>ExposureModel(
+    trir: float = 2.3,
+    shift_hours: float = 8.0,
+    base_hours: float = 200000.0,
+) -&gt; None</code></pre>
 <div class="api-doc"><p>Translate an establishment-level incidence rate into unit-level risk.</p>
-<p>Parameters
-----------
-trir
-Total recordable incidence rate per ``base_hours`` hours.
-shift_hours
-Length of the exposure window that a score would be attached to.
-base_hours
-Denominator of the incidence rate; 200,000 for OSHA-style rates.</p>
-<p>The class exists to make one point explicit: a risk score has no meaning
-until the unit of analysis and the exposure window are named. &quot;This crew is
-at elevated risk&quot; is not a claim until it says elevated over what period,
-relative to what denominator.</p></div>
-<div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
+<h4>Parameters</h4>
+<dl><dt>trir</dt><dd><p>Total recordable incidence rate per <code>base_hours</code> hours.</p></dd></dl>
+<dl><dt>shift_hours</dt><dd><p>Length of the exposure window that a score would be attached to.</p></dd></dl>
+<dl><dt>base_hours</dt><dd><p>Denominator of the incidence rate; 200,000 for OSHA-style rates.</p></dd></dl>
+<dl><dt>The class exists to make one point explicit: a risk score has no meaning</dt><dd></dd></dl>
+<dl><dt>until the unit of analysis and the exposure window are named. &quot;This crew is</dt><dd></dd></dl>
+<dl><dt>at elevated risk&quot; is not a claim until it says elevated over what period,</dt><dd></dd></dl>
+<dl><dt>relative to what denominator.</dt><dd></dd></dl></div>
+<div class="methods">
+<h3 id="ExposureModel.alert_burden"><span class="kind">method</span> ExposureModel.alert_burden</h3>
+<pre class="api-sig"><code>alert_burden(
+    self,
+    sensitivity: float,
+    specificity: float,
+) -&gt; dict</code></pre>
+<div class="api-doc"><p>Alerting arithmetic at this exposure model&#39;s base rate.</p></div>
+<h3 id="ExposureModel.per_hour"><span class="kind">method</span> ExposureModel.per_hour</h3>
+<pre class="api-sig"><code>per_hour(self) -&gt; float</code></pre>
+<h3 id="ExposureModel.per_shift"><span class="kind">method</span> ExposureModel.per_shift</h3>
+<pre class="api-sig"><code>per_shift(self) -&gt; float</code></pre>
+<h3 id="ExposureModel.per_worker_year"><span class="kind">method</span> ExposureModel.per_worker_year</h3>
+<pre class="api-sig"><code>per_worker_year(
+    self,
+    hours_per_year: float = 2000.0,
+) -&gt; float</code></pre>
+<h3 id="ExposureModel.shifts_between_events"><span class="kind">method</span> ExposureModel.shifts_between_events</h3>
+<pre class="api-sig"><code>shifts_between_events(self) -&gt; float</code></pre>
+<h3 id="ExposureModel.summary"><span class="kind">method</span> ExposureModel.summary</h3>
+<pre class="api-sig"><code>summary(self) -&gt; str</code></pre>
 </div>
-<div class="api-symbol">
-<h3>alerts_per_true_event</h3>
-<div class="api-sig">alerts_per_true_event(sensitivity: &#39;float&#39;, specificity: &#39;float&#39;, prevalence: &#39;float&#39;) -&gt; &#39;float&#39;</div>
-<div class="api-doc"><p>Number of alerts raised per true event detected, ``1 / PPV``.</p>
-<p>This is the quantity that determines whether an operational alerting system
-will be believed. It is reported instead of, not alongside, a bare PPV in
-most of this repository&#39;s output because the reciprocal is the form people
-can act on.</p></div>
 <div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
-</div>
-<div class="api-symbol">
-<h3>events_for_relative_precision</h3>
-<div class="api-sig">events_for_relative_precision(rel_precision: &#39;float&#39; = 0.1, z: &#39;float&#39; = 1.959963985) -&gt; &#39;float&#39;</div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="alerts_per_true_event">
+<div class="sym-head"><span class="kind">function</span><h2>alerts_per_true_event</h2><a class="anchor" href="#alerts_per_true_event" aria-label="Link to alerts_per_true_event">#</a></div>
+<pre class="api-sig"><code>alerts_per_true_event(
+    sensitivity: float,
+    specificity: float,
+    prevalence: float,
+) -&gt; float</code></pre>
+<div class="api-doc"><p>Number of alerts raised per true event detected, <code>1 / PPV</code>.</p>
+<p>This is the quantity that determines whether an operational alerting system will be believed. It is reported instead of, not alongside, a bare PPV in most of this repository&#39;s output because the reciprocal is the form people can act on.</p></div>
+<div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="events_for_relative_precision">
+<div class="sym-head"><span class="kind">function</span><h2>events_for_relative_precision</h2><a class="anchor" href="#events_for_relative_precision" aria-label="Link to events_for_relative_precision">#</a></div>
+<pre class="api-sig"><code>events_for_relative_precision(
+    rel_precision: float = 0.1,
+    z: float = 1.959963985,
+) -&gt; float</code></pre>
 <div class="api-doc"><p>Number of events (not observations) needed for a given relative precision.</p>
-<p>``events = z^2 / rel^2``, approximately, since ``n * p`` at small ``p``. At
-10% relative precision this is about 384 events, whatever the base rate.</p></div>
-</div>
-<div class="api-symbol">
-<h3>n_for_relative_precision</h3>
-<div class="api-sig">n_for_relative_precision(p: &#39;float&#39;, rel_precision: &#39;float&#39; = 0.1, z: &#39;float&#39; = 1.959963985) -&gt; &#39;float&#39;</div>
+<p><code>events = z^2 / rel^2</code>, approximately, since <code>n * p</code> at small <code>p</code>. At 10% relative precision this is about 384 events, whatever the base rate.</p></div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="n_for_relative_precision">
+<div class="sym-head"><span class="kind">function</span><h2>n_for_relative_precision</h2><a class="anchor" href="#n_for_relative_precision" aria-label="Link to n_for_relative_precision">#</a></div>
+<pre class="api-sig"><code>n_for_relative_precision(
+    p: float,
+    rel_precision: float = 0.1,
+    z: float = 1.959963985,
+) -&gt; float</code></pre>
 <div class="api-doc"><p>Sample size needed to estimate a proportion to a relative precision.</p>
-<p>``n = z^2 (1 - p) / (rel^2 * p)``</p>
-<p>At ``p = 9.2e-5`` (one recordable per 8-hour shift at TRIR 2.3) and 10%
-relative precision this is roughly 4.2 million worker-shifts. Below that
-sample size, calibration-in-the-large cannot be estimated, let alone a
-calibration curve.</p></div>
-</div>
-<div class="api-symbol">
-<h3>ppv_from_sens_spec</h3>
-<div class="api-sig">ppv_from_sens_spec(sensitivity: &#39;float&#39;, specificity: &#39;float&#39;, prevalence: &#39;float&#39;) -&gt; &#39;float&#39;</div>
+<p><code>n = z^2 (1 - p) / (rel^2 * p)</code></p>
+<p>At <code>p = 9.2e-5</code> (one recordable per 8-hour shift at TRIR 2.3) and 10% relative precision this is roughly 4.2 million worker-shifts. Below that sample size, calibration-in-the-large cannot be estimated, let alone a calibration curve.</p></div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="ppv_from_sens_spec">
+<div class="sym-head"><span class="kind">function</span><h2>ppv_from_sens_spec</h2><a class="anchor" href="#ppv_from_sens_spec" aria-label="Link to ppv_from_sens_spec">#</a></div>
+<pre class="api-sig"><code>ppv_from_sens_spec(
+    sensitivity: float,
+    specificity: float,
+    prevalence: float,
+) -&gt; float</code></pre>
 <div class="api-doc"><p>Positive predictive value from sensitivity, specificity and prevalence.</p>
-<p>``PPV = sens * prev / (sens * prev + (1 - spec) * (1 - prev))``</p></div>
-</div>
-<div class="api-symbol">
-<h3>probability_per_shift</h3>
-<div class="api-sig">probability_per_shift(trir: &#39;float&#39;, shift_hours: &#39;float&#39; = 8.0, base_hours: &#39;float&#39; = 200000.0) -&gt; &#39;float&#39;</div>
+<p><code>PPV = sens * prev / (sens * prev + (1 - spec) * (1 - prev))</code></p></div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="probability_per_shift">
+<div class="sym-head"><span class="kind">function</span><h2>probability_per_shift</h2><a class="anchor" href="#probability_per_shift" aria-label="Link to probability_per_shift">#</a></div>
+<pre class="api-sig"><code>probability_per_shift(
+    trir: float,
+    shift_hours: float = 8.0,
+    base_hours: float = 200000.0,
+) -&gt; float</code></pre>
 <div class="api-doc"><p>Probability that a given worker-shift contains a recordable case.</p>
-<p>Uses the rate directly rather than a Poisson exceedance probability, since
-at these rates the two agree to seven decimal places and the linear form is
-the one a reader can check by hand.</p></div>
-</div>
-<div class="api-symbol">
-<h3>rate_per_hour</h3>
-<div class="api-sig">rate_per_hour(trir: &#39;float&#39;, base_hours: &#39;float&#39; = 200000.0) -&gt; &#39;float&#39;</div>
+<p>Uses the rate directly rather than a Poisson exceedance probability, since at these rates the two agree to seven decimal places and the linear form is the one a reader can check by hand.</p></div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="rate_per_hour">
+<div class="sym-head"><span class="kind">function</span><h2>rate_per_hour</h2><a class="anchor" href="#rate_per_hour" aria-label="Link to rate_per_hour">#</a></div>
+<pre class="api-sig"><code>rate_per_hour(
+    trir: float,
+    base_hours: float = 200000.0,
+) -&gt; float</code></pre>
 <div class="api-doc"><p>Convert an OSHA-style incidence rate to a rate per worker-hour.</p>
-<p>``TRIR`` is cases per ``base_hours`` hours worked. At TRIR 2.3 this is
-1.15e-5 per worker-hour.</p></div>
-</div>
-<div class="api-symbol">
-<h3>rate_ratio_ci</h3>
-<div class="api-sig">rate_ratio_ci(events_a: &#39;int&#39;, exposure_a: &#39;float&#39;, events_b: &#39;int&#39;, exposure_b: &#39;float&#39;, z: &#39;float&#39; = 1.959963985) -&gt; &#39;dict&#39;</div>
+<p><code>TRIR</code> is cases per <code>base_hours</code> hours worked. At TRIR 2.3 this is 1.15e-5 per worker-hour.</p></div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="rate_ratio_ci">
+<div class="sym-head"><span class="kind">function</span><h2>rate_ratio_ci</h2><a class="anchor" href="#rate_ratio_ci" aria-label="Link to rate_ratio_ci">#</a></div>
+<pre class="api-sig"><code>rate_ratio_ci(
+    events_a: int,
+    exposure_a: float,
+    events_b: int,
+    exposure_b: float,
+    z: float = 1.959963985,
+) -&gt; dict</code></pre>
 <div class="api-doc"><p>Confidence interval for a ratio of two Poisson rates.</p>
-<p>Included because comparing an establishment or a shift against a benchmark
-is the operational use of these rates, and the interval is usually wide
-enough at realistic event counts to make the comparison uninformative --
-which is worth showing rather than asserting.</p></div>
-</div>
-<div class="api-symbol">
-<h3>shifts_per_event</h3>
-<div class="api-sig">shifts_per_event(trir: &#39;float&#39;, shift_hours: &#39;float&#39; = 8.0, base_hours: &#39;float&#39; = 200000.0) -&gt; &#39;float&#39;</div>
+<p>Included because comparing an establishment or a shift against a benchmark is the operational use of these rates, and the interval is usually wide enough at realistic event counts to make the comparison uninformative -- which is worth showing rather than asserting.</p></div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="shifts_per_event">
+<div class="sym-head"><span class="kind">function</span><h2>shifts_per_event</h2><a class="anchor" href="#shifts_per_event" aria-label="Link to shifts_per_event">#</a></div>
+<pre class="api-sig"><code>shifts_per_event(
+    trir: float,
+    shift_hours: float = 8.0,
+    base_hours: float = 200000.0,
+) -&gt; float</code></pre>
 <div class="api-doc"><p>Expected number of worker-shifts between recordable cases.</p></div>
 <div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
-</div>
-<div class="api-symbol">
-<h3>worker_shifts_for_calibration</h3>
-<div class="api-sig">worker_shifts_for_calibration(trir: &#39;float&#39; = 2.3, shift_hours: &#39;float&#39; = 8.0, rel_precision: &#39;float&#39; = 0.1) -&gt; &#39;dict&#39;</div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+<section class="api-symbol" id="worker_shifts_for_calibration">
+<div class="sym-head"><span class="kind">function</span><h2>worker_shifts_for_calibration</h2><a class="anchor" href="#worker_shifts_for_calibration" aria-label="Link to worker_shifts_for_calibration">#</a></div>
+<pre class="api-sig"><code>worker_shifts_for_calibration(
+    trir: float = 2.3,
+    shift_hours: float = 8.0,
+    rel_precision: float = 0.1,
+) -&gt; dict</code></pre>
 <div class="api-doc"><p>Sample size needed to calibrate a shift-level risk model.</p>
-<p>Returns both the required number of worker-shifts and the number of events
-those shifts are expected to contain.</p></div>
+<p>Returns both the required number of worker-shifts and the number of events those shifts are expected to contain.</p></div>
 <div class="api-used-by"><strong>Used by:</strong> study_02_rare_events.py</div>
+<a class="to-top" href="#top">Back to top</a>
+</section>
+  </main>
 </div>
-    </article>
-  </div>
-</main>
-<footer>Generated API reference for ehs-risk-sem</footer>
+<footer>Generated from the package docstrings by <code>tools/build_api_docs.py</code> &middot;
+<a href="https://github.com/priyatham9/ehs-risk-sem">Source on GitHub</a></footer>
 <script>
-document.getElementById('theme-toggle').addEventListener('click',function(){
-  const current=document.documentElement.getAttribute('data-theme')||'system';
-  const next=current==='light'?'dark':current==='dark'?'system':'light';
-  if(next==='system'){
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.removeItem('theme');
-  }else{
-    document.documentElement.setAttribute('data-theme',next);
-    localStorage.setItem('theme',next);
+(function(){
+  var root=document.documentElement, mq=matchMedia('(prefers-color-scheme: dark)');
+  var tb=document.getElementById('theme-toggle');
+  function cur(){var t=root.getAttribute('data-theme');return t==='dark'||t==='light'?t:(mq.matches?'dark':'light');}
+  function sync(){var d=cur()==='dark';tb.setAttribute('aria-pressed',d?'true':'false');tb.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');}
+  tb.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);
+    try{localStorage.setItem('pc-theme',n);localStorage.setItem('ehs-ai-theme',n);}catch(e){}sync();});
+  sync(); if(mq.addEventListener) mq.addEventListener('change',sync);
+
+  /* contents drawer: always open on wide screens, collapsed on phones */
+  var side=document.getElementById('side'), wide=matchMedia('(min-width: 861px)');
+  function fit(){ side.open=wide.matches; }
+  fit(); if(wide.addEventListener) wide.addEventListener('change',fit);
+  var here=side.querySelector('.side-body > ul [aria-current="page"]');
+  if(here&&wide.matches&&here.offsetTop>side.clientHeight-60) side.scrollTop=here.offsetTop-120;
+
+  /* search across every module, from search-index.js */
+  var q=document.getElementById('api-q'), list=document.getElementById('api-results');
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function hi(s,t){var i=s.toLowerCase().indexOf(t);return i<0?esc(s):esc(s.slice(0,i))+'<mark>'+esc(s.slice(i,i+t.length))+'</mark>'+esc(s.slice(i+t.length));}
+  var active=-1;
+  function render(){
+    var idx=window.API_INDEX||[], t=q.value.trim().toLowerCase(); active=-1; q.removeAttribute('aria-activedescendant');
+    if(!t){list.hidden=true;list.innerHTML='';q.setAttribute('aria-expanded','false');return;}
+    var hits=idx.map(function(e){var n=e.n.toLowerCase(),s=(e.s||'').toLowerCase(),m=e.m.toLowerCase(),sc=-1;
+      if(n===t)sc=0;else if(n.indexOf(t)===0)sc=1;else if(n.indexOf(t)>0)sc=2;else if(m.indexOf(t)>=0)sc=3;else if(s.indexOf(t)>=0)sc=4;
+      return {e:e,sc:sc};}).filter(function(h){return h.sc>=0;}).sort(function(a,b){return a.sc-b.sc||a.e.n.localeCompare(b.e.n);}).slice(0,14);
+    list.innerHTML=hits.length?hits.map(function(h,i){var e=h.e;return '<li><a role="option" id="api-r'+i+'" href="'+e.u+'"><b>'+hi(e.n,t)+'</b> <span class="kind">'+esc(e.k)+' \u00b7 '+esc(e.m)+'</span>'+(e.s?'<small>'+hi(e.s,t)+'</small>':'')+'</a></li>';}).join(''):'<li class="none">No symbol matches \u201c'+esc(q.value)+'\u201d</li>';
+    list.hidden=false;q.setAttribute('aria-expanded','true');
   }
-});
+  function move(d){var a=list.querySelectorAll('a');if(!a.length)return;if(active>=0)a[active].classList.remove('is-active');active=(active+d+a.length)%a.length;a[active].classList.add('is-active');a[active].scrollIntoView({block:'nearest'});q.setAttribute('aria-activedescendant',a[active].id);}
+  q.addEventListener('input',render);
+  q.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){e.preventDefault();move(1);} else if(e.key==='ArrowUp'){e.preventDefault();move(-1);}
+    else if(e.key==='Enter'){var a=list.querySelectorAll('a');var go=a[active>=0?active:0];if(go){e.preventDefault();location.href=go.href;}}
+    else if(e.key==='Escape'){q.value='';render();}
+  });
+  document.addEventListener('keydown',function(e){
+    var ae=document.activeElement;
+    if(e.key==='/'&&ae!==q&&!/input|textarea|select/i.test(ae.tagName)){e.preventDefault();side.open=true;q.focus();}
+  });
+
+  /* highlight the symbol in view under "On this page" */
+  var toc=[].slice.call(side.querySelectorAll('.toc a'));
+  if(toc.length&&'IntersectionObserver' in window){
+    var map={};toc.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){toc.forEach(function(a){a.classList.remove('is-here');});var a=map[en.target.id];if(a)a.classList.add('is-here');}});},{rootMargin:'-20% 0px -70% 0px'});
+    toc.forEach(function(a){var s=document.getElementById(a.getAttribute('href').slice(1));if(s)io.observe(s);});
+  }
+})();
 </script>
 </body>
 </html>
