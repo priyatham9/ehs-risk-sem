@@ -508,6 +508,114 @@ html{scroll-padding-top:16px}
 .st-chart.is-ph .big-sub{font-size:13px}
 .st-chart.is-ph .hi{font-size:14px}
 .st-chart.is-ph .st-caption{font-size:12px}
+/* ---------- leader layer: 60-second summary, reliability lab, leader boxes ---------- */
+.sum{padding:clamp(40px,6vh,64px) 0;border-bottom:2px solid var(--rule)}
+.sum-k,.lab-k{margin:0 0 10px}
+.sum h2,.lab h2{font-size:clamp(1.5rem,3.4vw,2.4rem);max-width:26ch;line-height:1.08}
+.sum-lede,.lab-lede{margin:12px 0 0;max-width:68ch;color:var(--ink-2)}
+.sum-grid{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border-top:2px solid var(--rule);border-left:2px solid var(--rule)}
+.sum-grid li{border-right:2px solid var(--rule);border-bottom:2px solid var(--rule);background:var(--surface)}
+.sum-grid a{display:flex;flex-direction:column;gap:6px;height:100%;padding:18px 18px 20px;color:var(--ink);text-decoration:none;transition:background .15s}
+.sum-grid a:hover{background:var(--surface-2)}
+.sum-n{font-family:var(--font-mono);font-weight:700;font-size:clamp(1.9rem,3.6vw,2.6rem);line-height:1;letter-spacing:-.03em;color:var(--accent);font-variant-numeric:tabular-nums}
+.sum-n.is-warn{color:var(--warn)}
+.sum-t{font-size:.9rem;line-height:1.4;color:var(--ink-2)}
+.sum-go{margin-top:auto;padding-top:6px;font-family:var(--font-mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.sum-grid a:hover .sum-go{color:var(--accent)}
+
+.lab{padding:clamp(44px,7vh,72px) 0;border-bottom:2px solid var(--rule);background:var(--surface-2)}
+.lab-note{display:inline-block;margin-top:14px;padding:8px 12px;border:2px solid var(--rule-soft);background:var(--warn-wash);font-size:.875rem;color:var(--ink-2)}
+.lab-note strong{color:var(--ink)}
+.lab-card{margin-top:24px;border:2px solid var(--rule);background:var(--surface)}
+.lab-tabs{display:flex;border-bottom:2px solid var(--rule)}
+.lab-tab{flex:1 1 0;min-height:48px;padding:10px 14px;border:0;border-right:2px solid var(--rule);background:var(--surface);color:var(--ink-2);font-family:var(--font-mono);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-align:left}
+.lab-tab:last-child{border-right:0}
+.lab-tab:hover{background:var(--surface-2);color:var(--ink)}
+.lab-tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.lab-tab small{display:block;margin-top:3px;font-weight:500;letter-spacing:.04em;text-transform:none;opacity:.85}
+.lab-panel{padding:clamp(18px,3vw,32px)}
+.lab-panel[hidden]{display:none}
+.lab-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px}
+.lab-ctl label{font-family:var(--font-mono);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.lab-ctl output{font-family:var(--font-mono);font-size:1.25rem;font-weight:700;color:var(--ink);min-width:6ch}
+.lab-ctl input[type=range]{flex:1 1 220px;min-width:0;accent-color:var(--accent);height:32px}
+.lab-ticks{display:flex;justify-content:space-between;margin:2px 0 0;font-family:var(--font-mono);font-size:.6875rem;color:var(--muted)}
+.lab-verdict{margin:18px 0 0;padding:14px 16px;border-left:6px solid var(--accent);background:var(--accent-wash);font-size:clamp(1.05rem,1.8vw,1.3rem);font-weight:700;line-height:1.3;color:var(--ink)}
+.lab-verdict.is-bad{border-left-color:var(--warn);background:var(--warn-wash)}
+.lab-verdict::before{content:attr(data-tag);display:block;margin-bottom:4px;font-family:var(--font-mono);font-size:.625rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.lab-body{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);margin-top:20px;align-items:start}
+.lab-fig{margin:0;min-width:0}
+.lab-fig svg{display:block;width:100%;height:auto;overflow:visible}
+.lab-fig figcaption{margin-top:8px;font-family:var(--font-mono);font-size:.6875rem;line-height:1.5;color:var(--muted)}
+.lab-stats{display:grid;gap:0;border-top:2px solid var(--rule)}
+.lab-stat{padding:12px 0;border-bottom:1px solid var(--rule-soft)}
+.lab-stat b{display:block;font-family:var(--font-mono);font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums}
+.lab-stat b.is-warn{color:var(--warn)}
+.lab-stat span{display:block;margin-top:4px;font-size:.875rem;line-height:1.4;color:var(--ink-2)}
+.lab-claims{list-style:none;margin:16px 0 0;padding:0;border-top:2px solid var(--rule)}
+.lab-claims li{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--rule-soft);font-size:.875rem;color:var(--ink-2)}
+.lab-claims .ck{flex:none;width:7.4em;white-space:nowrap;font-family:var(--font-mono);font-size:.6875rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.lab-claims .ck.yes{color:var(--accent)}
+.lab-claims .ck.no{color:var(--warn)}
+.lab-claims .need{margin-left:auto;flex:none;font-family:var(--font-mono);font-size:.75rem;color:var(--muted)}
+.lab-svg .rl,.lab-svg .rs{paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
+.lab-svg .ax{stroke:var(--rule-soft);stroke-width:1}
+.lab-svg .zero{stroke:var(--ink);stroke-width:1.5}
+.lab-svg .tk{fill:var(--muted);font-family:var(--font-mono);font-size:11px}
+.lab-svg .rl{fill:var(--ink);font-family:var(--font-sans);font-size:14px;font-weight:600}
+.lab-svg .rs{fill:var(--muted);font-family:var(--font-mono);font-size:11.5px}
+.lab-svg .rs.is-warn{fill:var(--warn);font-weight:700}
+.lab-svg .rng{fill:var(--accent-wash);stroke:var(--accent);stroke-width:2;transition:x .45s ease,width .45s ease}
+.lab-svg .rng.is-warn{fill:var(--warn-wash);stroke:var(--warn);stroke-dasharray:6 3}
+.lab-svg .est{stroke:var(--accent);stroke-width:3;transition:x1 .45s ease,x2 .45s ease}
+.lab-svg .tru{stroke:var(--ink);stroke-width:2;stroke-dasharray:3 3}
+.lab-svg .cell{fill:var(--surface-2);stroke:var(--rule-soft);stroke-width:1;transition:fill .5s ease-in-out,stroke .5s ease-in-out}
+.lab-svg .cell.on{fill:var(--accent);stroke:var(--accent)}
+.lab-svg .cell.part{fill:url(#labHatch);stroke:var(--accent)}
+.lab-svg .hatch{stroke:var(--accent);stroke-width:2}
+@media (prefers-reduced-motion:reduce){.lab-svg .rng,.lab-svg .est,.lab-svg .cell{transition:none!important}}
+.st-reduced .lab-svg .cell{transition:none!important}
+@media(max-width:800px){
+  .lab-body{grid-template-columns:1fr}
+  .lab-tab{padding:10px}
+  .lab-tab small{display:none}
+  .lab-verdict{font-size:1rem}
+  .lab-claims .ck{width:4.8em;white-space:normal;font-size:.625rem}
+}
+
+.lead-box{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);margin:34px 0 44px;border:2px solid var(--rule);background:var(--surface)}
+.lead-box > div{padding:18px 22px}
+.lead-box > div + div{border-left:2px solid var(--rule);background:var(--accent-wash)}
+.lead-box .lead-k{display:block;margin-bottom:8px;font-family:var(--font-mono);font-size:.6875rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.lead-box p{margin:0;font-size:.975rem;line-height:1.55;color:var(--ink-2)}
+.lead-box .ask{font-size:1.06rem;font-weight:600;line-height:1.4;color:var(--ink)}
+@media(max-width:800px){.lead-box{grid-template-columns:1fr;margin:24px 0 32px}.lead-box > div + div{border-left:0;border-top:2px solid var(--rule)}.lead-box > div{padding:16px}}
+.st-presenting .lead-box,.st-presenting .sum,.st-presenting .lab{display:none}
+@media print{.lab-tabs{display:none}.lab-panel[hidden]{display:block}}
+.lab-src{margin:8px 0 0;font-family:var(--font-mono);font-size:.6875rem;line-height:1.5;color:var(--muted)}
+
+/* ---------- hero: simulated estimates that come apart as the sample shrinks ---------- */
+.hero-dots{margin:0;position:relative;width:100%;max-width:560px;justify-self:end}
+.hero-dots::before{content:"";position:absolute;inset:-12% -10% 10% -10%;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,var(--accent-wash),transparent 72%);opacity:.9}
+.hd-stage{position:relative;border:2px solid var(--rule);background:color-mix(in srgb,var(--surface) 88%,transparent);aspect-ratio:1/1;box-shadow:8px 8px 0 var(--shadow)}
+.hd-stage canvas{display:block;width:100%;height:100%}
+.hd-ctl{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;margin-top:12px}
+.hd-ctl label{font-family:var(--font-mono);font-size:.6875rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.hd-ctl output{font-family:var(--font-mono);font-weight:700;font-size:1.1rem;min-width:5.5ch;color:var(--ink)}
+.hd-ctl input{flex:1 1 140px;min-width:0;accent-color:var(--accent);height:30px}
+.hero-dots figcaption{margin-top:6px;font-family:var(--font-mono);font-size:.6875rem;line-height:1.5;color:var(--muted)}
+.hero-dots figcaption strong{color:var(--warn)}
+@media(max-width:860px){.hero-dots{justify-self:stretch;max-width:none;order:0}.hd-stage{aspect-ratio:4/3}}
+/* kinetic type: the hero headline rises in, line by line; reduced motion shows it at rest */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero-text h1{animation:hdRise .9s cubic-bezier(.2,.7,.2,1) both}
+  .js .hero-text .hero-role{animation:hdRise .9s .15s cubic-bezier(.2,.7,.2,1) both}
+  .js .hero-text .hero-note,.js .hero-text .hero-links{animation:hdRise .9s .3s cubic-bezier(.2,.7,.2,1) both}
+  .js .sum-grid li{animation:hdRise .7s cubic-bezier(.2,.7,.2,1) both;animation-timeline:view();animation-range:entry 0% entry 60%}
+}
+@supports not (animation-timeline:view()){.js .sum-grid li{animation:none}}
+@keyframes hdRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.st-reduced .hero-text *,.st-reduced .sum-grid li{animation:none!important}
 </style>
 <script id="rs-theme-init">try{var t=localStorage.getItem("pc-theme")||localStorage.getItem("ehs-ai-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script><style id="rs-header-css">
 .rs-header{
@@ -628,15 +736,99 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       <p class="hero-note"><strong>All data on this page is synthetic.</strong> Every dataset was generated from a known model so that the estimate can be compared with the truth. No plant, contractor or worker data was used. Nothing here is a finding about a real site.</p>
       <div class="hero-links">
         <a class="btn btn-primary" href="#scene-1">Start the story</a>
-        <a class="btn" href="index.html">Full project page</a>
+        <a class="btn" href="#lab">Break it yourself</a>
         <a class="btn" href="#monday">What to do Monday</a>
+        <a class="btn" href="index.html">Full project page</a>
       </div>
     </div>
-    <div class="hero-orb">
-      <div class="st-orb-wrap" id="heroOrbWrap"><canvas class="st-orb" id="heroOrb" width="420" height="420" role="img" aria-label="Animated dotted sphere representing the model under review"></canvas></div>
-      <p class="orb-cap label" id="orbCap">The model under review</p>
+    <figure class="hero-dots" id="heroDots">
+      <div class="hd-stage"><canvas id="hdCanvas" role="img" aria-label="Simulated study results for four risk drivers. At 5,000 units every cloud of estimates sits tightly on its true value; at 100 units the clouds spread wide, overlap each other and cross zero."></canvas></div>
+      <div class="hd-ctl">
+        <label for="hdN">Units per study</label>
+        <output id="hdOut" for="hdN">5,000</output>
+        <input type="range" id="hdN" min="0" max="5" step="1" value="5" aria-valuetext="5,000 units" />
+      </div>
+      <figcaption><strong>Simulation, not site data.</strong> Each dot is one of 60 evenly spaced quantiles of the spread measured across 300 simulated studies (results/study01_recovery.csv). Dashed line: the true value. Scroll down, or drag, to cut the sample.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ===================== 60-SECOND SUMMARY ===================== -->
+<section class="sum" id="summary" aria-labelledby="sumH">
+ <div class="wrap">
+  <p class="label sum-k">The 60-second version</p>
+  <h2 class="display" id="sumH">Six numbers that decide whether a safety model can carry a decision</h2>
+  <p class="sum-lede">Each one comes from a simulation where the true answer was fixed in advance, so the gap between the model and the truth can be measured exactly. Tap a number to jump to its scene.</p>
+  <ol class="sum-grid">
+    <li><a href="#scene-1"><span class="sum-n" data-count="0.152" data-dec="3">0.152</span><span class="sum-t">Typical miss of one 100-unit study on a path whose true value is 0.45.</span><span class="sum-go">Scene 01 &darr;</span></a></li>
+    <li><a href="#scene-2"><span class="sum-n is-warn" data-count="86" data-dec="0">86</span><span class="sum-t">Times in 100 a textbook &ldquo;95 in 100&rdquo; interval held, at best, at any sample size. The worst was 76.</span><span class="sum-go">Scene 02 &darr;</span></a></li>
+    <li><a href="#scene-3"><span class="sum-n" data-count="6884" data-dec="0">6,884</span><span class="sum-t">Units needed before you can say which of two similar drivers matters more. A passing fit needs 153.</span><span class="sum-go">Scene 03 &darr;</span></a></li>
+    <li><a href="#scene-4"><span class="sum-n is-warn" data-count="0.495" data-dec="3">0.495</span><span class="sum-t">What a true 0.20 reads when one common cause is left out, with a perfect fit.</span><span class="sum-go">Scene 04 &darr;</span></a></li>
+    <li><a href="#scene-5"><span class="sum-n is-warn" data-count="680" data-dec="0">680</span><span class="sum-t">Alerts for every real event when a good-looking model meets a rare outcome.</span><span class="sum-go">Scene 05 &darr;</span></a></li>
+    <li><a href="#scene-6"><span class="sum-n" data-count="0.281" data-dec="3">0.281</span><span class="sum-t">The real effect of acting, behind a coefficient the model prints as 0.448.</span><span class="sum-go">Scene 06 &darr;</span></a></li>
+  </ol>
+ </div>
+</section>
+
+<!-- ===================== RELIABILITY LAB ===================== -->
+<section class="lab" id="lab" aria-labelledby="labH">
+ <div class="wrap">
+  <p class="label lab-k">Try it yourself</p>
+  <h2 class="display" id="labH">Shrink the data and the answer comes apart before the model complains</h2>
+  <p class="lab-lede">Move the dial. Nothing here is re-simulated in your browser: each position shows a row from the committed result tables, so what you see is exactly what the studies measured. The model never throws an error at any setting. It just gets quietly less trustworthy.</p>
+  <p class="lab-note"><strong>Synthetic simulation studies.</strong> Every value is from data generated by a known model (<span class="mono">simulations/dgp.py</span>), not from any real site or workforce.</p>
+  <div class="lab-card">
+    <div class="lab-tabs" role="tablist" aria-label="What to change">
+      <button type="button" class="lab-tab" role="tab" id="labTabN" aria-controls="labPanelN" aria-selected="true">Sample size<small>how many units you fit on</small></button>
+      <button type="button" class="lab-tab" role="tab" id="labTabR" aria-controls="labPanelR" aria-selected="false" tabindex="-1">Event rarity<small>how rare the outcome is</small></button>
+    </div>
+
+    <div class="lab-panel" role="tabpanel" id="labPanelN" aria-labelledby="labTabN">
+      <div class="lab-ctl">
+        <label for="labN">Units in the study</label>
+        <output id="labNOut" for="labN">100</output>
+        <input type="range" id="labN" min="0" max="5" step="1" value="0" aria-describedby="labNVerdict" />
+      </div>
+      <div class="lab-ticks" aria-hidden="true"><span>100</span><span>200</span><span>500</span><span>1,000</span><span>2,000</span><span>5,000</span></div>
+      <p class="lab-verdict is-bad" id="labNVerdict" data-tag="What a leader can conclude" aria-live="polite"></p>
+      <div class="lab-body">
+        <figure class="lab-fig">
+          <svg class="lab-svg" id="labNSvg" role="img" aria-label="Where 95 in 100 repeat studies would land for each of the four paths"></svg>
+          <figcaption>Bar: where 95 in 100 repeat studies of this size land (mean estimate &plusmn; 1.96 empirical SD over 300 replications). Dashed tick: the true value. A bar that crosses 0 means a study could get the sign wrong. Source: results/study01_recovery.csv.</figcaption>
+        </figure>
+        <div>
+          <div class="lab-stats">
+            <div class="lab-stat"><b id="labNPct" class="is-warn">&plusmn;66%</b><span>How far one study could miss the 0.45 path, as a share of its true size.</span></div>
+            <div class="lab-stat"><b id="labNCov" class="is-warn">78 to 82</b><span>Times in 100 the textbook &ldquo;95 in 100&rdquo; interval actually held, across the four paths.</span></div>
+          </div>
+          <ul class="lab-claims" id="labClaims" aria-label="Claims this sample size can support"></ul>
+          <p class="lab-src">Claims and the units each needs: results/study01_requirements.csv (80 percent power or the stated standard error).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-panel" role="tabpanel" id="labPanelR" aria-labelledby="labTabR" hidden>
+      <div class="lab-ctl">
+        <label for="labR">Outcome base rate</label>
+        <output id="labROut" for="labR">30%</output>
+        <input type="range" id="labR" min="0" max="3" step="1" value="0" aria-describedby="labRVerdict" />
+      </div>
+      <div class="lab-ticks" aria-hidden="true"><span>30%</span><span>5%</span><span>0.5%</span><span>0.05%</span></div>
+      <p class="lab-verdict" id="labRVerdict" data-tag="What a leader can conclude" aria-live="polite"></p>
+      <div class="lab-body">
+        <figure class="lab-fig">
+          <svg class="lab-svg" id="labRSvg" role="img" aria-label="Of 100 alerts in the top 5 percent of risk scores, how many are real events"></svg>
+          <figcaption>Each square is one alert from the top 5 percent of risk scores. Filled squares are real events (precision in the top 5 percent). Same generating signal at every setting; only the base rate changes. Source: results/study02_discrimination.csv.</figcaption>
+        </figure>
+        <div class="lab-stats">
+          <div class="lab-stat"><b id="labRAuc">0.685</b><span>AUC, the number on the vendor&rsquo;s slide. Watch how little it moves.</span></div>
+          <div class="lab-stat"><b id="labRAlerts">1.6</b><span>Alerts a supervisor chases for each real event.</span></div>
+          <div class="lab-stat"><b id="labREv">30,027</b><span>Real events the model had to learn from.</span></div>
+        </div>
+      </div>
     </div>
   </div>
+ </div>
 </section>
 
 <section class="st-chapter" data-num="01" data-orb="searching" aria-label="Chapter 01, On average the method is right (bias 0.007), but one study can miss by 0.152">
@@ -674,11 +866,16 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       </div>
       <div class="st-step" data-orb="working" data-step="3">
         <span class="label">The spread</span>
-        <h3>At n = 100 a single study lands between 0.15 and 0.76</h3>
+        <h3>At n = 100 a single study lands between 0.16 and 0.75</h3>
         <p>The empirical standard deviation on the 0.45 path is 0.152 at n = 100 and 0.041 at n = 1000. Drag the slider to watch the band close. Your report is one draw from that band, and the slide only ever shows the draw.</p>
       </div>
     </div>
   </div>
+
+  <aside class="lead-box" aria-label="Scene 01 for leaders">
+    <div><span class="lead-k">What it means for a leader</span><p>The average is trustworthy; any one study is not. With 100 units, a path whose true value is 0.45 could honestly come out anywhere from 0.16 to 0.75. With 1,000 units the range is 0.37 to 0.53. The slide shows one number and hides which part of that range you are in.</p></div>
+    <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;How many units is this fitted on, and what range would a repeat of the study give for the coefficient we are about to act on?&rdquo;</p></div>
+  </aside>
  </div>
 </section>
 
@@ -717,6 +914,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       </div>
     </div>
   </div>
+
+  <aside class="lead-box" aria-label="Scene 02 for leaders">
+    <div><span class="lead-k">What it means for a leader</span><p>The ranges your team reports are too narrow. A &ldquo;95 in 100&rdquo; interval from the standard formula held only 76 to 86 times in 100 here, and more data did not fix it. A decision taken near the edge of that range is more confident than the evidence behind it.</p></div>
+    <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;Is this interval from the analytic formula or from a bootstrap? If analytic, can I see the bootstrap interval next to it?&rdquo;</p></div>
+  </aside>
  </div>
 </section>
 
@@ -755,6 +957,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       </div>
     </div>
   </div>
+
+  <aside class="lead-box" aria-label="Scene 03 for leaders">
+    <div><span class="lead-k">What it means for a leader</span><p>Sample size buys specific claims, not general credibility. 153 units buy a passing fit, 369 a usable single coefficient, 770 the right to say unsafe acts beat operational stress, and 6,884 the right to rank system condition against safety response. Most safety datasets are sized for the first claim and quoted for the last.</p></div>
+    <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;Which claim is this deck making: the model fits, one driver matters, or one driver matters more than another? Does our sample clear the bar for that claim?&rdquo;</p></div>
+  </aside>
  </div>
 </section>
 
@@ -793,6 +1000,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       </div>
     </div>
   </div>
+
+  <aside class="lead-box" aria-label="Scene 04 for leaders">
+    <div><span class="lead-k">What it means for a leader</span><p>A model that fits perfectly can still point the budget at the wrong lever. Leave out one common cause and a true 0.20 reads 0.495, more than double, while the fit statistics look better than the correct model&rsquo;s. Fit indices do not check the causal story.</p></div>
+    <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;What could drive both this factor and our incidents that is not in the model, and what happens to the coefficient if we add the most likely one?&rdquo;</p></div>
+  </aside>
  </div>
 </section>
 
@@ -836,6 +1048,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       </div>
     </div>
   </div>
+
+  <aside class="lead-box" aria-label="Scene 05 for leaders">
+    <div><span class="lead-k">What it means for a leader</span><p>For rare events the headline metric misleads. AUC barely moves between a 30 percent and a 0.5 percent base rate, while alerts per real event go from 1.6 to 62. Supervisors live with the alert burden, not the AUC, and at 680 alerts per real event they will stop responding.</p></div>
+    <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;At our real base rate and the threshold we would actually use, how many alerts would one site see for each true event?&rdquo;</p></div>
+  </aside>
  </div>
 </section>
 
@@ -879,6 +1096,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       </div>
     </div>
   </div>
+
+  <aside class="lead-box" aria-label="Scene 06 for leaders">
+    <div><span class="lead-k">What it means for a leader</span><p>Identical numbers on a slide can mean an intervention on unsafe acts is worth 0.45 or 0.281, depending on a causal assumption the data cannot check. And the same crew can rank first or second depending on how scores are standardized by site.</p></div>
+    <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;Under what causal story is this coefficient the effect of acting on it, and what would we expect to see if that story were wrong?&rdquo;</p></div>
+  </aside>
  </div>
 </section>
 
@@ -898,13 +1120,15 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== MONDAY ===================== -->
 <section class="section monday" id="monday">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Monday</span><h2 class="display">One thing to do on Monday</h2></div>
+  <div class="scene-head"><span class="rail-num">Monday</span><h2 class="display">One thing to do on Monday: ask for the n and the interval method</h2></div>
   <p class="monday-lede">Take the last risk model your team presented. Ask for the sample size and the interval method behind the coefficient that drove the decision. If the interval came from the analytic standard error, ask for a bootstrap interval instead, and ask what would have to be true about the causal structure for that coefficient to be the effect of acting on it.</p>
   <ul class="monday-list">
     <li><span class="mono">1</span> Get the n. Compare it against 369 for a usable path and 6884 for a claim that one path beats another.</li>
     <li><span class="mono">2</span> Replace the analytic interval with a bootstrap interval. Expect it to be about 40 percent wider.</li>
     <li><span class="mono">3</span> Write down the one causal structure under which the coefficient answers the question being asked. If you cannot, report it as an association.</li>
     <li><span class="mono">4</span> For any alerting model, ask for alerts per true event at the operating point, not AUC.</li>
+    <li><span class="mono">5</span> Before a score sends audits across sites, ask whether the measurement model was checked site by site. Forcing one site&rsquo;s model onto another flipped the top-decile audit flag for 4.6 percent of units.</li>
+    <li><span class="mono">6</span> Put the range on the slide. If one study of your size could land anywhere from 0.16 to 0.75, the leadership team should see that before it sees 0.45.</li>
   </ul>
   <div class="next-card">
     <div>
@@ -3885,6 +4109,376 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<script id="lab-js">
+/* Leader layer for story.html: count-up summary strip and the reliability lab.
+   Every value below is copied from a committed file in results/; nothing is
+   simulated or interpolated in the browser. */
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var RMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  function reduced() { return RMQ.matches || /[?&]reduced=1/.test(location.search); }
+  function $(id) { return document.getElementById(id); }
+  function mk(tag, attrs, parent) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function txt(parent, x, y, s, cls, anchor) {
+    var t = mk('text', { x: x, y: y, 'class': cls, 'text-anchor': anchor || 'start' }, parent);
+    t.textContent = s; return t;
+  }
+  function comma(v) { return Math.round(v).toLocaleString('en-US'); }
+  function signed(v, d) { return (v < 0 ? '−' : '') + Math.abs(v).toFixed(d); }
+
+  /* ---- count-up for the summary strip (final value is already in the HTML) ---- */
+  function countUp(node) {
+    var to = parseFloat(node.getAttribute('data-count')), dec = +node.getAttribute('data-dec') || 0;
+    var suf = node.getAttribute('data-suf') || '';
+    function show(v) { node.textContent = (dec ? v.toFixed(dec) : comma(v)) + suf; }
+    if (reduced() || document.hidden) { show(to); return; }
+    var t0 = 0, dur = 1100;
+    function fr(t) {
+      if (!t0) t0 = t;
+      var p = Math.min(1, (t - t0) / dur);
+      show(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(fr); else show(to);
+    }
+    requestAnimationFrame(fr);
+  }
+  function initSummary() {
+    var nodes = [].slice.call(document.querySelectorAll('.sum-n[data-count]'));
+    if (!nodes.length || !('IntersectionObserver' in window) || reduced()) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); countUp(e.target); } });
+    }, { threshold: 0.6 });
+    nodes.forEach(function (n) { io.observe(n); });
+  }
+
+  /* ---- data: results/study01_recovery.csv (mean estimate, empirical SD, analytic coverage) ---- */
+  var NAMES = ['Unsafe acts', 'Operational stress', 'System condition', 'Safety response'];
+  var TRUTH = [0.45, 0.30, -0.25, -0.20];
+  var NS_ = [100, 200, 500, 1000, 2000, 5000];
+  var REC = {
+    100:  { m: [0.45620, 0.30741, -0.25705, -0.20212], sd: [0.15187, 0.14313, 0.14656, 0.14241], cov: [0.7800, 0.7933, 0.7967, 0.8233] },
+    200:  { m: [0.45375, 0.30206, -0.25693, -0.19509], sd: [0.09747, 0.09338, 0.10103, 0.09568], cov: [0.8233, 0.8500, 0.7933, 0.8467] },
+    500:  { m: [0.45223, 0.30150, -0.25321, -0.20184], sd: [0.05650, 0.06038, 0.06663, 0.05830], cov: [0.8633, 0.8333, 0.7567, 0.8567] },
+    1000: { m: [0.45088, 0.30067, -0.24837, -0.20155], sd: [0.04103, 0.04383, 0.04073, 0.04136], cov: [0.8600, 0.8067, 0.8433, 0.8400] },
+    2000: { m: [0.45275, 0.29843, -0.25027, -0.20129], sd: [0.02892, 0.03050, 0.03195, 0.03029], cov: [0.8433, 0.8233, 0.8000, 0.8333] },
+    5000: { m: [0.45136, 0.30019, -0.25143, -0.20003], sd: [0.01862, 0.01942, 0.01937, 0.01955], cov: [0.8600, 0.8367, 0.8300, 0.8200] }
+  };
+  /* results/study01_requirements.csv */
+  var CLAIMS = [
+    { k: 'The model passes a test of close fit', n: 153 },
+    { k: 'One path is estimated to within ±0.05 (SE)', n: 369 },
+    { k: 'Unsafe acts (0.45) beats operational stress (0.30)', n: 770 },
+    { k: 'One path is estimated to within ±0.025 (SE)', n: 1459 },
+    { k: 'System condition (−0.25) beats safety response (−0.20)', n: 6884 }
+  ];
+  /* results/study02_discrimination.csv */
+  var RARE = [
+    { lab: '30%', real: 0.298875, ev: 30027, auc: 0.6845, ppv: 0.629, apt: 1.5898 },
+    { lab: '5%', real: 0.05058, ev: 5136, auc: 0.6878, ppv: 0.1534, apt: 6.5189 },
+    { lab: '0.5%', real: 0.00475, ev: 479, auc: 0.6924, ppv: 0.0162, apt: 61.728 },
+    { lab: '0.05%', real: 0.00058, ev: 54, auc: 0.6771, ppv: 0.0026, apt: 384.62 }
+  ];
+
+  function width(svg) { var w = svg.parentNode.getBoundingClientRect().width; return Math.max(260, Math.round(w || 600)); }
+
+  /* ---- sample-size panel ---- */
+  function drawN(svg, n, rr) {
+    var r = rr || REC[n], W = width(svg), ph = W < 520;
+    var labW = ph ? 0 : 140, noteW = ph ? 0 : 200, top = 30, rowH = ph ? 74 : 52, H = top + rowH * 4 + 22;
+    var x0 = labW + 12, x1 = W - noteW - 8, lo = -0.6, hi = 0.8;
+    function X(v) { return x0 + (v - lo) / (hi - lo) * (x1 - x0); }
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('width', W); svg.setAttribute('height', H);
+    [-0.4, -0.2, 0, 0.2, 0.4, 0.6].forEach(function (t) {
+      mk('line', { x1: X(t), x2: X(t), y1: top - 8, y2: H - 18, 'class': t === 0 ? 'zero' : 'ax' }, svg);
+      txt(svg, X(t), H - 4, t === 0 ? '0' : signed(t, 1), 'tk', 'middle');
+    });
+    txt(svg, X(0) - 6, top - 14, '\u2190 lowers risk', 'tk', 'end');
+    txt(svg, X(0) + 6, top - 14, 'raises risk \u2192', 'tk', 'start');
+    var flips = [];
+    for (var i = 0; i < 4; i++) {
+      var y = top + i * rowH + (ph ? 20 : 8), a = r.m[i] - 1.96 * r.sd[i], b = r.m[i] + 1.96 * r.sd[i];
+      var cross = a < 0 && b > 0;
+      if (cross) flips.push(NAMES[i].toLowerCase());
+      var note = signed(a, 2) + ' to ' + signed(b, 2) + (cross ? ' \u00b7 sign can flip' : '');
+      if (ph) {
+        txt(svg, 0, y - 8, NAMES[i], 'rl');
+        txt(svg, W, y + 38, note, 'rs' + (cross ? ' is-warn' : ''), 'end');
+      } else {
+        txt(svg, labW, y + 15, NAMES[i], 'rl', 'end');
+        txt(svg, W, y + 15, note, 'rs' + (cross ? ' is-warn' : ''), 'end');
+      }
+      var rect = mk('rect', { x: X(a), y: y, width: Math.max(2, X(b) - X(a)), height: 20, 'class': 'rng' + (cross ? ' is-warn' : '') }, svg);
+      var tt = document.createElementNS(NS, 'title');
+      tt.textContent = NAMES[i] + ': true ' + signed(TRUTH[i], 2) + '; 95 in 100 studies of ' + comma(n) + ' land between ' + signed(a, 2) + ' and ' + signed(b, 2);
+      rect.appendChild(tt);
+      mk('line', { x1: X(TRUTH[i]), x2: X(TRUTH[i]), y1: y - 4, y2: y + 24, 'class': 'tru' }, svg);
+    }
+    return flips;
+  }
+  /* object constancy: the four bars glide from the old sample size to the new one */
+  var shownN = null, tN = 0;
+  function tweenN(n) {
+    var from = shownN, to = REC[n]; shownN = { m: to.m.slice(), sd: to.sd.slice() };
+    if (!from || reduced() || document.hidden) return;
+    var t0 = 0, id = ++tN, svg = $('labNSvg');
+    drawN(svg, n, from);
+    function lerp(a, b, t) { return a.map(function (v, i) { return v + (b[i] - v) * t; }); }
+    function fr(t) {
+      if (id !== tN) return;
+      if (!t0) t0 = t;
+      var p = Math.min(1, (t - t0) / 550), e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      drawN(svg, n, p < 1 ? { m: lerp(from.m, to.m, e), sd: lerp(from.sd, to.sd, e) } : null);
+      if (p < 1) requestAnimationFrame(fr);
+    }
+    requestAnimationFrame(fr);
+  }
+  function updateN() {
+    var idx = +$('labN').value, n = NS_[idx], r = REC[n];
+    $('labNOut').textContent = comma(n);
+    $('labN').setAttribute('aria-valuetext', comma(n) + ' units');
+    var flips = drawN($('labNSvg'), n);
+    tweenN(n);
+    var pct = Math.round(196 * r.sd[0] / TRUTH[0]);
+    $('labNPct').textContent = '±' + pct + '%';
+    $('labNPct').classList.toggle('is-warn', pct > 20);
+    var cmin = Math.round(Math.min.apply(null, r.cov) * 100), cmax = Math.round(Math.max.apply(null, r.cov) * 100);
+    $('labNCov').textContent = cmin + ' to ' + cmax;
+    var ul = $('labClaims'); ul.textContent = '';
+    var ok = 0;
+    CLAIMS.forEach(function (c) {
+      var yes = n >= c.n; if (yes) ok++;
+      var li = document.createElement('li');
+      var ck = document.createElement('span'); ck.className = 'ck ' + (yes ? 'yes' : 'no'); ck.textContent = yes ? '✓ Supported' : '✗ Not yet';
+      var k = document.createElement('span'); k.textContent = c.k;
+      var need = document.createElement('span'); need.className = 'need'; need.textContent = 'needs ' + comma(c.n);
+      li.appendChild(ck); li.appendChild(k); li.appendChild(need); ul.appendChild(li);
+    });
+    var v;
+    if (flips.length) v = 'At ' + comma(n) + ' units a single study could report ' + flips.join(' and ') + ' with the wrong sign, and the model would still fit. Treat every coefficient as a direction to investigate, not a number to budget against.';
+    else if (ok < 3) v = 'At ' + comma(n) + ' units every sign is safe, but one study can still miss the 0.45 path by ±' + pct + '%. Do not rank drivers on this sample.';
+    else if (ok < 5) v = 'At ' + comma(n) + ' units you can say unsafe acts matter more than operational stress. You still cannot say whether system condition beats safety response: that needs 6,884.';
+    else v = 'At ' + comma(n) + ' units every claim on the list is supported.';
+    var vn = $('labNVerdict'); vn.textContent = v; vn.classList.toggle('is-bad', !!flips.length || ok < 3);
+  }
+
+  /* ---- rarity panel ---- */
+  var waffle = null;
+  function drawR(svg, d) {
+    var W = width(svg), ph = W < 520, cols = ph ? 10 : 20, rows = 100 / cols, gap = 3;
+    var cell = Math.min(26, Math.floor((W - gap * (cols - 1)) / cols)), top = 30;
+    var H = top + rows * (cell + gap) + (ph ? 46 : 30);
+    var real = d.ppv * 100, full = Math.floor(real), part = real - full > 0.05;
+    if (!waffle || waffle.W !== W) {
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      svg.setAttribute('width', W); svg.setAttribute('height', H);
+      var defs = mk('defs', {}, svg);
+      var pat = mk('pattern', { id: 'labHatch', width: 5, height: 5, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+      mk('line', { x1: 0, y1: 0, x2: 0, y2: 5, 'class': 'hatch' }, pat);
+      waffle = { W: W, title: txt(svg, 0, 16, '', 'rl'), cells: [] };
+      for (var i = 0; i < 100; i++) {
+        var cx = (i % cols) * (cell + gap), cy = top + Math.floor(i / cols) * (cell + gap);
+        var c = mk('rect', { x: cx, y: cy, width: cell, height: cell, 'class': 'cell' }, svg);
+        /* stagger from the top-left so the change sweeps across the grid */
+        c.style.transitionDelay = (Math.floor(i / cols) + i % cols) * 14 + 'ms';
+        waffle.cells.push(c);
+      }
+      if (ph) { txt(svg, 0, H - 22, 'Filled = real event \u00b7 hatched = part of one', 'tk'); txt(svg, 0, H - 6, 'Empty = false alarm', 'tk'); }
+      else txt(svg, 0, H - 6, 'Filled = real event \u00b7 hatched = part of one \u00b7 empty = false alarm', 'tk');
+    }
+    waffle.title.textContent = 'Of 100 alerts, ' + (real >= 10 ? Math.round(real) : real.toFixed(real < 1 ? 2 : 1)) + ' are real events';
+    waffle.cells.forEach(function (c, i) { c.setAttribute('class', i < full ? 'cell on' : (i === full && part ? 'cell part' : 'cell')); });
+  }
+  var VERD = [
+    'At a 30 percent base rate most flags are real: 63 of 100 alerts in the top 5 percent are true events. Here the model earns its keep.',
+    'At 5 percent, 15 alerts in 100 are real. Still workable, but the supervisor is already chasing more false alarms than real ones.',
+    'At 0.5 percent, fewer than 2 alerts in 100 are real, 62 alerts per event, while AUC is actually slightly higher. The scoreboard says better; the floor says worse.',
+    'At 0.05 percent, about 1 alert in 385 is real and the model learned from only 54 events. The AUC still reads 0.677. Nobody will keep responding to this.'
+  ];
+  function updateR() {
+    var idx = +$('labR').value, d = RARE[idx];
+    $('labROut').textContent = d.lab;
+    $('labR').setAttribute('aria-valuetext', d.lab + ' base rate');
+    drawR($('labRSvg'), d);
+    $('labRAuc').textContent = d.auc.toFixed(3);
+    var a = $('labRAlerts'); a.textContent = d.apt >= 10 ? comma(d.apt) : d.apt.toFixed(1); a.classList.toggle('is-warn', d.apt > 10);
+    var e = $('labREv'); e.textContent = comma(d.ev); e.classList.toggle('is-warn', d.ev < 100);
+    var vn = $('labRVerdict'); vn.textContent = VERD[idx]; vn.classList.toggle('is-bad', idx >= 2);
+  }
+
+  /* ---- tabs (WAI-ARIA tabs pattern, arrow keys move between tabs) ---- */
+  function initTabs() {
+    var tabs = [$('labTabN'), $('labTabR')];
+    function sel(i, focus) {
+      tabs.forEach(function (t, j) {
+        var on = i === j;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        $(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+      if (i === 0) updateN(); else updateR();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { sel(i); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); sel((i + 1) % 2, true); }
+      });
+    });
+  }
+
+  function init() {
+    initSummary();
+    if (!$('lab')) return;
+    initTabs();
+    $('labN').addEventListener('input', updateN);
+    $('labR').addEventListener('input', updateR);
+    updateN(); updateR();
+    var last = 0;
+    window.addEventListener('resize', function () {
+      var w = window.innerWidth; if (w === last) return; last = w;
+      if (!$('labPanelN').hidden) updateN(); else updateR();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<script id="hero-dots-js">
+/* Hero figure: 60 quantile dots per path, placed at mean + SD x z for the committed
+   mean and empirical SD at each sample size (results/study01_recovery.csv). The
+   dots are not individual replications; they are evenly spaced quantiles of the
+   spread the study measured, so the picture encodes the committed numbers only.
+   No loop runs at rest: frames are drawn only while the state is changing. */
+(function () {
+  'use strict';
+  var cv = document.getElementById('hdCanvas'); if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var RMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  function reduced() { return RMQ.matches || /[?&]reduced=1/.test(location.search); }
+  var NAMES = ['Unsafe acts', 'Operational stress', 'System condition', 'Safety response'];
+  var TRUTH = [0.45, 0.30, -0.25, -0.20];
+  var NS_ = [100, 200, 500, 1000, 2000, 5000];
+  var M = [[0.45620, 0.30741, -0.25705, -0.20212], [0.45375, 0.30206, -0.25693, -0.19509], [0.45223, 0.30150, -0.25321, -0.20184],
+           [0.45088, 0.30067, -0.24837, -0.20155], [0.45275, 0.29843, -0.25027, -0.20129], [0.45136, 0.30019, -0.25143, -0.20003]];
+  var SD = [[0.15187, 0.14313, 0.14656, 0.14241], [0.09747, 0.09338, 0.10103, 0.09568], [0.05650, 0.06038, 0.06663, 0.05830],
+            [0.04103, 0.04383, 0.04073, 0.04136], [0.02892, 0.03050, 0.03195, 0.03029], [0.01862, 0.01942, 0.01937, 0.01955]];
+  var K = 60, LO = -0.65, HI = 0.8;
+  /* inverse normal CDF (Acklam) */
+  function qnorm(p) {
+    var a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.3577518672690, -30.66479806614716, 2.506628277459239],
+        b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28068155288572],
+        c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783],
+        d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416], q, r;
+    if (p < 0.02425) { q = Math.sqrt(-2 * Math.log(p)); return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); }
+    if (p > 1 - 0.02425) { q = Math.sqrt(-2 * Math.log(1 - p)); return -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) / ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1); }
+    q = p - 0.5; r = q * q;
+    return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q / (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+  }
+  var Z = [], JIT = [];
+  for (var i = 0; i < K; i++) { Z.push(qnorm((i + 0.5) / K)); JIT.push(((i * 0.6180339887) % 1) - 0.5); }
+  /* entrance: each dot starts from a scattered position and flies in */
+  var FROM = []; for (i = 0; i < K * 4; i++) FROM.push([((i * 0.7548776662) % 1), ((i * 0.5698402910) % 1)]);
+
+  var W = 0, H = 0, dpr = 1, col = {};
+  function readColors() {
+    var cs = getComputedStyle(document.documentElement);
+    ['--accent', '--warn', '--ink', '--ink-2', '--muted', '--rule-soft', '--surface'].forEach(function (k) { col[k] = cs.getPropertyValue(k).trim() || '#888'; });
+  }
+  function size() {
+    var r = cv.getBoundingClientRect();
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = Math.max(200, r.width); H = Math.max(160, r.height);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function state(s) { /* s in [0,5]; interpolate between committed stops for the visual morph only */
+    var k = Math.min(4, Math.floor(s)), f = s - k, m = [], sd = [];
+    for (var j = 0; j < 4; j++) { m.push(M[k][j] + (M[k + 1][j] - M[k][j]) * f); sd.push(SD[k][j] + (SD[k + 1][j] - SD[k][j]) * f); }
+    return { m: m, sd: sd };
+  }
+  function halo(s, x, y) { ctx.save(); ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.strokeStyle = col['--surface']; ctx.strokeText(s, x, y); ctx.restore(); ctx.fillText(s, x, y); }
+  function draw(s, intro) {
+    var st = state(s), padL = 14, padR = 14, top = 34, bot = 30;
+    var laneH = (H - top - bot) / 4, x0 = padL, x1 = W - padR;
+    function X(v) { return x0 + (v - LO) / (HI - LO) * (x1 - x0); }
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = '600 10px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.textBaseline = 'alphabetic';
+    /* axis */
+    ctx.strokeStyle = col['--rule-soft']; ctx.lineWidth = 1; ctx.fillStyle = col['--muted']; ctx.textAlign = 'center';
+    [-0.4, -0.2, 0.2, 0.4, 0.6].forEach(function (t) { ctx.beginPath(); ctx.moveTo(X(t), top - 6); ctx.lineTo(X(t), H - bot + 4); ctx.stroke(); ctx.fillText((t < 0 ? '−' : '') + Math.abs(t).toFixed(1), X(t), H - 10); });
+    ctx.strokeStyle = col['--ink']; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(X(0), top - 6); ctx.lineTo(X(0), H - bot + 4); ctx.stroke();
+    ctx.fillStyle = col['--ink']; ctx.fillText('0', X(0), H - 10);
+    ctx.textAlign = 'right'; ctx.fillStyle = col['--muted']; ctx.fillText('← lowers risk', X(0) - 6, 18);
+    ctx.textAlign = 'left'; ctx.fillText('raises risk →', X(0) + 6, 18);
+    var r = Math.max(2.2, Math.min(3.6, W / 150));
+    for (var j = 0; j < 4; j++) {
+      var cy = top + laneH * (j + 0.5), lo = st.m[j] - 1.96 * st.sd[j], hi = st.m[j] + 1.96 * st.sd[j];
+      var cross = lo < 0 && hi > 0;
+      /* lane label */
+      ctx.textAlign = TRUTH[j] > 0 ? 'left' : 'right';
+      ctx.fillStyle = col['--ink-2'];
+      halo(NAMES[j].toUpperCase(), TRUTH[j] > 0 ? x0 + 2 : x1 - 2, cy - laneH * 0.36);
+      /* truth */
+      ctx.setLineDash([3, 3]); ctx.strokeStyle = col['--ink']; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(X(TRUTH[j]), cy - laneH * 0.3); ctx.lineTo(X(TRUTH[j]), cy + laneH * 0.3); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = cross ? col['--warn'] : col['--accent'];
+      ctx.globalAlpha = 0.78;
+      for (var i = 0; i < K; i++) {
+        var x = X(st.m[j] + st.sd[j] * Z[i]), y = cy + JIT[i] * laneH * 0.5;
+        if (intro < 1) { var f = FROM[j * K + i], e = Math.max(0, Math.min(1, intro * 1.6 - (i % 12) * 0.05)); e = e < 0.5 ? 4 * e * e * e : 1 - Math.pow(-2 * e + 2, 3) / 2;
+          x = f[0] * W + (x - f[0] * W) * e; y = f[1] * H + (y - f[1] * H) * e; }
+        ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (cross && intro >= 1) { ctx.fillStyle = col['--warn']; ctx.textAlign = TRUTH[j] > 0 ? 'left' : 'right'; halo('SIGN CAN FLIP', TRUTH[j] > 0 ? x0 + 2 : x1 - 2, cy + laneH * 0.46); }
+    }
+  }
+
+  var cur = 5, target = 5, intro = reduced() ? 1 : 0, raf = 0, manual = false, visible = true, t0 = 0;
+  var sl = document.getElementById('hdN'), out = document.getElementById('hdOut');
+  function label(s) {
+    var k = Math.round(s), n = NS_[k].toLocaleString('en-US');
+    if (out.textContent !== n) { out.textContent = n; sl.setAttribute('aria-valuetext', n + ' units'); }
+    if (!manual && +sl.value !== k) sl.value = k;
+  }
+  function frame(t) {
+    raf = 0;
+    if (intro < 1) { if (!t0) t0 = t; intro = Math.min(1, (t - t0) / 1400); }
+    var d = target - cur;
+    cur = Math.abs(d) < 0.002 || reduced() ? target : cur + d * 0.14;
+    draw(cur, intro); label(cur);
+    if ((intro < 1 || cur !== target) && visible && !document.hidden) raf = requestAnimationFrame(frame);
+  }
+  function kick() { if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame); }
+  function onScroll() {
+    if (manual) return;
+    var vh = window.innerHeight || 800, rt = cv.getBoundingClientRect().top;
+    var start = Math.min(vh * 0.45, rt + window.scrollY);
+    var p = Math.max(0, Math.min(1, (start - rt) / (vh * 0.35)));
+    target = 5 * (1 - p);
+    kick();
+  }
+  sl.addEventListener('input', function () { manual = true; target = +sl.value; kick(); });
+  function relayout() { size(); readColors(); draw(cur, intro); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { relayout(); });
+  document.addEventListener('rs-themechange', function () { setTimeout(relayout, 0); });
+  if (RMQ.addEventListener) { try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', relayout); } catch (e) {} }
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) kick(); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) kick(); }).observe(cv);
+  function start() { relayout(); onScroll(); if (document.hidden) intro = 1; kick(); if (reduced()) { cur = target; draw(cur, 1); label(cur); } }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { draw(cur, intro); });
 })();
 </script>
 </body>
