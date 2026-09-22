@@ -26,6 +26,30 @@ API_DIR = DOCS_DIR / "api"
 SIMS_DIR = REPO_ROOT / "simulations"
 SITE = "https://priyatham9.github.io/ehs-risk-sem"
 
+
+def _load_apply_banner():
+    """Find grounded's shared banner (tools/banner.py).
+
+    Looks in $GROUNDED_TOOLS first, then a sibling ../grounded/tools checkout.
+    Returns None when neither exists; pages are then written without the
+    shared banner (the sidebar, search and theme still work on their own).
+    """
+    import os
+    for cand in (os.environ.get("GROUNDED_TOOLS"), str(REPO_ROOT.parent / "grounded" / "tools")):
+        if cand and (Path(cand) / "banner.py").exists():
+            sys.path.insert(0, cand)
+            try:
+                from banner import apply_banner
+            finally:
+                sys.path.remove(cand)
+            return apply_banner
+    print("note: grounded tools/banner.py not found; API pages built without the shared banner",
+          file=sys.stderr)
+    return None
+
+
+APPLY_BANNER = _load_apply_banner()
+
 # Add repo to path so we can import the package
 sys.path.insert(0, str(REPO_ROOT))
 
@@ -49,7 +73,7 @@ CSS_TEMPLATE = """<style>
  --code-bg:#F1F2EC; --code-ink:#1A1F1C; --mark:#FFE9A8;
  --font-sans:"Archivo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
  --font-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
- --maxw:1240px; --bar:58px;
+ --maxw:1240px; --bar:58px; /* shared rs-header banner: 56px row + 2px rule */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -88,23 +112,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
 .skip:focus{left:0}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-/* ============ top bar ============ */
-.topbar{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:2px solid var(--rule)}
-.topbar-inner{max-width:var(--maxw);height:var(--bar);margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:14px}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);text-decoration:none;white-space:nowrap}
-.brand-mark{width:14px;height:14px;background:var(--accent);flex:none}
-.brand small{font-size:inherit;font-weight:500;color:var(--muted)}
-.topnav{display:flex;align-items:center;gap:2px;margin-left:auto}
-.topnav a{text-decoration:none;padding:7px 11px;font-family:var(--font-mono);font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
-.topnav a:hover{color:var(--ink);background:var(--surface-2)}
-.topnav a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
-.toggle{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;flex:none;background:var(--paper);border:2px solid var(--rule);border-radius:0;color:var(--ink);cursor:pointer}
-.toggle:hover{background:var(--surface-2)}
-.toggle svg{width:18px;height:18px}
-.icon-moon{display:none}
-:root[data-theme="dark"] .icon-moon{display:block}
-:root[data-theme="dark"] .icon-sun{display:none}
-@media (prefers-color-scheme: dark){:root:not([data-theme]) .icon-moon{display:block}:root:not([data-theme]) .icon-sun{display:none}}
 
 /* ============ layout ============ */
 .layout{max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px}
@@ -180,8 +187,6 @@ footer a{color:var(--muted)}
 
 /* ============ phone ============ */
 @media (max-width: 860px){
-  .topbar-inner{padding:0 16px;gap:8px}
-  .brand small,.topnav a.hide-sm{display:none}
   .layout{grid-template-columns:minmax(0,1fr);gap:0;padding:0 16px}
   .side{position:static;max-height:none;overflow:visible;padding:14px 0 0;border-right:0;border-bottom:2px solid var(--rule)}
   .side > summary{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding:0 12px;border:2px solid var(--rule);background:var(--surface);font-family:var(--font-mono);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;list-style:none}
@@ -196,36 +201,17 @@ footer a{color:var(--muted)}
   .api-sig,.api-doc pre{font-size:.75rem;padding:10px 11px}
 }
 @media print{
-  .topbar,.side,footer,.to-top,.anchor{display:none!important}
+  .side,footer,.to-top,.anchor{display:none!important}
   .layout{display:block}
   body{background:#fff!important;color:#000!important}
 }
 </style>"""
 
-SUN = (
-    '<svg class="icon-sun" viewBox="0 0 20 20" fill="none" aria-hidden="true">'
-    '<circle cx="10" cy="10" r="4" stroke="currentColor" stroke-width="1.5"/>'
-    '<path d="M10 1v3M10 16v3M1 10h3M16 10h3M3.64 3.64l2.12 2.12M14.24 14.24l2.12 2.12'
-    'M16.36 3.64l-2.12 2.12M5.76 14.24l-2.12 2.12" stroke="currentColor" stroke-width="1.5"'
-    ' stroke-linecap="round"/></svg>'
-)
-MOON = (
-    '<svg class="icon-moon" viewBox="0 0 20 20" fill="none" aria-hidden="true">'
-    '<path d="M16.5 12.6A7 7 0 0 1 7.4 3.5a7 7 0 1 0 9.1 9.1z" stroke="currentColor"'
-    ' stroke-width="1.5" stroke-linejoin="round"/></svg>'
-)
-
-# Page behaviour: theme toggle, search across every page, phone contents drawer,
+# Page behaviour: search across every page, phone contents drawer,
 # and highlighting the symbol currently in view. Plain JS, no dependencies.
 PAGE_JS = """<script>
 (function(){
-  var root=document.documentElement, mq=matchMedia('(prefers-color-scheme: dark)');
-  var tb=document.getElementById('theme-toggle');
-  function cur(){var t=root.getAttribute('data-theme');return t==='dark'||t==='light'?t:(mq.matches?'dark':'light');}
-  function sync(){var d=cur()==='dark';tb.setAttribute('aria-pressed',d?'true':'false');tb.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');}
-  tb.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);
-    try{localStorage.setItem('pc-theme',n);localStorage.setItem('ehs-ai-theme',n);}catch(e){}sync();});
-  sync(); if(mq.addEventListener) mq.addEventListener('change',sync);
+  /* theme: the shared banner's toggle sets data-theme on <html>; the colour tokens follow it */
 
   /* contents drawer: always open on wide screens, collapsed on phones */
   var side=document.getElementById('side'), wide=matchMedia('(min-width: 861px)');
@@ -634,8 +620,7 @@ def sidebar_html(all_modules, current=None, symbols=None):
 
 def generate_html_page(title, description, canonical, side, content_html, is_index=False):
     """Generate a complete HTML page."""
-    api_cur = ' aria-current="page"' if is_index else ''
-    return f"""<!doctype html>
+    html = f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -654,17 +639,6 @@ def generate_html_page(title, description, canonical, side, content_html, is_ind
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<header class="topbar">
-  <div class="topbar-inner">
-    <a href="../index.html" class="brand"><span class="brand-mark"></span> ehs-risk-sem <small>/ API</small></a>
-    <nav class="topnav" aria-label="Site">
-      <a href="../index.html" class="hide-sm">Project</a>
-      <a href="../story.html" class="hide-sm">Story</a>
-      <a href="index.html"{api_cur}>API</a>
-    </nav>
-    <button class="toggle" id="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="false">{SUN}{MOON}</button>
-  </div>
-</header>
 <div class="layout">
   {side}
   <main class="main" id="main">
@@ -677,6 +651,9 @@ def generate_html_page(title, description, canonical, side, content_html, is_ind
 </body>
 </html>
 """
+    if APPLY_BANNER:
+        html = APPLY_BANNER(html, current_project="ehs-risk-sem", sections=[], story_href="../story.html")
+    return html
 
 
 def write_search_index(all_modules, all_pages):
