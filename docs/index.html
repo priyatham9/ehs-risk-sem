@@ -343,7 +343,7 @@ body{overflow-x:clip}
 
 /* ---- hero: the figure leads ---- */
 .hero{padding:64px 0 56px;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px 56px;align-items:end}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px 56px;align-items:start}
 .hero-fig{min-width:0}
 .hero-eyebrow{margin-bottom:10px}
 .hero-big{margin:0;display:flex;align-items:flex-start;font-family:var(--font-sans);font-stretch:125%;font-weight:900;line-height:.8;letter-spacing:-.045em;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -352,7 +352,7 @@ body{overflow-x:clip}
 .hero-unit{font-size:clamp(1.6rem,6vw,4rem);margin:.08em 0 0 .06em;color:var(--ink);letter-spacing:-.02em}
 .hero-means{margin:26px 0 0;padding-left:18px;border-left:4px solid var(--accent);font-size:clamp(1.02rem,1.6vw,1.22rem);line-height:1.45;font-weight:600;color:var(--ink);max-width:44ch}
 .hm-k{display:block;font-family:var(--font-mono);font-size:.625rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.hero-text{min-width:0;padding-bottom:6px}
+.hero-text{min-width:0;padding-top:4px}
 .hero .hero-text h1{font-size:clamp(1.7rem,3.3vw,2.75rem);max-width:20ch;line-height:1.02}
 .hero .hero-role{font-size:.98rem;margin-top:16px;max-width:56ch}
 .hero .status{grid-column:1/-1;margin-top:0;max-width:none}
@@ -661,8 +661,7 @@ a.door:hover{transform:translateY(-2px)}
 .fig,.chart{padding:24px}
 @media print{.status,.findings,.fig,.chart,.tbl-wrap,.scope,.opener,.defs,.notice,.door{border:1px solid #999!important;border-radius:6px}}
 </style>
-<style id="story-css">/*STORY_CSS_START*/
-/* ============================================================
+<style id="story-css">/*STORY_CSS_START*//* ============================================================
    story.css  -  shared storytelling engine styles  (v1.4)
    Depends on tokens defined in tools/shared.css:
    --paper --surface --surface-2 --ink --ink-2 --muted --rule
@@ -1482,8 +1481,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     Captions name the artifact. The page cannot report a value the pipeline did not produce.</p>
   </div>
 </footer>
-<script id="story-js">/*STORY_JS_START*/
-/* ============================================================
+<script id="story-js">/*STORY_JS_START*//* ============================================================
    story.js  -  shared storytelling engine (stdlib only, no deps)
    Exposes one global: Story
    Pairs with tools/story.css and the tokens in tools/shared.css.
