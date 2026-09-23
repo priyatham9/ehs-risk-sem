@@ -5894,7 +5894,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     el('line', { x1: L, y1: y(0.95), x2: RIGHT, y2: y(0.95), class: 'ref-line' }, svg);
     txt(svg, RIGHT + 10, y(0.95) + 5, 'NOMINAL 95%', 'st-caption');
     NS_LIST.forEach(function (n, i) { txt(svg, x(i), BTM + 34, n.toLocaleString(), 'row-sub', 'middle'); });
-    txt(svg, L, BTM + 64, 'SAMPLE SIZE N', 'st-caption');
+    txt(svg, L, BTM + 52, 'SAMPLE SIZE N', 'st-caption');
     /* direct labels at the right end, spread so they never collide */
     var ends = [];
     for (var k = 0; k < 4; k++) ends.push({ k: k, v: REC[5000].cov[k], y: y(REC[5000].cov[k]) });
@@ -5927,7 +5927,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       txt(svg, xi + 96, y(0.995) + 5, 'bootstrap at n = 500: 0.925 to 0.975', 'hi');
       txt(svg, 0, H - 14, 'The bootstrap interval is about 40 percent wider. That extra width is the precision you actually had.', 'hi');
     } else {
-      txt(svg, 0, H - 14, 'Analytic coverage runs 0.757 to 0.863 and never climbs toward the line as n grows.', 'hi');
+      txt(svg, 0, H - 2, 'Analytic coverage runs 0.757 to 0.863 and never climbs toward the line as n grows.', 'hi');
     }
   }
   function drawCovPh(svg, step) {
