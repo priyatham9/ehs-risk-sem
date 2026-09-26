@@ -1129,6 +1129,93 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 .st-hero h1.display,.hero h1.display{font-size:clamp(2.8rem,6vw,5.6rem);line-height:.95;letter-spacing:-.035em}
 @media (max-width:600px){.st-chapter .ch-key b{font-size:clamp(2.6rem,15vw,3.6rem)}.st-hero h1.display,.hero h1.display{font-size:min(2.6rem,9.2vw);overflow-wrap:anywhere}}
 </style>
+<style id="r8-page">
+/* figure data: every plotted number as a table */
+details.fd{border:2px solid var(--rule-soft);background:var(--surface)}
+details.fd > summary{cursor:pointer;list-style:none;min-height:44px;display:flex;align-items:center;gap:8px;padding:0 14px;font-family:var(--font-mono);font-size:.8125rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+details.fd > summary::-webkit-details-marker{display:none}
+details.fd > summary::before{content:"+";font-weight:700;width:1ch}
+details.fd[open] > summary::before{content:"\2212"}
+.fd-n{color:var(--muted);font-weight:500;text-transform:none;letter-spacing:0}
+.fd-body{padding:0 14px 14px}
+.fd-scroll{overflow-x:auto;margin-top:10px;overscroll-behavior-x:contain}
+.fd-scroll:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.fd table{border-collapse:collapse;width:100%;font-size:.9375rem;line-height:1.4;font-variant-numeric:tabular-nums}
+.fd caption{text-align:left;caption-side:top;padding:4px 0 8px;color:var(--ink-2);font-size:.9375rem;max-width:72ch}
+.fd th,.fd td{padding:8px 10px;border-bottom:1px solid var(--rule-soft);text-align:left;vertical-align:top}
+.fd thead th{font-family:var(--font-mono);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);border-bottom:2px solid var(--rule);vertical-align:bottom}
+.fd .num{text-align:right;font-family:var(--font-mono);white-space:nowrap}
+.fd tbody th{font-weight:600;color:var(--ink)}
+.fd tbody td{color:var(--ink-2)}
+h1,h2,h3{text-wrap:balance}
+p,li{text-wrap:pretty}
+/* round 8: readability floor, tap targets, figure titles and data */
+.label,.rail-num,.crumb{font-size:.75rem}
+.hero-note{max-width:62ch}
+/* top-align the hero columns: a line gained when the web font swaps in no longer shifts the whole column */
+.hero-grid{align-items:start}
+.seg{font-size:.75rem;min-height:44px}
+.st-figure figcaption{font-size:.8125rem;line-height:1.5;color:var(--muted)}
+.st-figure figcaption strong,.fd-src strong{color:var(--ink-2)}
+.ctrl input[type=range],.lab-ctl input[type=range],.hd-ctl input[type=range]{min-height:44px;height:44px}
+.sum-t{font-size:1rem;line-height:1.45}
+.sum-go{font-size:.75rem}
+.lab-ticks,.lab-src,.lab-claims .ck,.lab-verdict::before,.hd-ctl label,.lab-tab{font-size:.75rem}
+.lab-fig figcaption,.hero-dots figcaption{font-size:.8125rem}
+.lab-claims li,.lab-stat span{font-size:.9375rem}
+.lab-svg .tk{font-size:13px}
+.lab-svg .rs{font-size:13px}
+.lab-reset{margin-left:auto;min-height:44px;padding:0 14px;border:2px solid var(--rule-soft);background:var(--surface);color:var(--ink-2);font-family:var(--font-mono);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.lab-reset:hover{border-color:var(--accent);color:var(--accent)}
+.lead-box .lead-k{font-size:.75rem}
+.lead-box p{font-size:1.0625rem}
+.lead-box .ask{font-size:1.125rem}
+.hon p{font-size:1rem}
+.monday-lede{font-size:1.125rem}
+.monday-list li{font-size:1.0625rem}
+.footer .footer-links a{display:inline-flex;align-items:center;min-height:44px}
+.crumb a{display:inline-flex;align-items:center;min-height:44px}
+.crumb{margin-bottom:4px}
+.scene-wrap,#summary,#lab,#honesty,#monday{scroll-margin-top:64px}
+.fig-data{margin:20px 0 0}
+.fd-src{display:none;margin:0 0 8px;font-family:var(--font-mono);font-size:.8125rem;line-height:1.5;color:var(--muted)}
+.fd-hero{margin-top:10px}
+.fd-lab{margin-top:18px}
+.st-chapter .st-chapter-num{display:flex;align-items:center;gap:2px}
+.st-chapter{padding-bottom:clamp(32px,5vh,56px)!important}
+/* figure type. The engine sets every chart text to 14px through .st-chart text:not([font-size]),
+   which outranks single-class rules, so these carry the element selector. The 1000-unit desktop
+   frame renders at 0.85x or more; below 760 px the compact drawing takes over. */
+svg.st-chart text.p-name{font-size:16px;fill:var(--ink)}
+svg.st-chart text.v-num{font-size:17px;fill:var(--ink)}
+svg.st-chart text.hi{font-size:17px;fill:var(--ink)}
+svg.st-chart text.st-caption{font-size:15px;fill:var(--muted)}
+svg.st-chart text.big{font-size:78px;fill:var(--accent)}
+svg.st-chart text.big.is-warn{fill:var(--warn)}
+svg.st-chart text.big-sub{font-size:15px;fill:var(--muted)}
+svg.st-chart text.row-lab{font-size:16px;fill:var(--ink)}
+svg.st-chart text.row-sub{font-size:16px;fill:var(--muted)}
+svg.st-chart text.ph-title{fill:var(--ink-2)}
+svg.st-chart.is-ph text.row-sub,svg.st-chart.is-ph text.st-caption,svg.st-chart.is-ph text.big-sub,svg.st-chart.is-ph text.p-name,svg.st-chart.is-ph text.row-lab,svg.st-chart.is-ph text.hi{font-size:14px}
+svg.st-chart.is-ph text.v-num{font-size:15px}
+svg.st-chart.is-ph text.big{font-size:58px}
+/* the sticky scene title stays on one line, and the stage clears it */
+.scene-head{flex-wrap:nowrap;align-items:center}
+.scene-head .rail-num{flex:none}
+.scene-head h2{font-size:clamp(1.1rem,2.1vw,1.85rem);min-width:0}
+@media(min-width:801px){.scene-wrap .st-scene .st-stage{padding-top:76px}}
+@media(min-width:801px){.st-figure > svg.st-chart.is-ph{max-height:calc(100vh - 262px);max-height:calc(100svh - 262px)}}
+@media(max-width:800px){
+  .st-figure figcaption{display:none}
+  .fd-src{display:block}
+  .st-figure > svg.st-chart{max-height:calc(50vh - 34px);max-height:calc(50svh - 34px)}
+  .st-figure:has(.ctrl) > svg.st-chart{max-height:calc(50vh - 88px);max-height:calc(50svh - 88px)}
+  .seg{font-size:.75rem;padding:0 7px;letter-spacing:.03em;flex:1 1 auto}
+  .ctrl-seg{flex-wrap:nowrap}
+  .scene-head{flex-wrap:wrap;align-items:baseline}
+  .ctrl{margin-top:6px}
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -1157,7 +1244,8 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
         <output id="hdOut" for="hdN">5,000</output>
         <input type="range" id="hdN" min="0" max="5" step="1" value="5" aria-valuetext="5,000 units" />
       </div>
-      <figcaption><strong>Simulation, not site data.</strong> Each dot is one of 60 evenly spaced quantiles of the spread measured across 300 simulated studies (results/study01_recovery.csv). Dashed line: the true value. Scroll down, or drag, to cut the sample.</figcaption>
+      <figcaption><strong>Simulation, not site data.</strong> Each dot is one of 60 evenly spaced quantiles of the spread measured across 300 simulated studies (results/study01_recovery.csv). Dashed line: the true value. Drag to cut the sample.</figcaption>
+      <details class="fd fd-hero" data-table="hero"><summary>Data behind this figure <span class="fd-n">(table)</span></summary><div class="fd-body"></div></details>
     </figure>
   </div>
 </section>
@@ -1166,7 +1254,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <section class="sum" id="summary" aria-labelledby="sumH">
  <div class="wrap">
   <p class="label sum-k">The 60-second version</p>
-  <h2 class="display" id="sumH" data-m-split="words">Six numbers that decide whether a safety model can carry a decision</h2>
+  <h2 class="display" id="sumH" data-st-anchor data-m-split="words">Six numbers that decide whether a safety model can carry a decision</h2>
   <p class="sum-lede">Each one comes from a simulation where the true answer was fixed in advance, so the gap between the model and the truth can be measured exactly. Tap a number to jump to its scene.</p>
   <ol class="sum-grid" data-m-reveal data-m-stagger="0.07" data-m-from="up scale">
     <li><a href="#scene-1"><span class="sum-n" data-count="0.152" data-dec="3">0.152</span><span class="sum-t">Typical miss of one 100-unit study on a path whose true value is 0.45.</span><span class="sum-go">Scene 01 &darr;</span></a></li>
@@ -1183,7 +1271,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <section class="lab" id="lab" aria-labelledby="labH">
  <div class="wrap">
   <p class="label lab-k">Try it yourself</p>
-  <h2 class="display" id="labH" data-m-split="words">Shrink the data and the answer comes apart before the model complains</h2>
+  <h2 class="display" id="labH" data-st-anchor data-m-split="words">Shrink the data and the answer comes apart before the model complains</h2>
   <p class="lab-lede">Move the dial. Nothing here is re-simulated in your browser: each position shows a row from the committed result tables, so what you see is exactly what the studies measured. The model never throws an error at any setting. It just gets quietly less trustworthy.</p>
   <p class="lab-note"><strong>Synthetic simulation studies.</strong> Every value is from data generated by a known model (<span class="mono">simulations/dgp.py</span>), not from any real site or workforce.</p>
   <div class="lab-card" data-m-flip=".lab-panel, .lab-fig">
@@ -1197,6 +1285,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
         <label for="labN">Units in the study</label>
         <output id="labNOut" for="labN">100</output>
         <input type="range" id="labN" min="0" max="5" step="1" value="0" aria-describedby="labNVerdict" />
+        <button type="button" class="lab-reset" data-lab-reset>Reset</button>
       </div>
       <div class="lab-ticks" aria-hidden="true"><span>100</span><span>200</span><span>500</span><span>1,000</span><span>2,000</span><span>5,000</span></div>
       <p class="lab-verdict is-bad" id="labNVerdict" data-tag="What a leader can conclude" aria-live="polite"></p>
@@ -1221,6 +1310,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
         <label for="labR">Outcome base rate</label>
         <output id="labROut" for="labR">30%</output>
         <input type="range" id="labR" min="0" max="3" step="1" value="0" aria-describedby="labRVerdict" />
+        <button type="button" class="lab-reset" data-lab-reset>Reset</button>
       </div>
       <div class="lab-ticks" aria-hidden="true"><span>30%</span><span>5%</span><span>0.5%</span><span>0.05%</span></div>
       <p class="lab-verdict" id="labRVerdict" data-tag="What a leader can conclude" aria-live="polite"></p>
@@ -1237,6 +1327,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       </div>
     </div>
   </div>
+  <details class="fd fd-lab" data-table="lab"><summary>Data behind the lab <span class="fd-n">(two tables)</span></summary><div class="fd-body"></div></details>
  </div>
 </section>
 
@@ -1251,7 +1342,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== SCENE 1 ===================== -->
 <section class="section scene-wrap" id="scene-1">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 01</span><h2 class="display">On average the method is right (bias 0.007), but one study can miss by 0.152</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 01</span><h2 class="display" id="scene-1-h">How far one study can miss</h2></div>
   <div class="st-scene" data-scene="1">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -1261,7 +1352,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
           <input id="nSlider" type="range" min="0" max="5" step="1" value="2" aria-label="Sample size" />
           <span class="ctrl-hint label">300 replications per point</span>
         </div>
-        <figcaption>Source: results/study01_recovery.csv. Bars show the mean estimate; the band is one empirical standard deviation across replications.</figcaption>
+        <figcaption><strong>Synthetic simulation data.</strong> Solid tick: mean estimate over 300 replications; band: one empirical standard deviation. Source: results/study01_recovery.csv.</figcaption>
       </figure>
     </div></div>
     <div class="st-steps">
@@ -1284,6 +1375,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     </div>
   </div>
 
+  <div class="fig-data">
+    <p class="fd-src"><strong>Synthetic simulation data.</strong> Source: results/study01_recovery.csv.</p>
+    <details class="fd" data-table="path"><summary>Data behind this figure <span class="fd-n">(table)</span></summary><div class="fd-body"></div></details>
+  </div>
+
   <aside class="lead-box" aria-label="Scene 01 for leaders">
     <div><span class="lead-k">What it means for a leader</span><p>The average is trustworthy; any one study is not. With 100 units, a path whose true value is 0.45 could honestly come out anywhere from 0.16 to 0.75. With 1,000 units the range is 0.37 to 0.53. The slide shows one number and hides which part of that range you are in.</p></div>
     <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;How many units is this fitted on, and what range would a repeat of the study give for the coefficient we are about to act on?&rdquo;</p></div>
@@ -1302,12 +1398,12 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== SCENE 2 ===================== -->
 <section class="section scene-wrap" id="scene-2">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 02</span><h2 class="display">The textbook 95 percent interval holds only 83 times in 100 on average</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 02</span><h2 class="display" id="scene-2-h">How often a 95 percent interval holds</h2></div>
   <div class="st-scene" data-side="left" data-scene="2">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
         <svg class="st-chart" id="covSvg" viewBox="0 0 1000 600" role="img" aria-label="Coverage of nominal 95 percent analytic confidence intervals against sample size. All four paths sit between 76 and 86 percent at every sample size and do not approach 95 percent as the sample grows."></svg>
-        <figcaption>Source: results/study01_recovery.csv (analytic) and results/study01_bootstrap.csv (bootstrap, n = 500, 40 replications, Monte Carlo SE about 0.034).</figcaption>
+        <figcaption><strong>Synthetic simulation data.</strong> Source: results/study01_recovery.csv (analytic) and results/study01_bootstrap.csv (bootstrap, n = 500, 40 replications, Monte Carlo SE about 0.034).</figcaption>
       </figure>
     </div></div>
     <div class="st-steps">
@@ -1330,6 +1426,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     </div>
   </div>
 
+  <div class="fig-data">
+    <p class="fd-src"><strong>Synthetic simulation data.</strong> Source: results/study01_recovery.csv and results/study01_bootstrap.csv.</p>
+    <details class="fd" data-table="cov"><summary>Data behind this figure <span class="fd-n">(table)</span></summary><div class="fd-body"></div></details>
+  </div>
+
   <aside class="lead-box" aria-label="Scene 02 for leaders">
     <div><span class="lead-k">What it means for a leader</span><p>The ranges your team reports are too narrow. A &ldquo;95 in 100&rdquo; interval from the standard formula held only 76 to 86 times in 100 here, and more data did not fix it. A decision taken near the edge of that range is more confident than the evidence behind it.</p></div>
     <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;Is this interval from the analytic formula or from a bootstrap? If analytic, can I see the bootstrap interval next to it?&rdquo;</p></div>
@@ -1348,12 +1449,12 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== SCENE 3 ===================== -->
 <section class="section scene-wrap" id="scene-3">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 03</span><h2 class="display">A passing fit needs 153 units. Naming the bigger driver needs 6,884.</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 03</span><h2 class="display" id="scene-3-h">What each claim costs in sample size</h2></div>
   <div class="st-scene" data-scene="3">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
         <svg class="st-chart" id="reqSvg" viewBox="0 0 1000 600" role="img" aria-label="Sample size required for five different claims, on a logarithmic scale. Global fit needs 153 sites; separating the two smallest coefficients needs 6884."></svg>
-        <figcaption>Source: results/study01_requirements.csv and results/study01_distinguishability.csv. Log scale.</figcaption>
+        <figcaption><strong>Synthetic simulation data.</strong> Source: results/study01_requirements.csv and results/study01_distinguishability.csv. Log scale.</figcaption>
       </figure>
     </div></div>
     <div class="st-steps">
@@ -1376,6 +1477,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     </div>
   </div>
 
+  <div class="fig-data">
+    <p class="fd-src"><strong>Synthetic simulation data.</strong> Source: results/study01_requirements.csv and results/study01_distinguishability.csv.</p>
+    <details class="fd" data-table="req"><summary>Data behind this figure <span class="fd-n">(table)</span></summary><div class="fd-body"></div></details>
+  </div>
+
   <aside class="lead-box" aria-label="Scene 03 for leaders">
     <div><span class="lead-k">What it means for a leader</span><p>Sample size buys specific claims, not general credibility. 153 units buy a passing fit, 369 a usable single coefficient, 770 the right to say unsafe acts beat operational stress, and 6,884 the right to rank system condition against safety response. Most safety datasets are sized for the first claim and quoted for the last.</p></div>
     <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;Which claim is this deck making: the model fits, one driver matters, or one driver matters more than another? Does our sample clear the bar for that claim?&rdquo;</p></div>
@@ -1394,12 +1500,12 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== SCENE 4 ===================== -->
 <section class="section scene-wrap" id="scene-4">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 04</span><h2 class="display">Leave out one common cause and a true 0.20 reads 0.495, with a perfect fit</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 04</span><h2 class="display" id="scene-4-h">When the causal structure is wrong</h2></div>
   <div class="st-scene" data-side="left" data-scene="4">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
         <svg class="st-chart" id="misSvg" viewBox="0 0 1000 600" role="img" aria-label="Four misspecified models. Every one meets conventional fit cutoffs; bias in the reported coefficient ranges from zero to 0.295."></svg>
-        <figcaption>Source: results/study03_confounder.csv, study03_reverse.csv, study03_equivalent.csv, study03_mediator.csv.</figcaption>
+        <figcaption><strong>Synthetic simulation data.</strong> Source: results/study03_confounder.csv, study03_reverse.csv, study03_equivalent.csv, study03_mediator.csv.</figcaption>
       </figure>
     </div></div>
     <div class="st-steps">
@@ -1422,6 +1528,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     </div>
   </div>
 
+  <div class="fig-data">
+    <p class="fd-src"><strong>Synthetic simulation data.</strong> Source: results/study03_confounder.csv, study03_reverse.csv, study03_equivalent.csv, study03_mediator.csv.</p>
+    <details class="fd" data-table="mis"><summary>Data behind this figure <span class="fd-n">(table)</span></summary><div class="fd-body"></div></details>
+  </div>
+
   <aside class="lead-box" aria-label="Scene 04 for leaders">
     <div><span class="lead-k">What it means for a leader</span><p>A model that fits perfectly can still point the budget at the wrong lever. Leave out one common cause and a true 0.20 reads 0.495, more than double, while the fit statistics look better than the correct model&rsquo;s. Fit indices do not check the causal story.</p></div>
     <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;What could drive both this factor and our incidents that is not in the model, and what happens to the coefficient if we add the most likely one?&rdquo;</p></div>
@@ -1440,7 +1551,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== SCENE 5 ===================== -->
 <section class="section scene-wrap" id="scene-5">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 05</span><h2 class="display">With rare events, 680 alerts for every real one</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 05</span><h2 class="display" id="scene-5-h">Rare events and the alert burden</h2></div>
   <div class="st-scene" data-scene="5">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -1450,7 +1561,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
           <button type="button" class="seg" data-rare="disc">Base rate</button>
           <button type="button" class="seg" data-rare="bal">Rebalancing</button>
         </div>
-        <figcaption>Source: results/study02_alert_burden.csv, study02_discrimination.csv, study02_imbalance.csv, study02_sizing.csv.</figcaption>
+        <figcaption><strong>Synthetic simulation data.</strong> Source: results/study02_alert_burden.csv, study02_discrimination.csv, study02_imbalance.csv, study02_sizing.csv.</figcaption>
       </figure>
     </div></div>
     <div class="st-steps">
@@ -1473,6 +1584,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     </div>
   </div>
 
+  <div class="fig-data">
+    <p class="fd-src"><strong>Synthetic simulation data.</strong> Source: results/study02_alert_burden.csv, study02_discrimination.csv, study02_imbalance.csv.</p>
+    <details class="fd" data-table="rare"><summary>Data behind this figure <span class="fd-n">(table)</span></summary><div class="fd-body"></div></details>
+  </div>
+
   <aside class="lead-box" aria-label="Scene 05 for leaders">
     <div><span class="lead-k">What it means for a leader</span><p>For rare events the headline metric misleads. AUC barely moves between a 30 percent and a 0.5 percent base rate, while alerts per real event go from 1.6 to 62. Supervisors live with the alert burden, not the AUC, and at 680 alerts per real event they will stop responding.</p></div>
     <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;At our real base rate and the threshold we would actually use, how many alerts would one site see for each true event?&rdquo;</p></div>
@@ -1491,7 +1607,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== SCENE 6 ===================== -->
 <section class="section scene-wrap" id="scene-6">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Scene 06</span><h2 class="display">The same fitted coefficients can mean an effect of 0.45 or of 0.281</h2></div>
+  <div class="scene-head"><span class="rail-num">Scene 06</span><h2 class="display" id="scene-6-h">Three causal worlds, one set of numbers</h2></div>
   <div class="st-scene" data-side="left" data-scene="6">
     <div class="st-stage"><div class="st-stage-inner">
       <figure class="st-figure">
@@ -1501,7 +1617,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
           <button type="button" class="seg" data-world="1">World 2</button>
           <button type="button" class="seg" data-world="2">World 3</button>
         </div>
-        <figcaption>Source: results/study04_ambiguity.csv.</figcaption>
+        <figcaption><strong>Synthetic simulation data.</strong> Source: results/study04_ambiguity.csv.</figcaption>
       </figure>
     </div></div>
     <div class="st-steps">
@@ -1524,6 +1640,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     </div>
   </div>
 
+  <div class="fig-data">
+    <p class="fd-src"><strong>Synthetic simulation data.</strong> Source: results/study04_ambiguity.csv.</p>
+    <details class="fd" data-table="world"><summary>Data behind this figure <span class="fd-n">(table)</span></summary><div class="fd-body"></div></details>
+  </div>
+
   <aside class="lead-box" aria-label="Scene 06 for leaders">
     <div><span class="lead-k">What it means for a leader</span><p>Identical numbers on a slide can mean an intervention on unsafe acts is worth 0.45 or 0.281, depending on a causal assumption the data cannot check. And the same crew can rank first or second depending on how scores are standardized by site.</p></div>
     <div><span class="lead-k">Ask your analyst</span><p class="ask">&ldquo;Under what causal story is this coefficient the effect of acting on it, and what would we expect to see if that story were wrong?&rdquo;</p></div>
@@ -1534,7 +1655,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== HONESTY ===================== -->
 <section class="section honesty" id="honesty">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Limits</span><h2 class="display">What this does not establish</h2></div>
+  <div class="scene-head"><span class="rail-num">Limits</span><h2 class="display" id="honesty-h" data-st-anchor>What this does not establish</h2></div>
   <div class="hon-grid">
     <div class="hon"><span class="label">Data</span><p>Every dataset on this page is synthetic, generated from a known model by <span class="mono">simulations/dgp.py</span>. That is the design, not a shortcut: the failures shown here are only visible when the true answer is known. Nothing here describes a real site, a real workforce or a real rate.</p></div>
     <div class="hon"><span class="label">Scope</span><p>These are simulation studies of estimator behaviour. They do not show that any particular published safety model is wrong. They show which claims a model of this shape can and cannot support at a given sample size.</p></div>
@@ -1547,7 +1668,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
 <!-- ===================== MONDAY ===================== -->
 <section class="section monday" id="monday">
  <div class="wrap">
-  <div class="scene-head"><span class="rail-num">Monday</span><h2 class="display">One thing to do on Monday: ask for the n and the interval method</h2></div>
+  <div class="scene-head"><span class="rail-num">Monday</span><h2 class="display" id="monday-h" data-st-anchor>One thing to do on Monday: ask for the n and the interval method</h2></div>
   <p class="monday-lede">Take the last risk model your team presented. Ask for the sample size and the interval method behind the coefficient that drove the decision. If the interval came from the analytic standard error, ask for a bootstrap interval instead, and ask what would have to be true about the causal structure for that coefficient to be the effect of acting on it.</p>
   <ul class="monday-list">
     <li><span class="mono">1</span> Get the n. Compare it against 369 for a usable path and 6,884 for a claim that one path beats another.</li>
@@ -5654,7 +5775,16 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   var RMQ = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false, addEventListener: null };
   var PHQ = window.matchMedia ? matchMedia('(max-width:800px)') : { matches: false, addEventListener: null };
   function rm() { return (S && S.reduced ? S.reduced() : false) || RMQ.matches; }
-  function PH() { return PHQ.matches; }
+  /* compact drawing: phones, and laptop widths where the desktop figure would
+     render narrower than 760 px (its type would fall under 12 px there) */
+  var COMPACT = false;
+  function measureCompact() {
+    var f = document.querySelector('.st-scene .st-figure');
+    var w = f ? f.getBoundingClientRect().width : 1000;
+    COMPACT = w > 0 && w < 760;
+    return COMPACT;
+  }
+  function PH() { return PHQ.matches || COMPACT; }
 
   /* ---------------- data (every value read from a committed result file) --- */
   var PRED = ['Unsafe acts', 'Operational stress', 'System condition', 'Safety response'];
@@ -5748,13 +5878,16 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   }
   /* phone rendering: a 360 x 348 viewBox renders about 315 px wide at 375 px,
      so type set at 14-15 units lands at 12-13 real pixels and stays readable. */
-  var PW = 360, PHT = 348;
+  var PW = 360, PHT = 348, PTOP = 28;
   function box(svg) {
     var ph = PH();
-    svg.setAttribute('viewBox', ph ? ('0 0 ' + PW + ' ' + PHT) : '0 0 1000 600');
+    svg.setAttribute('viewBox', ph ? ('0 ' + (-PTOP) + ' ' + PW + ' ' + (PHT + PTOP)) : '0 0 1000 600');
+    svg.setAttribute('preserveAspectRatio', ph ? 'xMinYMid meet' : 'xMidYMid meet');
     svg.classList.toggle('is-ph', ph);
     return ph;
   }
+  /* the compact drawing carries its own title line above the plot */
+  function phTitle(svg, s) { txt(svg, 0, -10, s, 'st-caption ph-title'); }
   function phNote(svg, text) {
     var words = text.split(' '), line = '', out = [], i;
     for (i = 0; i < words.length; i++) {
@@ -5767,7 +5900,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   }
   function phBig(svg, val, sub, warn) {
     txt(svg, 0, 58, val, 'big' + (warn ? ' is-warn' : ''));
-    wrapText(svg, 0, 82, sub, 'big-sub', 38, 16);
+    wrapText(svg, 0, 82, sub, 'big-sub', 34, 17);
   }
   function phRows(svg, rows, T, rowH, barW, fmtVal) {
     rows.forEach(function (r, i) {
@@ -5794,7 +5927,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     var defs = el('defs', {}, svg);
     var mk = el('marker', { id: 's4-arrow', viewBox: '0 0 10 10', refX: '9', refY: '5', markerWidth: '6', markerHeight: '6', orient: 'auto-start-reverse' }, defs);
     el('path', { d: 'M0,0 L10,5 L0,10 z', fill: 'var(--ink-2)' }, mk);
-    txt(svg, 0, 24, 'ESTIMATED PATH TO LATENT RISK  ·  n = ' + nKey.toLocaleString() + '  ·  300 REPLICATIONS', 'st-caption');
+    txt(svg, 0, 24, 'PATH ESTIMATE VS TRUTH  ·  n = ' + nKey.toLocaleString() + '  ·  300 REPLICATIONS  ·  SIMULATED', 'st-caption');
     bignum(svg, 0, 130, fmt(d.sd[0]), 'EMPIRICAL SD ON THE 0.45 PATH AT n = ' + nKey.toLocaleString(), nKey <= 200);
     var sx = function (v) { return ax0 + (v + 0.4) / 1.0 * (ax1 - ax0); };
     /* zero reference runs the height of the four rows */
@@ -5822,12 +5955,13 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       }, svg);
       pathParts.push({ band: band, est: est, lab: lab, sub: sub, sx: sx, i: i });
     }
-    txt(svg, 0, H - 40, 'Solid tick = mean estimate. Dashed tick = generating value. Band = one empirical SD across 300 replications.', 'row-sub');
+    txt(svg, 0, H - 40, 'Solid tick: mean estimate. Dashed: true value. Band: one empirical SD.', 'row-sub');
     txt(svg, 0, H - 14, emph >= 3 ? 'Your study is one draw from that band, and the slide only ever shows the draw.' : 'Largest bias across the four paths is 0.007 at n = 100 and 0.0014 at n = 5000.', 'hi');
   }
   function drawPathPh(svg, nKey, emph) {
     clear(svg); pathParts = null;
     var d = REC[nKey], top = 152, gap = 44, x0 = 146, x1 = 296;
+    phTitle(svg, 'PATH ESTIMATE VS TRUTH · n = ' + nKey.toLocaleString());
     phBig(svg, fmt(d.sd[0]), 'SD ON THE 0.45 PATH AT n = ' + nKey.toLocaleString(), nKey <= 200);
     var sx = function (v) { return x0 + (v + 0.4) / 1.0 * (x1 - x0); };
     el('line', { x1: sx(0), y1: top - 24, x2: sx(0), y2: top + gap * 3 + 24, class: 'st-grid' }, svg);
@@ -5841,7 +5975,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       el('line', { x1: sx(TRUE_B[i]), y1: y - 19, x2: sx(TRUE_B[i]), y2: y + 19, class: 'p-true' }, svg);
       txt(svg, PW, y + 6, fmt(d.est[i]), 'v-num', 'end');
     }
-    txt(svg, 0, top + gap * 3 + 42, 'Solid tick = estimate, dashed = true value, band = one SD.', 'row-sub');
+    txt(svg, 0, top + gap * 3 + 34, 'Tick: estimate. Dashed: true value.', 'row-sub');
     phNote(svg, emph >= 3 ? 'Your study is one draw from that band.' : 'Largest bias is 0.007 at n = 100.');
   }
   function updatePath(svg, nKey) {
@@ -5862,7 +5996,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       p.sub.textContent = 'true ' + fmt(TRUE_B[i], 2) + '   sd ' + fmt(d.sd[i]);
     });
     var cap = svg.querySelector('text.st-caption');
-    if (cap) cap.textContent = 'ESTIMATED PATH TO LATENT RISK  ·  n = ' + nKey.toLocaleString() + '  ·  300 REPLICATIONS';
+    if (cap) cap.textContent = 'PATH ESTIMATE VS TRUTH  ·  n = ' + nKey.toLocaleString() + '  ·  300 REPLICATIONS  ·  SIMULATED';
     var big = svg.querySelector('text.big');
     if (big) { big.textContent = fmt(d.sd[0]); big.setAttribute('class', 'big' + (nKey <= 200 ? ' is-warn' : '')); }
     var bs = svg.querySelector('text.big-sub');
@@ -5872,11 +6006,11 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   /* ---------------- chart 2: coverage ------------------------------------- */
   function drawCoverage(svg, step) {
     if (box(svg)) return drawCovPh(svg, step);
-    var H = 600, L = 96, T = 216, BTM = 512, RIGHT = 768;
+    var H = 600, L = 96, T = 216, BTM = 512, RIGHT = 700;
     clear(svg);
     var x = function (i) { return L + i * (RIGHT - L) / (NS_LIST.length - 1); };
     var y = function (v) { return T + (1.00 - v) / 0.30 * (BTM - T); };
-    txt(svg, 0, 24, 'COVERAGE OF A NOMINAL 95% INTERVAL, FOUR PATHS', 'st-caption');
+    txt(svg, 0, 24, 'COVERAGE OF A NOMINAL 95% INTERVAL, FOUR PATHS  ·  SIMULATED', 'st-caption');
     bignum(svg, 0, 132, '83%', 'HOW OFTEN THE INTERVAL ACTUALLY CONTAINS THE TRUTH', true);
     [0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00].forEach(function (g) {
       el('line', { x1: L, y1: y(g), x2: RIGHT, y2: y(g), class: 'st-grid' }, svg);
@@ -5925,7 +6059,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       BOOT.boot.forEach(function (v, i) { tip(el('circle', { cx: xi + 13, cy: y(v), r: 6, class: 'boot-dot' }, svg), PRED[i] + ' bootstrap at n = 500: ' + v.toFixed(3)); });
       el('line', { x1: xi + 20, y1: y(0.955), x2: xi + 92, y2: y(0.995), class: 'lead' }, svg);
       txt(svg, xi + 96, y(0.995) + 5, 'bootstrap at n = 500: 0.925 to 0.975', 'hi');
-      txt(svg, 0, H - 14, 'The bootstrap interval is about 40 percent wider. That extra width is the precision you actually had.', 'hi');
+      txt(svg, 0, H - 14, 'The bootstrap interval is about 40 percent wider: the precision you actually had.', 'hi');
     } else {
       txt(svg, 0, H - 2, 'Analytic coverage runs 0.757 to 0.863 and never climbs toward the line as n grows.', 'hi');
     }
@@ -5935,6 +6069,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     var L = 44, R = 336, T = 154, B = 262;
     var x = function (i) { return L + i * (R - L) / (NS_LIST.length - 1); };
     var y = function (v) { return T + (1.00 - v) / 0.30 * (B - T); };
+    phTitle(svg, 'INTERVAL COVERAGE, 4 PATHS');
     phBig(svg, '83%', 'HOW OFTEN A NOMINAL 95% INTERVAL HOLDS', true);
     [0.80, 0.90, 1.00].forEach(function (g) {
       el('line', { x1: L, y1: y(g), x2: R, y2: y(g), class: 'st-grid' }, svg);
@@ -5960,10 +6095,10 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       var xi = x(2);
       BOOT.analytic.forEach(function (v) { el('circle', { cx: xi - 7, cy: y(v), r: 4.5, class: 'boot-dot', fill: 'var(--warn)' }, svg); });
       BOOT.boot.forEach(function (v) { el('circle', { cx: xi + 7, cy: y(v), r: 4.5, class: 'boot-dot' }, svg); });
-      txt(svg, 0, B + 48, 'Bootstrap at n = 500 covers 0.925 to 0.975.', 'hi');
-      phNote(svg, 'It is 40 percent wider, and that width is real.');
+      txt(svg, 0, B + 46, 'Bootstrap at n = 500: 0.925 to 0.975.', 'hi');
+      phNote(svg, 'Wider by 40 percent: the real precision.');
     } else {
-      txt(svg, 0, B + 48, 'All four paths: 0.757 to 0.863.', 'hi');
+      txt(svg, 0, B + 46, 'All four paths: 0.757 to 0.863.', 'hi');
       phNote(svg, 'More data never lifts them to the line.');
     }
   }
@@ -5973,14 +6108,14 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     if (box(svg)) return drawReqPh(svg, step);
     var H = 600, T = 226, rowH = 70, barX = 400, barW = 440;
     clear(svg);
-    txt(svg, 0, 24, 'SAMPLE SIZE REQUIRED FOR EACH CLAIM, LOG SCALE', 'st-caption');
+    txt(svg, 0, 24, 'UNITS REQUIRED FOR EACH CLAIM, LOG SCALE  ·  SIMULATED', 'st-caption');
     bignum(svg, 0, 132, '6,884', 'UNITS BEFORE YOU CAN SAY WHICH PATH IS LARGER', true);
     var max = Math.log10(8000), min = Math.log10(100);
     var bw = function (n) { return Math.max(4, (Math.log10(n) - min) / (max - min) * barW); };
     [100, 1000, 8000].forEach(function (g) {
       var gx = barX + bw(g);
-      el('line', { x1: gx, y1: T - 42, x2: gx, y2: T + rowH * 4 + 26, class: 'st-grid' }, svg);
-      txt(svg, gx, T - 50, g.toLocaleString(), 'row-sub', 'middle');
+      el('line', { x1: gx, y1: T - 32, x2: gx, y2: T + rowH * 4 + 26, class: 'st-grid' }, svg);
+      txt(svg, gx, T - 38, g.toLocaleString(), 'row-sub', 'middle');
     });
     REQ.forEach(function (r, i) {
       var y = T + i * rowH;
@@ -5996,6 +6131,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   }
   function drawReqPh(svg, step) {
     clear(svg);
+    phTitle(svg, 'UNITS NEEDED PER CLAIM, LOG SCALE');
     phBig(svg, '6,884', 'UNITS TO SAY WHICH PATH IS LARGER', true);
     var T = 124, rowH = 38, barW = 215;
     var max = Math.log10(8000), min = Math.log10(100);
@@ -6012,13 +6148,13 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     if (box(svg)) return drawMisPh(svg, step);
     var H = 600, T = 222, rowH = 70, barX = 430, barW = 400;
     clear(svg);
-    txt(svg, 0, 24, 'GAP BETWEEN THE REPORTED NUMBER AND THE EFFECT IT IS READ AS', 'st-caption');
+    txt(svg, 0, 24, 'GAP BETWEEN REPORTED NUMBER AND EFFECT  ·  SIMULATED', 'st-caption');
     bignum(svg, 0, 132, '0.295', 'LARGEST GAP, AND ITS MODEL HAS CFI 1.000 AND RMSEA 0.000', true);
     var order = MIS.slice().sort(function (a, b) { return a.gap - b.gap; });
     [0.1, 0.2, 0.3].forEach(function (g) {
       var gx = barX + g / 0.30 * barW;
-      el('line', { x1: gx, y1: T - 44, x2: gx, y2: T + rowH * 4 + 26, class: 'st-grid' }, svg);
-      txt(svg, gx, T - 52, g.toFixed(1), 'row-sub', 'middle');
+      el('line', { x1: gx, y1: T - 32, x2: gx, y2: T + rowH * 4 + 26, class: 'st-grid' }, svg);
+      txt(svg, gx, T - 38, g.toFixed(1), 'row-sub', 'middle');
     });
     order.forEach(function (m, i) {
       var y = T + i * rowH;
@@ -6034,6 +6170,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   }
   function drawMisPh(svg, step) {
     clear(svg);
+    phTitle(svg, 'COEFFICIENT GAP BY WRONG MODEL');
     phBig(svg, '0.295', 'LARGEST GAP, AT CFI 1.000 AND RMSEA 0.000', true);
     var T = 124, rowH = 38, barW = 215;
     var order = MIS.slice().sort(function (a, b) { return a.gap - b.gap; });
@@ -6054,6 +6191,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     disc: ['62', 'ALERTS PER TRUE EVENT AT A 0.5% BASE RATE'],
     bal: ['88x', 'PREDICTED OVER OBSERVED RISK AFTER UNDERSAMPLING']
   };
+  var RARE_T_PH = { burden: 'ALERTS PER TRUE EVENT, LOG SCALE', disc: 'ALERT BURDEN BY BASE RATE', bal: 'PREDICTED OVER OBSERVED RISK' };
   var RARE_SO = {
     burden: 'Everything above 2.1 trains a supervisor to ignore the tool.',
     disc: 'AUC moves 0.007. The burden moves 39-fold.',
@@ -6064,7 +6202,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     var H = 600, T = 244, barX = 470, barW = 380;
     var cfg = RARE[view] || RARE.burden, big = RARE_BIG[view] || RARE_BIG.burden;
     clear(svg);
-    txt(svg, 0, 24, cfg.title.toUpperCase(), 'st-caption');
+    txt(svg, 0, 24, cfg.title.toUpperCase() + '  ·  SIMULATED', 'st-caption');
     bignum(svg, 0, 132, big[0], big[1], true);
     var vals = cfg.rows.map(function (r) { return r.v; });
     var max = Math.max.apply(null, vals), rowH = Math.min(84, (500 - T) / Math.max(1, cfg.rows.length - 1) || 84);
@@ -6085,12 +6223,13 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       tween(600, function (t) { rect.setAttribute('width', w * t); });
       txt(svg, barX + w + 14, y + 8, (r.v >= 10 ? Math.round(r.v).toLocaleString() : r.v.toFixed(1)) + cfg.unit, 'v-num');
     });
-    txt(svg, 0, H - 40, 'Log scale. Base rate 9.2 recordable events per 100,000 worker-shifts. Source: results/study02_*.csv.', 'row-sub');
+    txt(svg, 0, H - 40, 'Log scale. Base rate 9.2 events per 100,000 worker-shifts (simulated).', 'row-sub');
     txt(svg, 0, H - 14, RARE_SO[view] || RARE_SO.burden, 'hi');
   }
   function drawRarePh(svg, view) {
     clear(svg);
     var cfg = RARE[view] || RARE.burden, big = RARE_BIG_PH[view] || RARE_BIG_PH.burden;
+    phTitle(svg, RARE_T_PH[view] || RARE_T_PH.burden);
     phBig(svg, big[0], big[1], true);
     var T = 132, rowH = 44, barW = 195;
     var max = Math.max.apply(null, cfg.rows.map(function (r) { return r.v; }));
@@ -6108,7 +6247,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
     var H = 600, T = 268, rowH = 62, mid = 620, unit = 300;
     clear(svg); worldParts = [];
     var w = WORLDS[idx];
-    txt(svg, 0, 24, 'FITTED COEFFICIENTS  ·  WORLD ' + (idx + 1) + ' OF 3', 'st-caption');
+    txt(svg, 0, 24, 'FITTED COEFFICIENTS  ·  WORLD ' + (idx + 1) + ' OF 3  ·  SIMULATED', 'st-caption');
     bignum(svg, 0, 132, w.eff.toFixed(3), 'EFFECT OF INTERVENING ON UNSAFE ACTS', w.eff !== 0.45);
     txt(svg, 0, 196, w.k, 'hi');
     el('line', { x1: mid, y1: T - 48, x2: mid, y2: T + rowH * 3 + 30, class: 'st-axis-line' }, svg);
@@ -6123,13 +6262,13 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       worldParts.push({ rect: rect, lab: lab, v: v });
     }
     wrapText(svg, 0, H - 58, w.note, 'hi', 96, 24);
-    txt(svg, 0, H - 12, 'Source: results/study04_ambiguity.csv. Rounded for a slide, all three worlds are the same slide.', 'row-sub');
+    txt(svg, 0, H - 12, 'Rounded for a slide, all three worlds are the same slide.', 'row-sub');
   }
   function drawWorldPh(svg, idx) {
     clear(svg); worldParts = null;
     var w = WORLDS[idx], T = 150, rowH = 36, mid = 180, unit = 150;
+    phTitle(svg, 'FITTED COEFFICIENTS · WORLD ' + (idx + 1) + ' OF 3');
     phBig(svg, w.eff.toFixed(3), 'EFFECT OF INTERVENING ON UNSAFE ACTS', w.eff !== 0.45);
-    txt(svg, 0, 126, 'WORLD ' + (idx + 1) + ' OF 3', 'st-caption');
     el('line', { x1: mid, y1: T - 14, x2: mid, y2: T + rowH * 3 + 26, class: 'st-axis-line' }, svg);
     for (var i = 0; i < 4; i++) {
       var y = T + i * rowH;
@@ -6154,6 +6293,77 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
         p.lab.setAttribute('x', v < 0 ? mid - bw - 14 : mid + bw + 14); p.lab.textContent = fmt(v);
       });
       if (t === 1) drawWorld(svg, idx);
+    });
+  }
+
+  /* ---------------- data tables: the plotted numbers, one per figure -------
+     Rendered by the engine's Story.dataTable when it is present, else as a plain
+     <details> table in the same place. Every value comes from the arrays above. */
+  function tblHtml(t) {
+    var h = '<div class="fd-scroll" role="region" tabindex="0" aria-label="' + t.caption.replace(/"/g, '') + '"><table><caption>' + t.caption + '</caption><thead><tr>' +
+      t.columns.map(function (c, i) { return '<th scope="col"' + (i ? ' class="num"' : '') + '>' + c + '</th>'; }).join('') + '</tr></thead><tbody>';
+    t.rows.forEach(function (r) {
+      h += '<tr>' + r.map(function (c, i) { return i ? '<td class="num">' + c + '</td>' : '<th scope="row">' + c + '</th>'; }).join('') + '</tr>';
+    });
+    return h + '</tbody></table></div>';
+  }
+  var TABLES = {
+    hero: function () {
+      return [{ caption: 'Empirical standard deviation of each estimate across 300 simulated studies, by units per study', columns: ['Units (n)'].concat(PRED),
+        rows: NS_LIST.map(function (n) { return [n.toLocaleString()].concat(REC[n].sd.map(function (v) { return fmt(v); })); }) }];
+    },
+    path: function () {
+      return [{ caption: 'Mean estimate (empirical SD) by sample size, 300 replications per cell. True values: ' + TRUE_B.map(function (v, i) { return PRED[i] + ' ' + fmt(v, 2); }).join(', '),
+        columns: ['Units (n)'].concat(PRED), rows: NS_LIST.map(function (n) {
+          return [n.toLocaleString()].concat(REC[n].est.map(function (e, i) { return fmt(e) + ' (' + fmt(REC[n].sd[i]) + ')'; }));
+        }) }];
+    },
+    cov: function () {
+      return [{ sum: 'Data: coverage by sample size', caption: 'Share of nominal 95 percent analytic intervals that held the true value, 300 replications per cell',
+        columns: ['Units (n)'].concat(PRED).concat(['Analytic SE / empirical SD']), rows: NS_LIST.map(function (n) {
+          return [n.toLocaleString()].concat(REC[n].cov.map(function (c) { return c.toFixed(3); })).concat([REC[n].ser.toFixed(2)]);
+        }) },
+        { sum: 'Data: analytic against bootstrap, n = 500', caption: 'Analytic against bootstrap coverage at n = 500, 40 replications (Monte Carlo SE about 0.034)', columns: ['Interval'].concat(PRED),
+          rows: [['Analytic'].concat(BOOT.analytic.map(function (c) { return c.toFixed(3); })), ['Bootstrap'].concat(BOOT.boot.map(function (c) { return c.toFixed(3); }))] }];
+    },
+    req: function () {
+      return [{ caption: 'Units needed for each claim (80 percent power, or the stated standard error)', columns: ['Claim', 'Units needed'],
+        rows: REQ.map(function (r) { return [r.k, r.n.toLocaleString()]; }) }];
+    },
+    mis: function () {
+      return [{ caption: 'Gap between the reported coefficient and the effect it is read as, by misspecified model', columns: ['Model', 'Gap', 'Fit'],
+        rows: MIS.map(function (m) { return [m.k, m.gap.toFixed(3), m.fit.replace(/\s{2,}/g, ', ')]; }) }];
+    },
+    rare: function () {
+      return ['burden', 'disc', 'bal'].map(function (k) {
+        var c = RARE[k];
+        return { sum: 'Data: ' + { burden: 'alert burden', disc: 'base rate', bal: 'rebalancing' }[k], caption: c.title, columns: ['Setting', 'Value'], rows: c.rows.map(function (r) { return [r.k, (r.v >= 10 ? r.v.toFixed(1) : r.v.toFixed(2)) + c.unit]; }) };
+      });
+    },
+    world: function () {
+      return [{ caption: 'Fitted coefficients and the true effect of intervening on unsafe acts, by causal world',
+        columns: ['World'].concat(PRED).concat(['Effect of acting on unsafe acts']), rows: WORLDS.map(function (w, i) {
+          return [(i + 1) + '. ' + w.k].concat(w.c.map(function (v) { return fmt(v); })).concat([w.eff.toFixed(3)]);
+        }) }];
+    }
+  };
+  function fillTables() {
+    var eng = S && typeof S.dataTable === 'function';
+    [].forEach.call(document.querySelectorAll('details.fd[data-table]'), function (d) {
+      var f = TABLES[d.getAttribute('data-table')], b = d.querySelector('.fd-body');
+      if (!f || !b || b.firstChild) return;
+      var list = f();
+      if (eng) {
+        var host = d.parentNode, fig = d.closest('figure') || host, src = (host.querySelector('.fd-src') || {}).textContent || '';
+        try {
+          list.forEach(function (t, k) {
+            S.dataTable(fig, { caption: t.caption, columns: t.columns, rows: t.rows, into: host, summary: t.sum || 'Data behind this figure', source: k === list.length - 1 ? src.replace(/^Synthetic simulation data\.\s*/, '') : '' });
+          });
+          d.remove();
+          return;
+        } catch (e) { /* fall through to the page's own table */ }
+      }
+      b.innerHTML = list.map(tblHtml).join('');
     });
   }
 
@@ -6218,11 +6428,18 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       drawRare(charts[5].svg, rareView);
       drawWorld(charts[6].svg, worldIdx);
     }
+    measureCompact();
     paintAll();
+    fillTables();
 
     /* the phone figures are separate drawings, so re-render on a width change */
     if (PHQ.addEventListener) PHQ.addEventListener('change', paintAll);
     else if (PHQ.addListener) PHQ.addListener(paintAll);
+    var rzT = 0;
+    addEventListener('resize', function () {
+      clearTimeout(rzT);
+      rzT = setTimeout(function () { var was = COMPACT; if (measureCompact() !== was) paintAll(); }, 150);
+    });
     document.addEventListener('rs-themechange', paintAll);
   }
 
@@ -6434,7 +6651,7 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
   }
 
   /* ---- tabs (WAI-ARIA tabs pattern, arrow keys move between tabs) ---- */
-  function initTabs() {
+  function initTabs(start) {
     var tabs = [$('labTabN'), $('labTabR')];
     function sel(i, focus) {
       tabs.forEach(function (t, j) {
@@ -6446,20 +6663,77 @@ html.rs-lock,html.rs-lock body{overflow:hidden}
       if (focus) tabs[i].focus();
       if (i === 0) updateN(); else updateR();
     }
+    if (start) sel(start);
     tabs.forEach(function (t, i) {
-      t.addEventListener('click', function () { sel(i); });
+      t.addEventListener('click', function () { sel(i); writeState(); });
       t.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); sel((i + 1) % 2, true); }
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); sel((i + 1) % 2, true); writeState(); }
       });
     });
+  }
+
+  /* ---- the lab's numbers as tables (collapsed under the card) ---- */
+  function labTable() {
+    var d = document.querySelector('details.fd[data-table="lab"] .fd-body');
+    if (!d || d.firstChild) return;
+    var ST = window.Story, dets = d.parentNode;
+    if (ST && typeof ST.dataTable === 'function') {
+      try {
+        var host = dets.parentNode;
+        ST.dataTable($('lab'), { into: host, summary: 'Data: sample size', caption: 'Sample size: where 95 in 100 repeat studies land (mean plus or minus 1.96 empirical SD), and the analytic coverage range, 300 replications',
+          columns: ['Units (n)'].concat(NAMES).concat(['Analytic coverage']), rows: NS_.map(function (n) { var r = REC[n];
+            return [comma(n)].concat(r.m.map(function (m, i) { return signed(m - 1.96 * r.sd[i], 2) + ' to ' + signed(m + 1.96 * r.sd[i], 2); })).concat([Math.round(Math.min.apply(null, r.cov) * 100) + ' to ' + Math.round(Math.max.apply(null, r.cov) * 100) + ' in 100']); }),
+          source: 'results/study01_recovery.csv (synthetic simulation)' });
+        ST.dataTable($('lab'), { into: host, summary: 'Data: event rarity', caption: 'Event rarity: same generating signal, four base rates (top 5 percent of risk scores)',
+          columns: ['Base rate', 'Real events', 'AUC', 'Precision', 'Alerts per real event'], rows: RARE.map(function (r) { return [r.lab, comma(r.ev), r.auc.toFixed(3), r.ppv.toFixed(3), r.apt >= 10 ? r.apt.toFixed(1) : r.apt.toFixed(2)]; }),
+          source: 'results/study02_discrimination.csv (synthetic simulation)' });
+        dets.remove();
+        return;
+      } catch (e) { /* page table below */ }
+    }
+    function t(cap, head, rows) {
+      return '<div class="fd-scroll" role="region" tabindex="0" aria-label="' + cap + '"><table><caption>' + cap + '</caption><thead><tr>' + head.map(function (c, i) { return '<th scope="col"' + (i ? ' class="num"' : '') + '>' + c + '</th>'; }).join('') + '</tr></thead><tbody>' +
+        rows.map(function (r) { return '<tr>' + r.map(function (c, i) { return i ? '<td class="num">' + c + '</td>' : '<th scope="row">' + c + '</th>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+    }
+    d.innerHTML = t('Sample size: where 95 in 100 repeat studies land (mean plus or minus 1.96 empirical SD), and analytic coverage range, 300 replications',
+      ['Units (n)'].concat(NAMES).concat(['Analytic coverage']), NS_.map(function (n) {
+        var r = REC[n];
+        return [comma(n)].concat(r.m.map(function (m, i) { return signed(m - 1.96 * r.sd[i], 2) + ' to ' + signed(m + 1.96 * r.sd[i], 2); }))
+          .concat([Math.round(Math.min.apply(null, r.cov) * 100) + ' to ' + Math.round(Math.max.apply(null, r.cov) * 100) + ' in 100']);
+      })) +
+      t('Event rarity: same generating signal, four base rates (top 5 percent of risk scores)', ['Base rate', 'Real events', 'AUC', 'Precision', 'Alerts per real event'],
+        RARE.map(function (r) { return [r.lab, comma(r.ev), r.auc.toFixed(3), r.ppv.toFixed(3), r.apt >= 10 ? r.apt.toFixed(1) : r.apt.toFixed(2)]; }));
+  }
+  /* ---- shareable state: ?units=&rate=&lab= (replaceState, so the back button is not flooded) ---- */
+  function readState() {
+    var q = new URLSearchParams(location.search), u = q.get('units'), r = q.get('rate');
+    var ui = NS_.indexOf(+u); if (ui >= 0) $('labN').value = ui;
+    var ri = RARE.map(function (x) { return x.lab; }).indexOf(r); if (ri >= 0) $('labR').value = ri;
+    return q.get('lab') === 'rarity' ? 1 : 0;
+  }
+  function writeState() {
+    if (!history.replaceState) return;
+    var q = new URLSearchParams(location.search);
+    var tabR = !$('labPanelR').hidden;
+    q.set('units', NS_[+$('labN').value]); q.set('rate', RARE[+$('labR').value].lab);
+    if (tabR) q.set('lab', 'rarity'); else q.delete('lab');
+    history.replaceState(history.state, '', location.pathname + '?' + q.toString() + location.hash);
   }
 
   function init() {
     initSummary();
     if (!$('lab')) return;
-    initTabs();
-    $('labN').addEventListener('input', updateN);
-    $('labR').addEventListener('input', updateR);
+    labTable();
+    var startTab = readState();
+    initTabs(startTab);
+    $('labN').addEventListener('input', function () { updateN(); writeState(); });
+    $('labR').addEventListener('input', function () { updateR(); writeState(); });
+    [].forEach.call(document.querySelectorAll('[data-lab-reset]'), function (b) {
+      b.addEventListener('click', function () {
+        $('labN').value = 0; $('labR').value = 0; updateN(); updateR();
+        if (history.replaceState) { var q = new URLSearchParams(location.search); ['units', 'rate', 'lab'].forEach(function (k) { q.delete(k); }); var qs = q.toString(); history.replaceState(history.state, '', location.pathname + (qs ? '?' + qs : '') + location.hash); }
+      });
+    });
     updateN(); updateR();
     var last = 0;
     window.addEventListener('resize', function () {
