@@ -6,6 +6,7 @@ Keep a Changelog and this project uses semantic versioning.
 ## [Unreleased]
 
 ### Added
+- `.zenodo.json` and `codemeta.json` (title, description, creators from `CITATION.cff`, MIT licence, keywords, related identifiers for the sibling repositories and the programme site; no DOI or ORCID) so a release is archived with correct metadata once Zenodo is linked; `CITATION.cff` gains `keywords`. `tools/check_citation.py` (stdlib, run by `.github/workflows/citation.yml`) checks the required CFF 1.2.0 fields and that `CITATION.cff`, `.zenodo.json`, `codemeta.json` and `LICENSE` agree on title, authors, keywords and licence. No release or tag created.
 - `tools/sample_size_planner.py`: Monte Carlo sample-size planner for SEM safety-climate surveys (proper-solution rate, loading and path stability by N, recommended N), with committed tables `results/planner_loading075.csv` and `results/planner_loading050.csv` and `tests/test_sample_size_planner.py`
 - `docs/methods-note.md`: methods note for safety practitioners on when SEM fit indices pass while path estimates are too imprecise to rank or use as weights, with sample-size guidance and verified references
 - `tools/methods_note_tables.py`: builds the note's tables from the committed `results/` CSV files

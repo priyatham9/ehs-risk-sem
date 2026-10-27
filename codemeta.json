@@ -1,0 +1,30 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "ehs-risk-sem: structural equation modelling for occupational safety risk in numpy",
+  "description": "Structural equation modelling for occupational safety risk, implemented in numpy. Simulation studies show where the method breaks, demonstrating that parameter estimates are imprecise despite good fit quality across conventional cutoffs. Nothing here analyses real injury data; every number comes from generated data with known parameters.",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Priyatham",
+      "familyName": "Chimmani"
+    }
+  ],
+  "license": "https://spdx.org/licenses/MIT",
+  "codeRepository": "https://github.com/priyatham9/ehs-risk-sem",
+  "url": "https://priyatham9.github.io/ehs-risk-sem/",
+  "version": "0.1.0",
+  "programmingLanguage": [
+    "Python"
+  ],
+  "keywords": [
+    "structural equation modeling",
+    "occupational safety",
+    "safety climate",
+    "simulation",
+    "sample size",
+    "numpy",
+    "EHS"
+  ],
+  "isPartOf": "https://priyatham9.github.io/grounded/"
+}

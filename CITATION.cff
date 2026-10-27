@@ -11,6 +11,14 @@ url: "https://priyatham9.github.io/ehs-risk-sem/"
 license: MIT
 date-released: "2026-09-07"
 version: 0.1.0
+keywords:
+  - structural equation modeling
+  - occupational safety
+  - safety climate
+  - simulation
+  - sample size
+  - numpy
+  - EHS
 references:
   - type: article
     title: "Power analysis and determination of sample size for covariance structure modeling"
