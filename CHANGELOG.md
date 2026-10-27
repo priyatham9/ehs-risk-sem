@@ -6,6 +6,7 @@ Keep a Changelog and this project uses semantic versioning.
 ## [Unreleased]
 
 ### Added
+- `tools/sample_size_planner.py`: Monte Carlo sample-size planner for SEM safety-climate surveys (proper-solution rate, loading and path stability by N, recommended N), with committed tables `results/planner_loading075.csv` and `results/planner_loading050.csv` and `tests/test_sample_size_planner.py`
 - `docs/methods-note.md`: methods note for safety practitioners on when SEM fit indices pass while path estimates are too imprecise to rank or use as weights, with sample-size guidance and verified references
 - `tools/methods_note_tables.py`: builds the note's tables from the committed `results/` CSV files
 - `tests/test_methods_note.py`: fails if the note's tables or quoted numbers drift from `results/`
