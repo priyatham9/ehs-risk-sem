@@ -1,0 +1,76 @@
+{
+  "title": "ehs-risk-sem: structural equation modelling for occupational safety risk in numpy",
+  "upload_type": "software",
+  "description": "Structural equation modelling for occupational safety risk, implemented in numpy. Simulation studies show where the method breaks, demonstrating that parameter estimates are imprecise despite good fit quality across conventional cutoffs. Nothing here analyses real injury data; every number comes from generated data with known parameters.",
+  "creators": [
+    {
+      "name": "Chimmani, Priyatham"
+    }
+  ],
+  "license": "mit",
+  "keywords": [
+    "structural equation modeling",
+    "occupational safety",
+    "safety climate",
+    "simulation",
+    "sample size",
+    "numpy",
+    "EHS"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://priyatham9.github.io/grounded/",
+      "relation": "isPartOf",
+      "scheme": "url",
+      "resource_type": "other"
+    },
+    {
+      "identifier": "https://github.com/priyatham9/grounded",
+      "relation": "isPartOf",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://priyatham9.github.io/ehs-risk-sem/",
+      "relation": "isDocumentedBy",
+      "scheme": "url",
+      "resource_type": "other"
+    },
+    {
+      "identifier": "https://github.com/priyatham9/ehs-osha-analysis",
+      "relation": "references",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/priyatham9/ehs-chemical-peers",
+      "relation": "references",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/priyatham9/ehs-ai-grounding-eval",
+      "relation": "references",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/priyatham9/ehs-human-factors-ontology",
+      "relation": "references",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/priyatham9/ehs-capitals-calculator",
+      "relation": "references",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/priyatham9/ehs-benchmarks",
+      "relation": "references",
+      "scheme": "url",
+      "resource_type": "software"
+    }
+  ]
+}
