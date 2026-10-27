@@ -11,3 +11,33 @@ url: "https://priyatham9.github.io/ehs-risk-sem/"
 license: MIT
 date-released: "2026-09-07"
 version: 0.1.0
+references:
+  - type: article
+    title: "Power analysis and determination of sample size for covariance structure modeling"
+    authors:
+      - family-names: MacCallum
+        given-names: Robert C.
+      - family-names: Browne
+        given-names: Michael W.
+      - family-names: Sugawara
+        given-names: Hazuki M.
+    journal: "Psychological Methods"
+    volume: 1
+    issue: "2"
+    start: 130
+    end: 149
+    year: 1996
+  - type: article
+    title: "Cutoff criteria for fit indexes in covariance structure analysis: Conventional criteria versus new alternatives"
+    authors:
+      - family-names: Hu
+        given-names: Li-tze
+      - family-names: Bentler
+        given-names: Peter M.
+    journal: "Structural Equation Modeling"
+    volume: 6
+    issue: "1"
+    start: 1
+    end: 55
+    year: 1999
+    doi: "10.1080/10705519909540118"
