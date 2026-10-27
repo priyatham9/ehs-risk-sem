@@ -3,6 +3,16 @@
 All notable changes to this project are documented here. The format follows
 Keep a Changelog and this project uses semantic versioning.
 
+## [Unreleased]
+
+### Added
+- `docs/methods-note.md`: methods note for safety practitioners on when SEM fit indices pass while path estimates are too imprecise to rank or use as weights, with sample-size guidance and verified references
+- `tools/methods_note_tables.py`: builds the note's tables from the committed `results/` CSV files
+- `tests/test_methods_note.py`: fails if the note's tables or quoted numbers drift from `results/`
+
+### Changed
+- README test count updated from 114 to 119 to match the test suite
+
 ## [0.1.0] - 2026-09-09
 
 ### Added
