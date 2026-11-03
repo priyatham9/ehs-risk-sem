@@ -12,7 +12,7 @@
   ],
   "license": "https://spdx.org/licenses/MIT",
   "codeRepository": "https://github.com/priyatham9/ehs-risk-sem",
-  "url": "https://priyatham9.github.io/ehs-risk-sem/",
+  "url": "https://ehs-risk-sem.vercel.app/",
   "version": "0.1.0",
   "programmingLanguage": [
     "Python"
@@ -26,5 +26,5 @@
     "numpy",
     "EHS"
   ],
-  "isPartOf": "https://priyatham9.github.io/grounded/"
+  "isPartOf": "https://grounded-chi-five.vercel.app/"
 }

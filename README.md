@@ -1,9 +1,9 @@
 # ehs-risk-sem
 
 [![tests](https://github.com/priyatham9/ehs-risk-sem/actions/workflows/tests.yml/badge.svg)](https://github.com/priyatham9/ehs-risk-sem/actions/workflows/tests.yml)
-[![site](https://img.shields.io/badge/site-priyatham9.github.io-blue)](https://priyatham9.github.io/ehs-risk-sem/)
+[![site](https://img.shields.io/badge/site-priyatham-personal-site.vercel.app-blue)](https://ehs-risk-sem.vercel.app/)
 
-Part of the Grounded research programme: https://priyatham9.github.io/grounded/
+Part of the Grounded research programme: https://grounded-chi-five.vercel.app/
 
 Structural equation modelling for occupational safety risk, implemented in numpy. Simulation studies show where the method breaks, demonstrating that parameter estimates are imprecise despite good fit quality across conventional cutoffs. Nothing here analyses real injury data; every number comes from generated data with known parameters.
 
@@ -52,7 +52,7 @@ run. `--quick` writes to `results_quick/` instead, so a reduced-replication run
 cannot silently replace the checked-in tables with noisier ones under the same
 file names.
 
-API documentation is at <https://priyatham9.github.io/ehs-risk-sem/api/>.
+API documentation is at <https://ehs-risk-sem.vercel.app/api/>.
 
 ---
 

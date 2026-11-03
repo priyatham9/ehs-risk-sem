@@ -24,7 +24,7 @@ PKG_PATH = REPO_ROOT / PKG_NAME
 DOCS_DIR = REPO_ROOT / "docs"
 API_DIR = DOCS_DIR / "api"
 SIMS_DIR = REPO_ROOT / "simulations"
-SITE = "https://priyatham9.github.io/ehs-risk-sem"
+SITE = "https://ehs-risk-sem.vercel.app"
 
 
 def _load_apply_banner():
