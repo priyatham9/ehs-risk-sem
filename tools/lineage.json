@@ -1,0 +1,270 @@
+{
+ "version": 1,
+ "description": "Declared lineage of the ehs-risk-sem build. Validated against the repository by tools/health.py and rendered to docs/health.md.",
+ "must_be_declared": [
+  "results/*.csv",
+  "synthetic/*.csv",
+  "docs/methods-note.md",
+  "docs/api/*",
+  "docs/index.html",
+  "docs/story.html",
+  "health/*",
+  "docs/health.*",
+  "tools/lineage.json"
+ ],
+ "artifacts": {
+  "package": {
+   "label": "ehs_risk_sem package (estimators)",
+   "kind": "file",
+   "source": true,
+   "paths": [
+    "ehs_risk_sem/*.py"
+   ]
+  },
+  "dgp": {
+   "label": "Data-generating processes for the studies",
+   "kind": "file",
+   "source": true,
+   "paths": [
+    "simulations/dgp.py"
+   ]
+  },
+  "lineage_spec": {
+   "label": "Declared lineage (this file)",
+   "kind": "file",
+   "source": true,
+   "paths": [
+    "tools/lineage.json"
+   ]
+  },
+  "pages": {
+   "label": "Hand-written project pages",
+   "kind": "file",
+   "source": true,
+   "paths": [
+    "docs/index.html",
+    "docs/story.html"
+   ]
+  },
+  "synthetic_data": {
+   "label": "Synthetic datasets (labelled, not measured)",
+   "kind": "file",
+   "paths": [
+    "synthetic/survey_style.csv",
+    "synthetic/rare_event.csv",
+    "synthetic/zero_inflated_counts.csv"
+   ]
+  },
+  "study01": {
+   "label": "Study 1 tables: sample size",
+   "kind": "file",
+   "paths": [
+    "results/study01_*.csv"
+   ]
+  },
+  "study02": {
+   "label": "Study 2 tables: rare events",
+   "kind": "file",
+   "paths": [
+    "results/study02_*.csv"
+   ]
+  },
+  "study03": {
+   "label": "Study 3 tables: misspecification",
+   "kind": "file",
+   "paths": [
+    "results/study03_*.csv"
+   ]
+  },
+  "study04": {
+   "label": "Study 4 tables: coefficient interpretation",
+   "kind": "file",
+   "paths": [
+    "results/study04_*.csv"
+   ]
+  },
+  "planner": {
+   "label": "Sample-size planner tables",
+   "kind": "file",
+   "paths": [
+    "results/planner_*.csv"
+   ]
+  },
+  "cutoffs": {
+   "label": "Simulation-based fit-index cutoff tables",
+   "kind": "file",
+   "paths": [
+    "results/fit_index_cutoffs_*.csv"
+   ]
+  },
+  "methods_note": {
+   "label": "Methods note (tables generated between markers)",
+   "kind": "file",
+   "paths": [
+    "docs/methods-note.md"
+   ]
+  },
+  "api_docs": {
+   "label": "HTML API reference",
+   "kind": "file",
+   "paths": [
+    "docs/api/*"
+   ]
+  },
+  "health_outputs": {
+   "label": "Health tables, report and figure",
+   "kind": "file",
+   "paths": [
+    "health/*.csv",
+    "docs/health.md",
+    "docs/health.svg"
+   ]
+  }
+ },
+ "stages": [
+  {
+   "id": "generate_synthetic",
+   "label": "Generate synthetic datasets",
+   "script": "synthetic/generate_synthetic_datasets.py",
+   "function": "main",
+   "command": "python3 synthetic/generate_synthetic_datasets.py",
+   "inputs": [],
+   "outputs": [
+    "synthetic_data"
+   ]
+  },
+  {
+   "id": "study01",
+   "label": "Study 1: sample size",
+   "script": "simulations/study_01_sample_size.py",
+   "function": "main",
+   "command": "python3 simulations/run_all.py",
+   "inputs": [
+    "package",
+    "dgp"
+   ],
+   "outputs": [
+    "study01"
+   ]
+  },
+  {
+   "id": "study02",
+   "label": "Study 2: rare events",
+   "script": "simulations/study_02_rare_events.py",
+   "function": "main",
+   "command": "python3 simulations/run_all.py",
+   "inputs": [
+    "package",
+    "dgp"
+   ],
+   "outputs": [
+    "study02"
+   ]
+  },
+  {
+   "id": "study03",
+   "label": "Study 3: misspecification",
+   "script": "simulations/study_03_misspecification.py",
+   "function": "main",
+   "command": "python3 simulations/run_all.py",
+   "inputs": [
+    "package",
+    "dgp"
+   ],
+   "outputs": [
+    "study03"
+   ]
+  },
+  {
+   "id": "study04",
+   "label": "Study 4: coefficient interpretation",
+   "script": "simulations/study_04_coefficient_interpretation.py",
+   "function": "main",
+   "command": "python3 simulations/run_all.py",
+   "inputs": [
+    "package",
+    "dgp"
+   ],
+   "outputs": [
+    "study04"
+   ]
+  },
+  {
+   "id": "planner",
+   "label": "Sample-size planner",
+   "script": "tools/sample_size_planner.py",
+   "function": "main",
+   "command": "python3 tools/sample_size_planner.py --loading 0.75 --out results/planner_loading075.csv",
+   "inputs": [
+    "package"
+   ],
+   "outputs": [
+    "planner"
+   ]
+  },
+  {
+   "id": "cutoffs",
+   "label": "Fit-index cutoff simulation",
+   "script": "tools/fit_index_cutoffs.py",
+   "function": "main",
+   "command": "python3 tools/fit_index_cutoffs.py --reps 500 --out results/fit_index_cutoffs_n1200.csv",
+   "inputs": [
+    "package",
+    "synthetic_data"
+   ],
+   "outputs": [
+    "cutoffs"
+   ]
+  },
+  {
+   "id": "note_tables",
+   "label": "Build methods-note tables",
+   "script": "tools/methods_note_tables.py",
+   "function": "main",
+   "command": "python3 tools/methods_note_tables.py",
+   "inputs": [
+    "study01",
+    "study03",
+    "study04"
+   ],
+   "outputs": [
+    "methods_note"
+   ]
+  },
+  {
+   "id": "api_docs",
+   "label": "Build API reference",
+   "script": "tools/build_api_docs.py",
+   "function": "main",
+   "command": "python3 tools/build_api_docs.py",
+   "inputs": [
+    "package",
+    "pages"
+   ],
+   "outputs": [
+    "api_docs"
+   ]
+  },
+  {
+   "id": "health",
+   "label": "Data expectations and lineage check",
+   "script": "tools/health.py",
+   "function": "main",
+   "command": "python3 tools/health.py --write",
+   "inputs": [
+    "synthetic_data",
+    "study01",
+    "study02",
+    "study03",
+    "study04",
+    "planner",
+    "cutoffs",
+    "methods_note",
+    "lineage_spec"
+   ],
+   "outputs": [
+    "health_outputs"
+   ]
+  }
+ ]
+}

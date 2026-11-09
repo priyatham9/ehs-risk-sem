@@ -1,0 +1,11 @@
+order,stage,label,script,command,inputs,outputs,upstream_stages
+1,generate_synthetic,Generate synthetic datasets,synthetic/generate_synthetic_datasets.py,python3 synthetic/generate_synthetic_datasets.py,,synthetic_data,
+2,study01,Study 1: sample size,simulations/study_01_sample_size.py,python3 simulations/run_all.py,package;dgp,study01,
+3,study02,Study 2: rare events,simulations/study_02_rare_events.py,python3 simulations/run_all.py,package;dgp,study02,
+4,study03,Study 3: misspecification,simulations/study_03_misspecification.py,python3 simulations/run_all.py,package;dgp,study03,
+5,study04,Study 4: coefficient interpretation,simulations/study_04_coefficient_interpretation.py,python3 simulations/run_all.py,package;dgp,study04,
+6,planner,Sample-size planner,tools/sample_size_planner.py,python3 tools/sample_size_planner.py --loading 0.75 --out results/planner_loading075.csv,package,planner,
+7,cutoffs,Fit-index cutoff simulation,tools/fit_index_cutoffs.py,python3 tools/fit_index_cutoffs.py --reps 500 --out results/fit_index_cutoffs_n1200.csv,package;synthetic_data,cutoffs,generate_synthetic
+8,note_tables,Build methods-note tables,tools/methods_note_tables.py,python3 tools/methods_note_tables.py,study01;study03;study04,methods_note,study01;study03;study04
+9,api_docs,Build API reference,tools/build_api_docs.py,python3 tools/build_api_docs.py,package;pages,api_docs,
+10,health,Data expectations and lineage check,tools/health.py,python3 tools/health.py --write,synthetic_data;study01;study02;study03;study04;planner;cutoffs;methods_note;lineage_spec,health_outputs,cutoffs;generate_synthetic;note_tables;planner;study01;study02;study03;study04

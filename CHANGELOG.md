@@ -6,6 +6,7 @@ Keep a Changelog and this project uses semantic versioning.
 ## [Unreleased]
 
 ### Added
+- `tools/health.py`, `tools/lineage.json`, `docs/health.md`, `docs/health.svg`, `health/*.csv`, `tests/test_health.py`: 101 named data expectations over the committed simulation tables, synthetic datasets and methods note (98 pass, 3 warn, 0 fail; the warnings are the SE-understatement, low-coverage and weak-loading findings), plus a declared 10-stage pipeline lineage validated with `ast` and rendered as a Mermaid graph; stdlib only, run by the tests workflow with `--check`
 - `tools/fit_index_cutoffs.py`: simulation-based (seeded Monte Carlo) fit-index cutoffs for a fitted model structure and sample size, reporting empirical distributions and percentile cutoffs for chi-square, CFI, TLI, RMSEA and SRMR, the failure rate of the fixed Hu & Bentler cutoffs under a correct model, and the observed value's percentile; committed tables `results/fit_index_cutoffs_n1200.csv` and `results/fit_index_cutoffs_n200.csv`, `tests/test_fit_index_cutoffs.py`, and a README section stating what the simulation does not cover
 - `.zenodo.json` and `codemeta.json` (title, description, creators from `CITATION.cff`, MIT licence, keywords, related identifiers for the sibling repositories and the programme site; no DOI or ORCID) so a release is archived with correct metadata once Zenodo is linked; `CITATION.cff` gains `keywords`. `tools/check_citation.py` (stdlib, run by `.github/workflows/citation.yml`) checks the required CFF 1.2.0 fields and that `CITATION.cff`, `.zenodo.json`, `codemeta.json` and `LICENSE` agree on title, authors, keywords and licence. No release or tag created.
 - `tools/sample_size_planner.py`: Monte Carlo sample-size planner for SEM safety-climate surveys (proper-solution rate, loading and path stability by N, recommended N), with committed tables `results/planner_loading075.csv` and `results/planner_loading050.csv` and `tests/test_sample_size_planner.py`
@@ -14,7 +15,7 @@ Keep a Changelog and this project uses semantic versioning.
 - `tests/test_methods_note.py`: fails if the note's tables or quoted numbers drift from `results/`
 
 ### Changed
-- README test count updated from 114 to 119 to match the test suite
+- README test count updated from 114 to 119 to match the test suite, then to 149 with the health tests
 
 ## [0.1.0] - 2026-09-09
 

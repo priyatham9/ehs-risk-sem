@@ -1,0 +1,102 @@
+id,dataset,rule,observed,limit,status,severity
+R01,results,no results CSV outside the declared schema,0,0,pass,error
+R02,study01,study01: columns equal the declared schema (4 files),0,0,pass,error
+R03,study02,study02: columns equal the declared schema (6 files),0,0,pass,error
+R04,study03,study03: columns equal the declared schema (5 files),0,0,pass,error
+R05,study04,study04: columns equal the declared schema (4 files),0,0,pass,error
+R06,planner,planner: columns equal the declared schema (2 files),0,0,pass,error
+R07,cutoffs,cutoffs: columns equal the declared schema (2 files),0,0,pass,error
+R08,study01,study01: numeric columns parse as finite numbers,0,0,pass,error
+R09,study02,study02: numeric columns parse as finite numbers,0,0,pass,error
+R10,study03,study03: numeric columns parse as finite numbers,0,0,pass,error
+R11,study04,study04: numeric columns parse as finite numbers,0,0,pass,error
+R12,planner,planner: numeric columns parse as finite numbers,0,0,pass,error
+R13,cutoffs,cutoffs: numeric columns parse as finite numbers,0,0,pass,error
+R14,results,empty cells only in the 10 columns that may be empty,0,0,pass,error
+R15,study01,recovery has one row per N and predictor,24,24,pass,error
+R16,study01,every recovery row used the same replication count,1,1,pass,error
+R17,study01,no improper solutions or failed fits in the recovery grid,0,0,pass,error
+R18,study01,coverage and the SE ratio are positive and coverage is a probability,0,0,pass,error
+R19,study01,bias equals mean estimate minus true beta,0,0,pass,error
+R20,study01,SE ratio equals mean analytic SE over empirical SD,0,0,pass,error
+R21,study01,RMSE is within 2% of sqrt(bias^2 + SD^2),0,0,pass,error
+R22,study01,"empirical SD falls at every step up in N, for each predictor",0,0,pass,error
+R23,study01,analytic SE scales as 1/sqrt(N) between the smallest and largest N (within 5%),7.111,7.071 +/- 5%,pass,error
+R24,study01,absolute bias stays below 0.01 everywhere (point estimates are not the problem),0.0074,0.01,pass,error
+R25,study01,analytic SE is not below 90% of the empirical SD in any row (lowest ratio shown),0.631,>= 0.9 for all,warn,warn
+R26,study01,analytic 95% coverage is at least 0.93 in every row,0.757,0.93,warn,warn
+R27,study01,requirements has five rows with positive integer N,5,5,pass,error
+R28,study01,halving the target SE needs about 4x the sample (3.8x to 4.2x),3.95,3.8 to 4.2,pass,error
+R29,study01,absolute difference equals |beta_a - beta_b|,0,0,pass,error
+R30,study01,required N for 80% power rises as the coefficient gap shrinks,0,0,pass,error
+R31,study01,SE of a coefficient difference at N = 250 is the same for every pair (1e-9),1.39e-17,1e-09,pass,error
+R32,study01,required N for the two quoted pairs agrees between requirements and distinguishability,770 / 6884,770 / 6884,pass,error
+R33,study01,"true betas agree between recovery, distinguishability and bootstrap",0,0,pass,error
+R34,study01,bootstrap intervals are wider than analytic intervals for every predictor,0,0,pass,error
+R35,study01,Monte Carlo SE of coverage equals sqrt(0.95 * 0.05 / reps) within 0.001,0,0,pass,error
+R36,study02,PPV and alerts per true event recompute from Bayes' rule,0,0,pass,error
+R37,study02,worker-shifts per event equals 1 / base rate,0,0,pass,error
+R38,study02,"per-shift rate times shifts per 2,000-hour year equals the 2.3 per 100 FTE annual rate",0,0,pass,error
+R39,study02,units required equals events required over base rate,0,0,pass,error
+R40,study02,events required equals (1.96 / relative precision)^2 within 0.1%,0,0,pass,error
+R41,study02,realised base rate is within 0.005 (scaled) of target in every discrimination row,0,0,pass,error
+R42,study02,"AUC lies in (0.5, 1) and alerts per true event is 1 / PPV at the top 5%",0,0,pass,error
+R43,study02,over-prediction ratio equals mean predicted over observed rate,0,0,pass,error
+R44,study02,every imbalance row is scored on the same test set (identical observed rate),1,1,pass,error
+R45,study02,undersampled training set is balanced (event fraction within 0.01 of 0.5),[0.5],0.5 +/- 0.01,pass,error
+R46,study02,relative error vs truth recomputes from the generating-model row for ML and King-Zeng,0,0,pass,error
+R47,study02,"ML, King-Zeng and generating-model rows used the same positive number of usable replications",['200'],one positive value,pass,error
+R48,study02,excess zeros and variance-to-mean ratio recompute from their columns,0,0,pass,error
+R49,study02,with no structural zeros the excess-zero fraction is below 0.01 (the null behaves),[0.001],0.01,pass,error
+R50,study03,confounder bias equals fitted beta minus true direct effect,0,0,pass,error
+R51,study03,omitting the confounder biases the path more than including it,0.295 vs 0.027,omitted > included,pass,error
+R52,study03,the omitted-confounder model still meets conventional fit cutoffs (the study's premise),True,True,pass,error
+R53,study03,the two equivalent models report identical beta and fit,0,0,pass,error
+R54,study03,"p-values lie in [0, 1], RMSEA is non-negative and CFI is at most 1",0,0,pass,error
+R55,study03,estimated direct plus indirect effect equals the total effect,0.442343,0.442343,pass,error
+R56,study03,generating direct plus indirect effect equals the generating total,0.4475,0.4475,pass,error
+R57,study03,omitting the mediator returns the total effect,True,True,pass,error
+R58,study03,formative block: omega is below 0.5 and the disattenuated correlation exceeds 1 (the failure being shown),0.139 / 1.063,< 0.5 / > 1,pass,error
+R59,study04,rounding distance is at most 0.025 and p05 <= median <= p95,"[0.0113, 0.0209, 0.0247]",p05 <= median <= p95 <= 0.025,pass,error
+R60,study04,expected chance fraction of grid-like estimates equals (0.01 / 0.05)^4,0.0016,0.0016,pass,error
+R61,study04,observed grid-like fraction is a probability,0.001,"[0, 1]",pass,error
+R62,study04,every ambiguity world reports four fitted coefficients,"[4, 4, 4]",4 each,pass,error
+R63,study04,composite reliabilities recompute from the listed loadings (within 0.002),0.823 / 0.675,0.823 / 0.675,pass,error
+R64,study04,Site B (one weak loading) has lower reliability than Site A,0.675 vs 0.823,B < A,pass,error
+R65,study04,"shares and correlations in the invariance table lie in [-1, 1]",4,all in range,pass,error
+R66,study04,raw-scale table has two sites by two crews,4,4,pass,error
+R67,planner,loading 0.50: rates are probabilities and every replication completed,0,0,pass,error
+R68,planner,loading 0.50: path_sd falls with N,0,0,pass,error
+R69,planner,loading 0.50: loading_sd falls with N,0,0,pass,error
+R70,planner,loading 0.50: proper_solution_rate does not fall with N,0,0,pass,error
+R71,planner,loading 0.50: conventional_fit_rate does not fall with N,0,0,pass,error
+R72,planner,loading 0.75: rates are probabilities and every replication completed,0,0,pass,error
+R73,planner,loading 0.75: path_sd falls with N,0,0,pass,error
+R74,planner,loading 0.75: loading_sd falls with N,0,0,pass,error
+R75,planner,loading 0.75: proper_solution_rate does not fall with N,0,0,pass,error
+R76,planner,loading 0.75: conventional_fit_rate does not fall with N,0,0,pass,error
+R77,planner,both loading levels use the same N grid,"[100, 150, 200, 300, 500, 750, 1000, 2000]","[100, 150, 200, 300, 500, 750, 1000, 2000]",pass,error
+R78,planner,stronger loadings (0.75) give a smaller path SD than weak loadings (0.50) at every N,0,0,pass,error
+R79,planner,planner true betas equal the study 1 true betas,['0.45 0.3 -0.25 -0.2'],0.45 0.3 -0.25 -0.2,pass,error
+R80,planner,weak-loading planner run has at least 95% proper solutions at every N,0.743,0.95,warn,warn
+R81,cutoffs,"n1200: five indices (chi_square, cfi, tli, rmsea, srmr)","['chi_square', 'cfi', 'tli', 'rmsea', 'srmr']",5 indices,pass,error
+R82,cutoffs,n1200: p05 <= p50 <= p95 for every index,0,0,pass,error
+R83,cutoffs,n1200: cutoff is the lower 5% quantile for CFI and TLI and the upper 95% quantile otherwise,0,0,pass,error
+R84,cutoffs,n1200: fixed-cutoff failure rates are probabilities,0,0,pass,error
+R85,cutoffs,n1200: replications used per index are equal and positive,['500'],one positive value,pass,error
+R86,cutoffs,"n200: five indices (chi_square, cfi, tli, rmsea, srmr)","['chi_square', 'cfi', 'tli', 'rmsea', 'srmr']",5 indices,pass,error
+R87,cutoffs,n200: p05 <= p50 <= p95 for every index,0,0,pass,error
+R88,cutoffs,n200: cutoff is the lower 5% quantile for CFI and TLI and the upper 95% quantile otherwise,0,0,pass,error
+R89,cutoffs,n200: fixed-cutoff failure rates are probabilities,0,0,pass,error
+R90,cutoffs,n200: replications used per index are equal and positive,['500'],one positive value,pass,error
+R91,cutoffs,n1200: an observed value past the cutoff has a percentile past 5% / 95%,0,0,pass,error
+R92,synthetic,"survey_style.csv: labelled synthetic, header states n = 1200 and seed = 20260903, and 1200 rows are present",1200 rows; n=True; seed=True,1200 rows,pass,error
+R93,synthetic,survey_style.csv: every data cell is a finite number,0,0,pass,error
+R94,synthetic,"rare_event.csv: labelled synthetic, header states n = 25000 and seed = 424242, and 25000 rows are present",25000 rows; n=True; seed=True,25000 rows,pass,error
+R95,synthetic,rare_event.csv: every data cell is a finite number,0,0,pass,error
+R96,synthetic,"zero_inflated_counts.csv: labelled synthetic, header states n = 8000 and seed = 771, and 8000 rows are present",8000 rows; n=True; seed=True,8000 rows,pass,error
+R97,synthetic,zero_inflated_counts.csv: every data cell is a finite number,0,0,pass,error
+R98,synthetic,rare-event outcome rate is within 10% of the stated 0.005,0.00484,0.005 +/- 10%,pass,error
+R99,synthetic,"generating probabilities in the rare-event file lie in (0, 1)",0.0642,< 1,pass,error
+R100,synthetic,zero-inflated counts: observed zero share is above the 0.38 structural-zero rate,0.52,> 0.38,pass,error
+R101,methods note,methods note states that it uses simulated data,True,True,pass,error
