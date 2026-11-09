@@ -32,6 +32,9 @@ jobs:
         run: python -m pip install --upgrade pip numpy pandas
       - name: Run tests
         run: python -m unittest discover -s tests -v
+      - name: Check data health and lineage
+        if: matrix.python-version == '3.12'
+        run: python tools/health.py --check
   coverage:
     runs-on: ubuntu-24.04
     steps:
