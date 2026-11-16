@@ -1,0 +1,13 @@
+{
+  "successes": 23,
+  "attempts": 300,
+  "rate": 0.07666666666666666,
+  "exact_cp_low": 0.04921878387567534,
+  "exact_cp_high": 0.11281811536048081,
+  "one_sided_upper_p": 0.029182858472288676,
+  "two_sided_probability_ordering_p": 0.04515085926937622,
+  "wilson_low": 0.0516276117866074,
+  "wilson_high": 0.1124101038501748,
+  "bonferroni_two_original_null_conditions_p": 0.09030171853875243,
+  "interpretation": "Exploratory calibration concern: Wilson narrowly excludes5%, exact equal-tailed interval includes5%; no proof of miscalibration or certified remedy. The multiplicity calculation illustrates adjustment across two original null conditions, not all analyses."
+}

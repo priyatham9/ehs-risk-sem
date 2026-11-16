@@ -1,0 +1,11 @@
+{
+  "b999_minus_b399": -0.006,
+  "paired_mcse": 0.0034606323086938864,
+  "paired_bootstrap_low": -0.013,
+  "paired_bootstrap_high": 0.001,
+  "neither_reject": 935,
+  "b999_only_reject": 3,
+  "b399_only_reject": 9,
+  "both_reject": 53,
+  "attempts": 1000
+}

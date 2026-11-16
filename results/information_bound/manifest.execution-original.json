@@ -1,0 +1,7 @@
+{
+  "analysis": "Gaussian expected Fisher information, asymptotic theoretical benchmark",
+  "empirical_data": false,
+  "free_parameters": 40,
+  "source_sha256": "875a8167255dcd322a46b8b5d9eb919ecd75413d32af7c52cff95816075b68c8",
+  "numpy": "2.3.5"
+}

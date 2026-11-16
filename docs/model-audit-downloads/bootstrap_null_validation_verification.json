@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "outer_reps": 1000,
+  "bootstrap_refits": 999000,
+  "bootstrap_failed": 0,
+  "bootstrap_improper": 0,
+  "bootstrap_nonconverged": 0,
+  "outer_valid": 1000,
+  "outer_proper": 1000,
+  "outer_converged": 1000,
+  "no_seed_overlap_with_original_studies": true,
+  "checkpoint_sha256": {
+    "chunk_0000_0250.jsonl": "c1bdc1af623f3cec0d054dd86e2cbdf337498d157b355b63f4e3b2ea7e1ed02f",
+    "chunk_0250_0500.jsonl": "3cd301c19482dfdcfde38170c625538124c1b820b24a4f6ae668f0a72a9b0610",
+    "chunk_0500_0750.jsonl": "a8c418c96a5b0dcc7f27230f57b850eb67648a348fbadf9bba2796d0f162dfae",
+    "chunk_0750_1000.jsonl": "34f2eb24ab96ef6dcff8e8fe158ea77d5711f39e4f981a12cacad9273d6fc9fa"
+  },
+  "summary_sha256": "e877497f80d83c90893fe456c376cce5a7270e823283f8930005d141ec8e70b6"
+}

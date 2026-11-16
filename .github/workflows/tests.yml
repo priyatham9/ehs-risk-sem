@@ -2,6 +2,7 @@ name: tests
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
@@ -50,3 +51,16 @@ jobs:
         run: |
           coverage report -m
           coverage report -m | grep TOTAL | awk '{print "Coverage: " $NF}' >> $GITHUB_STEP_SUMMARY
+  research-artifacts:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install artifact verification dependencies
+        run: python -m pip install numpy pandas
+      - name: Verify original simulation checkpoints and provenance
+        run: OPENBLAS_NUM_THREADS=1 python tools/check_inference_audit.py
+      - name: Verify independent validation and all paired bootstrap intervals
+        run: OPENBLAS_NUM_THREADS=1 python tools/check_bootstrap_null_validation.py

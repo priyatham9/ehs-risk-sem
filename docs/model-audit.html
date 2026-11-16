@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#142c43" />
+    <meta
+      name="description"
+      content="Explore 54,000 simulated fits to distinguish model fit, coefficient ordering, rejection rates, and false positives. Compare oracle, two-step, calibrated, and Fisher benchmarks under explicit assumptions."
+    />
+    <title>Good fit. Uncertain ranking. · Model audit</title>
+    <link rel="stylesheet" href="model-audit.css" />
+    <script src="model-audit.js" defer></script>
+
+    <link
+      rel="canonical"
+      href="https://ehs-risk-sem.vercel.app/model-audit.html"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Priyatham · Research" />
+    <meta
+      property="og:title"
+      content="Good fit. Uncertain ranking. · Model audit"
+    />
+    <meta
+      property="og:description"
+      content="Explore 54,000 simulated fits to distinguish model fit, coefficient ordering, rejection rates, and false positives. Compare oracle, two-step, calibrated, and Fisher benchmarks under explicit assumptions."
+    />
+    <meta
+      property="og:url"
+      content="https://ehs-risk-sem.vercel.app/model-audit.html"
+    />
+    <meta
+      property="og:image"
+      content="https://ehs-risk-sem.vercel.app/audit-preview.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="Good fit. Uncertain ranking. · Model audit — interactive research page"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Good fit. Uncertain ranking. · Model audit"
+    />
+    <meta
+      name="twitter:description"
+      content="Explore 54,000 simulated fits to distinguish model fit, coefficient ordering, rejection rates, and false positives. Compare oracle, two-step, calibrated, and Fisher benchmarks under explicit assumptions."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ehs-risk-sem.vercel.app/audit-preview.jpg"
+    />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="980" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta
+      name="twitter:image:alt"
+      content="Good fit. Uncertain ranking. · Model audit — interactive research page"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#workbench">Skip to the experiment</a>
+    <header class="masthead page-width">
+      <a class="wordmark" href="./">PRIYATHAM <span>/ METHODS</span></a>
+      <nav aria-label="Page navigation">
+        <a href="#workbench">Explore the study</a
+        ><a href="#provenance"
+          >Methods & provenance <span class="arrow-ne" aria-hidden="true"></span
+        ></a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="page-width">
+          <div class="hero-eyebrow">
+            <span>RESEARCH NOTE 02 / STRUCTURAL EQUATION MODELS</span
+            ><span class="simulation-badge"
+              ><i aria-hidden="true"></i> SIMULATION ONLY</span
+            >
+          </div>
+          <div class="hero-grid">
+            <div>
+              <h1 id="page-title">
+                Good fit.<br />
+                <em>Uncertain ranking.</em>
+              </h1>
+              <p class="hero-lead">
+                Reproducing a covariance pattern is one test. Distinguishing two
+                coefficients is another.
+              </p>
+              <p class="hero-context">
+                An audit of a two-step estimator asks whether advertised sample
+                sizes support the inference they promise—when the latent
+                variables have to be measured.
+              </p>
+              <a class="hero-link" href="#workbench"
+                >Put the claim on trial <span aria-hidden="true">↓</span></a
+              >
+            </div>
+            <aside
+              class="model-diagram"
+              aria-label="The assumed alternative population model, not estimated effects"
+            >
+              <div class="diagram-heading">
+                <span>ALTERNATIVE GENERATING MODEL</span
+                ><span>ASSUMED, NOT ESTIMATED</span>
+              </div>
+              <div class="paths">
+                <div class="path-row">
+                  <span>Unsafe acts</span><b>+.45</b><i aria-hidden="true"></i>
+                </div>
+                <div class="path-row">
+                  <span>Operational stress</span><b>+.30</b
+                  ><i aria-hidden="true"></i>
+                </div>
+                <div class="path-row">
+                  <span>System condition</span><b>−.25</b
+                  ><i aria-hidden="true"></i>
+                </div>
+                <div class="path-row">
+                  <span>Safety response</span><b>−.20</b
+                  ><i aria-hidden="true"></i>
+                </div>
+                <div class="risk-node">
+                  <span>LATENT</span><strong>Risk</strong>
+                </div>
+              </div>
+              <p>
+                Four correlated predictors. Three reflective indicators per
+                factor. The analyst sees indicators; the oracle sees the latent
+                scores.
+              </p>
+              <div class="diagram-foot">
+                <span>ρ = .35</span><span>Gaussian data</span
+                ><span>Independent errors</span>
+              </div>
+            </aside>
+          </div>
+          <div class="hero-bottom">
+            <span><b id="hero-fits">—</b> simulated fits</span
+            ><span><b id="hero-cells">—</b> conditions</span
+            ><span><b id="hero-reps">—</b> surveys per condition / stage</span
+            ><span class="hero-scope"
+              >No workplace observations.<br />
+              No causal effect estimates.</span
+            >
+          </div>
+        </div>
+      </section>
+      <div class="section-nav">
+        <nav class="page-width" aria-label="Investigation sections">
+          <a href="#workbench"><span>01</span> Audit the test</a
+          ><a href="#experiment-map"><span>02</span> Explore the design</a
+          ><a href="#information"><span>03</span> Price measurement</a
+          ><a href="#bootstrap"><span>04</span> Test a remedy</a>
+        </nav>
+      </div>
+
+      <section
+        id="workbench"
+        class="page-width workbench"
+        aria-labelledby="workbench-title"
+      >
+        <div class="section-intro">
+          <div>
+            <span class="kicker"
+              >01 / REJECTION IS NOT AUTOMATICALLY POWER</span
+            >
+            <h2 id="workbench-title">Read both sides of the test.</h2>
+          </div>
+          <p>
+            A procedure that rejects often can look powerful. Its behavior when
+            the true difference is zero tells you whether that confidence is
+            earned.
+          </p>
+        </div>
+        <div id="load-error" class="load-error" hidden role="alert"></div>
+        <div class="control-console" aria-label="Simulation condition controls">
+          <fieldset class="contrast-control">
+            <legend>01 <span>Choose the coefficient contrast</span></legend>
+            <div
+              class="segmented"
+              role="group"
+              aria-label="Coefficient contrast"
+            >
+              <button
+                data-pair="positive"
+                aria-label="Unsafe acts minus operational stress, positive coefficient pair"
+                aria-pressed="true"
+                disabled
+              >
+                <strong>Positive pair</strong
+                ><span>+.45 − (+.30) = +.15</span></button
+              ><button
+                data-pair="negative"
+                aria-label="System condition minus safety response capability, negative coefficient pair"
+                aria-pressed="false"
+                disabled
+              >
+                <strong>Negative pair</strong><span>−.25 − (−.20) = −.05</span>
+              </button>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>02 <span>Indicator loading</span></legend>
+            <div
+              class="segmented loading-control"
+              role="group"
+              aria-label="Indicator loading"
+            >
+              <button data-loading="0.5" aria-pressed="false" disabled>
+                .50<span>Weaker</span></button
+              ><button data-loading="0.75" aria-pressed="true" disabled>
+                .75<span>Moderate</span></button
+              ><button data-loading="0.9" aria-pressed="false" disabled>
+                .90<span>Stronger</span>
+              </button>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>03 <span>Sample size / advertised N₀</span></legend>
+            <div
+              class="segmented size-control"
+              role="group"
+              aria-label="Sample size multiplier"
+            >
+              <button data-multiplier="0.5" aria-pressed="false" disabled>
+                ½×<span data-n-label="0.5">—</span></button
+              ><button data-multiplier="1" aria-pressed="true" disabled>
+                1×<span data-n-label="1">—</span></button
+              ><button data-multiplier="2" aria-pressed="false" disabled>
+                2×<span data-n-label="2">—</span>
+              </button>
+            </div>
+          </fieldset>
+        </div>
+        <div class="case-strip">
+          <span id="case-label">Waiting for a verified simulation artifact</span
+          ><span id="case-detail"
+            >Controls select completed conditions; no interpolated
+            simulations.</span
+          >
+        </div>
+        <div class="comparison-heading">
+          <div>
+            <h3>One contrast. Three inference rules.</h3>
+            <p id="comparison-description">
+              Alternative and held-out null results appear together.
+            </p>
+          </div>
+          <label class="uncertainty-toggle"
+            ><input
+              id="show-uncertainty"
+              type="checkbox"
+              checked
+              disabled
+            /><span>Show 95% Monte Carlo intervals</span></label
+          >
+        </div>
+        <div
+          class="comparison-table"
+          role="table"
+          aria-label="Alternative rejection and null false-positive rates"
+        >
+          <div class="comparison-head" role="row">
+            <div role="columnheader">METHOD / INFORMATION AVAILABLE</div>
+            <div role="columnheader">
+              <strong>A difference exists</strong
+              ><span>Rejection under the alternative</span
+              ><small>Reference: 80% power</small>
+            </div>
+            <div role="columnheader">
+              <strong>No difference exists</strong
+              ><span>False positives on held-out null data</span
+              ><small>Reference: 5% false positives</small>
+            </div>
+          </div>
+          <div id="comparison-rows">
+            <p class="loading-message">Loading completed study results…</p>
+          </div>
+          <div class="comparison-axis" aria-hidden="true">
+            <span></span>
+            <div><span>0%</span><span>50%</span><span>100%</span></div>
+            <div><span>0%</span><span>50%</span><span>100%</span></div>
+          </div>
+        </div>
+        <div class="chart-note">
+          <span class="note-symbol" aria-hidden="true">i</span>
+          <p>
+            Intervals describe <strong>Monte Carlo uncertainty</strong>, not a
+            survey’s confidence interval. Calibrated intervals resample
+            independent calibration and evaluation simulations. The calibrated
+            procedure knows the generating model; it is a diagnostic, not a
+            correction available for real survey data.
+          </p>
+        </div>
+        <div class="figure-downloads">
+          <span>Full design figures</span
+          ><a
+            href="model-audit-downloads/inference_audit_figure_alternative.pdf"
+            download
+            >Alternative rejection · PDF <span aria-hidden="true">↓</span></a
+          ><a
+            href="model-audit-downloads/inference_audit_figure_null_validation.pdf"
+            download
+            >Null false positives · PDF <span aria-hidden="true">↓</span></a
+          >
+        </div>
+        <div id="case-reading" class="case-reading" aria-live="polite"></div>
+        <details class="method-decoder">
+          <summary>What is each method allowed to know?</summary>
+          <div class="decoder-grid">
+            <div>
+              <strong
+                ><i class="method-dot oracle" aria-hidden="true"></i> Oracle
+                OLS</strong
+              >
+              <p>
+                Observes the unobserved latent scores in known population units.
+                Uses an exact t critical value. This is a reference experiment,
+                not an estimator available to the analyst.
+              </p>
+            </div>
+            <div>
+              <strong
+                ><i class="method-dot naive" aria-hidden="true"></i> Two-step,
+                naive uncertainty</strong
+              >
+              <p>
+                Estimates the measurement model, then the structural
+                coefficients. Its plug-in standard error treats the estimated
+                latent correlation matrix as if it were known.
+              </p>
+            </div>
+            <div>
+              <strong
+                ><i class="method-dot calibrated" aria-hidden="true"></i>
+                Null-calibrated diagnostic</strong
+              >
+              <p>
+                Uses the same two-step estimates, with a critical value learned
+                from a separate simulated null distribution. Held-out null
+                simulations check the resulting false-positive rate.
+              </p>
+            </div>
+          </div>
+        </details>
+        <div class="fit-evidence">
+          <div class="fit-evidence-title">
+            <span class="kicker">THE FIT CHECK</span>
+            <h3>Good fit does not certify the ordering.</h3>
+            <p>
+              The same alternative simulations, inspected for model fit and
+              signed coefficient-order reversals. Correct point-estimate
+              ordering and statistical evidence against equality are different
+              outcomes.
+            </p>
+          </div>
+          <div class="fit-measure">
+            <span>Meet all conventional fit cutoffs</span
+            ><strong id="fit-rate">—</strong
+            ><small id="fit-interval">Awaiting completed results</small>
+            <p>CFI ≥ .95 · RMSEA ≤ .06 · SRMR ≤ .08</p>
+          </div>
+          <div class="fit-measure reversal">
+            <span>Wrong ordering among good fits</span
+            ><strong id="reversal-rate">—</strong
+            ><small id="reversal-interval">Awaiting completed results</small>
+            <p>
+              Estimated contrast has the opposite sign to the known population
+              contrast.
+            </p>
+          </div>
+        </div>
+        <p id="fit-accounting" class="accounting-note"></p>
+        <div class="workbench-actions">
+          <button id="copy-condition" class="text-button" disabled>
+            Copy condition link
+            <span class="arrow-ne" aria-hidden="true"></span></button
+          ><button id="export-condition" class="text-button" disabled>
+            Export this condition <span aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </section>
+
+      <section
+        id="experiment-map"
+        class="map-section"
+        aria-labelledby="map-title"
+      >
+        <div class="page-width">
+          <div class="section-intro">
+            <div>
+              <span class="kicker">02 / THE EXPERIMENT MAP</span>
+              <h2 id="map-title">
+                More people. Better measurement.<br />
+                Different returns.
+              </h2>
+            </div>
+            <p>
+              Each cell is a completed experiment. Select one to update the
+              diagnostic above. The three sample sizes are discrete tested
+              settings.
+            </p>
+          </div>
+          <div class="map-toolbar">
+            <div
+              class="metric-tabs"
+              role="tablist"
+              aria-label="Experiment map metric"
+            >
+              <button
+                data-metric="calibrated"
+                role="tab"
+                aria-selected="true"
+                aria-controls="design-map"
+                disabled
+              >
+                Calibrated rejection</button
+              ><button
+                data-metric="false-positive"
+                role="tab"
+                aria-selected="false"
+                tabindex="-1"
+                aria-controls="design-map"
+                disabled
+              >
+                Naive false positives</button
+              ><button
+                data-metric="reversal"
+                role="tab"
+                aria-selected="false"
+                tabindex="-1"
+                aria-controls="design-map"
+                disabled
+              >
+                Wrong ordering after good fit
+              </button>
+            </div>
+            <span id="map-contrast">Positive pair</span>
+          </div>
+          <p id="map-metric-description" class="map-description"></p>
+          <div
+            id="design-map"
+            class="design-map"
+            role="tabpanel"
+            aria-label="Measurement loading by sample size experiment map"
+          ></div>
+          <a class="map-return" href="#workbench"
+            >Inspect the selected condition above
+            <span aria-hidden="true">↑</span></a
+          >
+          <div class="map-caption">
+            <span>LOADING = CORRELATION OF EACH INDICATOR WITH ITS FACTOR</span
+            ><span id="map-caption-detail"
+              >Values and intervals are read directly from completed simulation
+              summaries.</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="information"
+        class="page-width information-section"
+        aria-labelledby="information-title"
+      >
+        <div class="section-intro">
+          <div>
+            <span class="kicker">03 / A SEPARATE INFORMATION BENCHMARK</span>
+            <h2 id="information-title">
+              Measurement uncertainty<br />
+              has a price.
+            </h2>
+          </div>
+          <p>
+            Is the loss only a weak estimator? Expected Fisher information gives
+            a theoretical comparison under the same Gaussian model, with all
+            measurement parameters estimated.
+          </p>
+        </div>
+        <div class="information-grid">
+          <div class="information-reading">
+            <div class="theory-badge">
+              THEORY / NOT A SIMULATED REJECTION RATE
+            </div>
+            <div class="information-number">
+              <span id="variance-inflation">—</span
+              ><small
+                >variance relative to observing<br />
+                standardized latent variables</small
+              >
+            </div>
+            <p id="fisher-reading">
+              Loading-specific information results appear after the artifact is
+              verified.
+            </p>
+            <p class="small-note">
+              This reference differs from raw-latent oracle OLS above:
+              standardizing observed latent variables introduces its own
+              estimation uncertainty.
+            </p>
+          </div>
+          <div class="sample-budget">
+            <div class="budget-heading">
+              <h3>Sample size for 80% asymptotic power</h3>
+              <span id="fisher-condition">—</span>
+            </div>
+            <div class="budget-row">
+              <span>Advertised threshold N₀</span><b id="advertised-n">—</b>
+              <div class="budget-track"><i id="advertised-bar"></i></div>
+            </div>
+            <div class="budget-row benchmark">
+              <span>Efficient Gaussian Wald benchmark</span
+              ><b id="fisher-n">—</b>
+              <div class="budget-track"><i id="fisher-bar"></i></div>
+            </div>
+            <div class="fisher-powers">
+              <div>
+                <span>At advertised N₀</span
+                ><strong id="fisher-power-base">—</strong
+                ><small>asymptotic power</small>
+              </div>
+              <div>
+                <span>At twice N₀</span
+                ><strong id="fisher-power-double">—</strong
+                ><small>asymptotic power</small>
+              </div>
+            </div>
+            <p class="small-note">
+              A local asymptotic benchmark for this model, not a universal or
+              finite-sample power ceiling. No workplace sample-size
+              recommendation is implied.
+            </p>
+          </div>
+        </div>
+        <details class="method-decoder fisher-method">
+          <summary>
+            Inspect the assumptions and independent calculation check
+          </summary>
+          <div id="fisher-validation"></div>
+        </details>
+      </section>
+
+      <section
+        id="bootstrap"
+        class="bootstrap-section"
+        aria-labelledby="bootstrap-title"
+      >
+        <div class="page-width">
+          <div class="section-intro">
+            <div>
+              <span class="kicker">04 / AN IMPLEMENTABLE FOLLOW-UP</span>
+              <h2 id="bootstrap-title">
+                Refit the measurement.<br />
+                Then test the contrast.
+              </h2>
+            </div>
+            <p>
+              Row-resampling bootstrap intervals carry measurement estimation
+              through to the coefficient difference. This follow-up evaluates
+              the procedure on independent simulated surveys.
+            </p>
+          </div>
+          <div class="bootstrap-process" aria-label="Bootstrap procedure">
+            <span><b>01</b> Resample whole survey rows</span
+            ><i aria-hidden="true">→</i
+            ><span><b>02</b> Refit measurement & structure</span
+            ><i aria-hidden="true">→</i
+            ><span><b>03</b> Compute the contrast within each draw</span>
+          </div>
+          <div id="bootstrap-unavailable" class="unavailable-study">
+            <div class="pending-mark" aria-hidden="true">○</div>
+            <div>
+              <h3>Complete follow-up results are not in this artifact.</h3>
+              <p>
+                The interface withholds partial runs. It will display the
+                bootstrap comparison only when every planned outer survey and
+                inner refit has been accounted for.
+              </p>
+              <span id="bootstrap-design"></span>
+            </div>
+          </div>
+          <div id="bootstrap-results" hidden>
+            <div class="bootstrap-context">
+              <div>
+                <strong id="bootstrap-case">—</strong>
+                <p>
+                  This separate study fixes loading at .75 and sample size at
+                  N₀. Only the coefficient pair follows the controls above.
+                </p>
+              </div>
+              <div class="bootstrap-interval-choice">
+                <label for="bootstrap-method">Bootstrap interval</label
+                ><select id="bootstrap-method">
+                  <option value="percentile">Percentile interval</option>
+                  <option value="normal">
+                    Normal interval with bootstrap SE
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="bootstrap-comparison">
+              <div>
+                <span class="kicker"
+                  >FALSE POSITIVES / TRUE DIFFERENCE = 0</span
+                >
+                <div id="bootstrap-null"></div>
+              </div>
+              <div>
+                <span class="kicker">REJECTION / TRUE DIFFERENCE ≠ 0</span>
+                <div id="bootstrap-alternative"></div>
+              </div>
+            </div>
+            <div
+              id="bootstrap-reading"
+              class="case-reading bootstrap-reading"
+            ></div>
+            <details
+              id="bootstrap-calibration-detail"
+              class="method-decoder calibration-detail"
+              hidden
+            >
+              <summary>
+                Original negative-pair percentile check · exact interval and
+                multiplicity
+              </summary>
+              <div id="bootstrap-calibration-detail-body"></div>
+            </details>
+            <div class="bootstrap-coverage">
+              <span>Coverage of the known contrast under the alternative</span
+              ><strong id="bootstrap-coverage">—</strong
+              ><small id="bootstrap-coverage-interval"></small>
+            </div>
+            <p id="bootstrap-accounting" class="accounting-note"></p>
+            <p class="small-note">
+              Pointwise intervals; no multiplicity correction. Each coefficient
+              contrast is computed within the same bootstrap draw. Subtracting
+              two marginal confidence intervals would discard their covariance.
+            </p>
+          </div>
+          <section
+            id="null-validation"
+            class="null-validation"
+            aria-labelledby="validation-title"
+            hidden
+          >
+            <div class="validation-heading">
+              <div>
+                <span class="kicker"
+                  >INDEPENDENT FOLLOW-UP / FIXED NULL DESIGN</span
+                >
+                <h3 id="validation-title">
+                  Does the calibration concern replicate?
+                </h3>
+              </div>
+              <span class="validation-scope"
+                >NEGATIVE PAIR ONLY<br />
+                INDEPENDENT OF THE CONTROLS ABOVE</span
+              >
+            </div>
+            <p id="validation-design" class="validation-design"></p>
+            <div id="validation-pending" class="unavailable-study">
+              <div class="pending-mark" aria-hidden="true">○</div>
+              <div>
+                <h4>
+                  Fresh validation results are not complete in this artifact.
+                </h4>
+                <p>
+                  The follow-up protocol was fixed before its main computation.
+                  Partial numerical results are withheld; the original study
+                  above is preserved.
+                </p>
+              </div>
+            </div>
+            <div id="validation-results" hidden>
+              <div class="validation-original">
+                <span>ORIGINAL EXPLORATORY SIGNAL</span
+                ><strong id="validation-original-rate">—</strong>
+                <p id="validation-original-context"></p>
+              </div>
+              <div class="validation-table-wrap">
+                <table class="validation-table">
+                  <caption>
+                    Fresh surveys only · percentile bootstrap intervals · true
+                    coefficient difference = 0
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Inner resamples</th>
+                      <th scope="col">Null rejections</th>
+                      <th scope="col">False-positive rate</th>
+                      <th scope="col">95% Wilson MC</th>
+                      <th scope="col">95% exact MC</th>
+                    </tr>
+                  </thead>
+                  <tbody id="validation-rows"></tbody>
+                </table>
+              </div>
+              <p class="small-note">
+                Both Monte Carlo intervals describe uncertainty in rejection
+                frequency. They are not the bootstrap intervals used to test a
+                coefficient. The two fresh rows share the same outer surveys;
+                the first row uses the first attempted resamples from the longer
+                sequence. An interval containing the nominal 5% rate indicates
+                compatibility with that rate; it does not demonstrate
+                equivalence or certify calibration.
+              </p>
+              <div class="validation-paired">
+                <div>
+                  <span class="kicker"
+                    >PAIRED CHANGE / MORE INNER RESAMPLES</span
+                  ><strong id="validation-difference">—</strong>
+                  <p id="validation-difference-interval"></p>
+                </div>
+                <div>
+                  <h4>What changed on the same surveys?</h4>
+                  <p id="validation-discordance"></p>
+                  <p class="small-note">
+                    A paired interval uses the within-survey relationship. It
+                    does not treat these as two independent rate estimates.
+                  </p>
+                </div>
+              </div>
+              <p id="validation-accounting" class="accounting-note"></p>
+              <details class="method-decoder">
+                <summary>
+                  Normal-interval companion check · secondary result
+                </summary>
+                <div id="validation-normal" class="validation-normal"></div>
+              </details>
+              <div class="validation-actions">
+                <a href="model-audit-methods.md"
+                  >Read the follow-up protocol and limits
+                  <span class="arrow-ne" aria-hidden="true"></span></a
+                ><a
+                  href="model-audit-downloads/bootstrap-null-validation-replication.zip"
+                  download
+                  >Fresh validation replication · ZIP
+                  <span aria-hidden="true">↓</span></a
+                ><a
+                  href="model-audit-downloads/bootstrap-null-validation-replication.zip.sha256"
+                  download
+                  >Fresh validation checksum · SHA-256
+                  <span aria-hidden="true">↓</span></a
+                ><button id="export-validation" class="text-button" disabled>
+                  Export independent validation
+                  <span aria-hidden="true">↓</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section
+        id="provenance"
+        class="page-width provenance-section"
+        aria-labelledby="provenance-title"
+      >
+        <div class="section-intro">
+          <div>
+            <span class="kicker">05 / WHAT THIS EXPERIMENT CAN SUPPORT</span>
+            <h2 id="provenance-title">
+              A simulation is a controlled world.<br />
+              Keep its boundaries visible.
+            </h2>
+          </div>
+          <button id="export-study" class="solid-button" disabled>
+            Download verified results <span aria-hidden="true">↓</span>
+          </button>
+        </div>
+        <div class="provenance-grid">
+          <dl>
+            <div>
+              <dt>Generating model</dt>
+              <dd>
+                Five Gaussian latent variables; four predictors with equal
+                correlation .35; three reflective indicators per factor;
+                independent measurement errors. Loadings .50, .75, and .90.
+              </dd>
+            </div>
+            <div>
+              <dt>Two different truths</dt>
+              <dd>
+                Under the alternative, the coefficient differences are +.15 or
+                −.05. Under the null, the compared coefficients are equal.
+                Independent streams supply calibration, null validation, and
+                alternative evaluation.
+              </dd>
+            </div>
+            <div>
+              <dt>Denominators</dt>
+              <dd>
+                Primary rates use all attempted simulations; failed fits count
+                as non-rejections. Fit validity, proper solutions, and
+                convergence are reported separately. Ordering reversal among
+                good fits has its own conditional denominator.
+              </dd>
+            </div>
+            <div>
+              <dt>Uncertainty</dt>
+              <dd>
+                95% pointwise Monte Carlo intervals. Wilson intervals for
+                ordinary rates; two-sample resampling intervals for calibrated
+                rates include uncertainty in the null critical value. No
+                simultaneous confidence claim.
+              </dd>
+            </div>
+            <div>
+              <dt>Outside the experiment</dt>
+              <dd>
+                No observed workplace data, missingness, nonnormality,
+                cross-loadings, or correlated measurement errors. Model fit does
+                not establish causality. A simulation-specific cutoff is not a
+                real-data inference procedure.
+              </dd>
+            </div>
+          </dl>
+          <div class="provenance-record">
+            <span class="kicker">ARTIFACT RECORD</span>
+            <h3>Every plotted value has a source.</h3>
+            <div id="artifact-record">Loading verified manifests…</div>
+            <div class="provenance-links">
+              <a
+                href="model-audit-downloads/model-audit-replication.zip"
+                download
+                >Original studies replication bundle · ZIP
+                <span aria-hidden="true">↓</span></a
+              >
+              <a
+                href="model-audit-downloads/model-audit-replication.zip.sha256"
+                download
+                >Replication bundle checksum · SHA-256
+                <span aria-hidden="true">↓</span></a
+              >
+              <a href="model-audit-methods.md"
+                >Read the full methods note
+                <span class="arrow-ne" aria-hidden="true"></span></a
+              ><a href="model-audit-data.json" download
+                >Machine-readable audit <span aria-hidden="true">↓</span></a
+              ><a
+                href="https://github.com/priyatham9/ehs-risk-sem"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Source repository
+                <span class="arrow-ne" aria-hidden="true"></span
+              ></a>
+            </div>
+            <code>python tools/export_model_audit.py --check</code>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="page-width footer">
+      <a class="wordmark" href="./">PRIYATHAM <span>/ METHODS</span></a
+      ><span>Fit is a question. Inference is another.</span
+      ><a href="#page-title"
+        >Back to the study <span aria-hidden="true">↑</span></a
+      >
+    </footer>
+    <div
+      id="live-status"
+      class="sr-only"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <noscript
+      ><p class="noscript">
+        JavaScript is required for the interactive comparison. The
+        <a href="model-audit-data.json">complete available audit data</a> remain
+        downloadable.
+      </p></noscript
+    >
+  </body>
+</html>

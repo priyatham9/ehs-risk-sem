@@ -1,0 +1,142 @@
+{
+  "design_version": 1,
+  "reps_per_stage_cell": 1000,
+  "seed": 2026111605,
+  "cells": [
+    {
+      "pair": "positive",
+      "loading": 0.5,
+      "multiplier": 0.5,
+      "n": 385
+    },
+    {
+      "pair": "positive",
+      "loading": 0.5,
+      "multiplier": 1.0,
+      "n": 770
+    },
+    {
+      "pair": "positive",
+      "loading": 0.5,
+      "multiplier": 2.0,
+      "n": 1540
+    },
+    {
+      "pair": "positive",
+      "loading": 0.75,
+      "multiplier": 0.5,
+      "n": 385
+    },
+    {
+      "pair": "positive",
+      "loading": 0.75,
+      "multiplier": 1.0,
+      "n": 770
+    },
+    {
+      "pair": "positive",
+      "loading": 0.75,
+      "multiplier": 2.0,
+      "n": 1540
+    },
+    {
+      "pair": "positive",
+      "loading": 0.9,
+      "multiplier": 0.5,
+      "n": 385
+    },
+    {
+      "pair": "positive",
+      "loading": 0.9,
+      "multiplier": 1.0,
+      "n": 770
+    },
+    {
+      "pair": "positive",
+      "loading": 0.9,
+      "multiplier": 2.0,
+      "n": 1540
+    },
+    {
+      "pair": "negative",
+      "loading": 0.5,
+      "multiplier": 0.5,
+      "n": 3442
+    },
+    {
+      "pair": "negative",
+      "loading": 0.5,
+      "multiplier": 1.0,
+      "n": 6884
+    },
+    {
+      "pair": "negative",
+      "loading": 0.5,
+      "multiplier": 2.0,
+      "n": 13768
+    },
+    {
+      "pair": "negative",
+      "loading": 0.75,
+      "multiplier": 0.5,
+      "n": 3442
+    },
+    {
+      "pair": "negative",
+      "loading": 0.75,
+      "multiplier": 1.0,
+      "n": 6884
+    },
+    {
+      "pair": "negative",
+      "loading": 0.75,
+      "multiplier": 2.0,
+      "n": 13768
+    },
+    {
+      "pair": "negative",
+      "loading": 0.9,
+      "multiplier": 0.5,
+      "n": 3442
+    },
+    {
+      "pair": "negative",
+      "loading": 0.9,
+      "multiplier": 1.0,
+      "n": 6884
+    },
+    {
+      "pair": "negative",
+      "loading": 0.9,
+      "multiplier": 2.0,
+      "n": 13768
+    }
+  ],
+  "stages": [
+    "null_calibration",
+    "null_validation",
+    "alternative"
+  ],
+  "numpy": "2.3.5",
+  "python": "3.12.14",
+  "source_sha256": "286b9d0fb6fdf8e9922073af9d06267853e10ef171421b313f6fc592fe608180",
+  "dependency_sha256": {
+    "ehs_risk_sem/__init__.py": "e8ab21b11e8b9be4313d8b14493240b88b196ce50b892ddd7867bcf023204ee5",
+    "ehs_risk_sem/calibration.py": "2d86209a84dd2a861a51c65a30c7a5a26d84646e42dd28ba7b244b04676fc805",
+    "ehs_risk_sem/compat.py": "042b78c95b97a9620fab831f913551f0f246482c9231a942ed49e21b57a8cae7",
+    "ehs_risk_sem/diagnostics.py": "c7b99629638758cae0fde0d35af9f2c876d56a70f438fad1eacfb86fc4a4cce2",
+    "ehs_risk_sem/fit_indices.py": "c78382d7ec7360612ae5945b51919978613f43bc002b14c3834708457776d805",
+    "ehs_risk_sem/glm.py": "67e061d6a5bf06175743c91cd099e05853365d25b0b75f701d4d3a8d0920cd8f",
+    "ehs_risk_sem/identification.py": "eb930a176665093df01571fbfa056483e3f442016c6981210f442ce7504383d3",
+    "ehs_risk_sem/linalg.py": "3997c6f467607d68ec73535d4914005d7636e2ddd566d9af735387767012973d",
+    "ehs_risk_sem/measurement.py": "6ef407df8d4fc19c4ec02578dff86690369f84acaa4aca9009c058e3953d4ff7",
+    "ehs_risk_sem/model.py": "081ca1ceff34bd279ef1480a09dfe629125a72bffc07ac625786b831fd473031",
+    "ehs_risk_sem/power.py": "8f09fd31e5218d1c4d1b76fbfd05a4ff32a7b71c1f30a5af09ef6094344682d4",
+    "ehs_risk_sem/rare_events.py": "653d464a4f11dc7d752cfdaedf3bc6c9e1ea0733d822b5b902d9c1b3b84821eb",
+    "ehs_risk_sem/special.py": "250914bb6f2764d35eaedde91b0941bbfc620752e1c4d9b0a7a40cfe8ba9b9b1",
+    "ehs_risk_sem/structural.py": "c18d63b58246bf595af8a1f0562cff954efd8d0489171aa7d6eb5a2d1039edc2",
+    "simulations/dgp.py": "ab7499fe406cdd28d2fbff988b4adca3ae85ddbbbce40e49124c137d20533e94",
+    "simulations/inference_distributions.py": "5861c6e0781f7dcfc54d792588c007a7bf5dcdd2e8e723b0cb84f6efb9f4e6c0"
+  },
+  "simulation_only": true
+}

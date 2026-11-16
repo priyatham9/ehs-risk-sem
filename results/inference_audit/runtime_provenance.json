@@ -1,0 +1,33 @@
+{
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "scipy": "1.17.0",
+  "commands": [
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m simulations.study_05_inference_audit --out results/inference_audit --reps 1000 --workers 2",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m simulations.study_06_bootstrap_ranking --out results/bootstrap_ranking --reps 300 --n-boot 399 --workers 2",
+    "OPENBLAS_NUM_THREADS=1 python -m simulations.study_07_information_bound",
+    "OPENBLAS_NUM_THREADS=1 python -m simulations.validate_information_bound"
+  ],
+  "pilot": {
+    "fits": 100,
+    "n": 13768,
+    "loading": 0.5,
+    "seconds": 2.7484888270009833
+  },
+  "note": "Simulation and asymptotic theory only; no empirical workplace observations.",
+  "reproduction_requirements": [
+    "Python >=3.9",
+    "numpy",
+    "pandas"
+  ],
+  "optional_figure_requirement": "matplotlib",
+  "reference_distribution_migration": "Initial runs used SciPy reference t/normal functions; equivalent standard-library implementations now remove that dependency. Preserved manifests, source snapshots and distribution_migration.json record equivalence checks.",
+  "bootstrap_resume_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m simulations.study_06_bootstrap_ranking --out results/bootstrap_ranking --reps 300 --n-boot 399 --workers 4",
+  "bootstrap_diagnostic_optimization": {
+    "matched_refits": 100,
+    "full_diagnostic_seconds": 15.96416502500142,
+    "unused_diagnostics_omitted_seconds": 0.9794219239993254,
+    "draws_and_status_bitwise_identical": true
+  }
+}
