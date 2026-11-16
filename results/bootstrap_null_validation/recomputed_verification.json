@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": [
+    "prospective source and dependency hashes",
+    "exact fixed sample size",
+    "fresh deterministic seeds with no original-study overlap",
+    "all prefix intervals recomputed",
+    "failure positions retained",
+    "summary rates and paired differences recomputed"
+  ],
+  "outer_reps": 1000,
+  "bootstrap_refits": 999000,
+  "summary_sha256": "e877497f80d83c90893fe456c376cce5a7270e823283f8930005d141ec8e70b6"
+}

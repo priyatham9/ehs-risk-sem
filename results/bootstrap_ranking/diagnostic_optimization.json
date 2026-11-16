@@ -1,0 +1,11 @@
+{
+  "scope": "Only compute_fit_indices is suppressed inside bootstrap refits. Base fits retain full diagnostics; all measurement and structural estimation code remains the public fit function.",
+  "matched_seed_benchmark": {
+    "resamples": 100,
+    "full_seconds": 15.96416502500142,
+    "omit_unused_diagnostics_seconds": 0.9794219239993254,
+    "contrast_draws_and_status_counts_bitwise_equal": true
+  },
+  "additional_test": "test_omitting_unused_fit_indices_preserves_exact_estimates: matched resamples at loadings .5,.75,.9",
+  "original_full_diagnostics_source": "execution_sources/study_06_full_diagnostics_pilot.py"
+}

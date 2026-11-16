@@ -1,0 +1,6 @@
+{
+  "change": "Replace SciPy normal functions with standard-library erfc/NormalDist.",
+  "maximum_absolute_numeric_output_change": 2.220446049250313e-16,
+  "original_manifest": "manifest.execution-original.json",
+  "sample_size_recommendations_unchanged": true
+}

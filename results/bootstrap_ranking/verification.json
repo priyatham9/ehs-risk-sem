@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "checks": [
+    "complete cell counts",
+    "deterministic seeds",
+    "no duplicate seeds",
+    "finite valid statistics",
+    "oracle decisions recomputed with Student-t critical values",
+    "explicit failed-fit accounting",
+    "summary denominators",
+    "source hashes"
+  ],
+  "counts": {
+    "attempts": 1200,
+    "completed": 1200,
+    "valid": 1200,
+    "proper": 1200,
+    "converged": 1200,
+    "bootstrap_refits": 478800,
+    "bootstrap_failed": 0,
+    "bootstrap_improper": 0
+  },
+  "checkpoint_sha256": {
+    "negative_l75_n6884_alternative.jsonl": "89b97d8edd5a200821042531ba407d499f16ce5bd9116e58100585bfcd3a626e",
+    "negative_l75_n6884_null_validation.jsonl": "d22ff39ce2f29adecbca68f9d97e387ec583a40277113e466c96ca17c7ef56b2",
+    "positive_l75_n770_alternative.jsonl": "3a5c6ae444aa2d79f3b5743e03a73b2be7d54f0f5fa90da32ba4b75dcb5bdf5b",
+    "positive_l75_n770_null_validation.jsonl": "8465d6ebab90db1f65a54b3b0f0f7df66d89adfec4d6bb3f953ca3b65dbb6c59"
+  },
+  "summary_sha256": "b74f2c82fd5abca5518f765cad2adc29a8a0090fd18401d45fc2c82944f6bfbb"
+}

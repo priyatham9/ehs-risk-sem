@@ -1,0 +1,6 @@
+results/inference_audit/* linguist-generated=true
+results/bootstrap_ranking/* linguist-generated=true
+results/information_bound/* linguist-generated=true
+results/bootstrap_null_validation/* linguist-generated=true
+docs/model-audit-data.json linguist-generated=true
+docs/model-audit-downloads/* linguist-generated=true

@@ -1,0 +1,12 @@
+{
+  "change": "Remove SciPy dependency for reference distributions; estimator, seeds, draws and test decisions unchanged.",
+  "original_execution_manifest": "manifest.execution-original.json",
+  "current_manifest": "manifest.json",
+  "original_source_sha256": "afe06b5b2e3b75b104e748e5fc2e1307f036f411bc7b333e02142b7c037ecb36",
+  "current_source_sha256": "286b9d0fb6fdf8e9922073af9d06267853e10ef171421b313f6fc592fe608180",
+  "saved_oracle_decisions_checked": 54000,
+  "changed_decisions": 0,
+  "max_t_critical_absolute_difference_on_design_grid": 1.0469403122215226e-12,
+  "independent_reference": "SciPy 1.17 pinned values in tests/test_inference_distributions.py",
+  "source_semantics": "Current manifest describes rerunnable equivalent implementation; preserved execution_sources and original manifest document pre-migration implementation."
+}
