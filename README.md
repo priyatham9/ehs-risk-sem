@@ -5,6 +5,12 @@
 
 Part of the Grounded research programme: https://grounded-chi-five.vercel.app/
 
+[Open the interactive project](https://ehs-risk-sem.vercel.app/story.html) · [Data and methods](https://ehs-risk-sem.vercel.app/)
+
+**Research question:** What can a well-fitting structural equation model actually establish about safety risk?
+
+**Evidence and limits:** Simulation studies with known parameters. All data are simulated; these are methodological results, not estimates of real workplace risk.
+
 Structural equation modelling for occupational safety risk, implemented in numpy. Simulation studies show where the method breaks, demonstrating that parameter estimates are imprecise despite good fit quality across conventional cutoffs. Nothing here analyses real injury data; every number comes from generated data with known parameters.
 
 The package exists because a particular kind of formula circulates in practitioner

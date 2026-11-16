@@ -628,7 +628,7 @@ def generate_html_page(title, description, canonical, side, content_html, is_ind
 <title>{escape_html(title)}</title>
 <meta name="description" content="{escape_html(description)}" />
 <link rel="canonical" href="{escape_html(canonical)}" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231E40AF'/%3E%3Ctext x='8' y='12' font-family='monospace' font-size='11' font-weight='700' text-anchor='middle' fill='white'%3ES%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23136c50'/%3E%3Ctext x='8' y='12' font-family='monospace' font-size='11' font-weight='700' text-anchor='middle' fill='white'%3ES%3C/text%3E%3C/svg%3E" />
 <meta name="theme-color" content="#F7F7F3" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#0A0C10" media="(prefers-color-scheme: dark)" />
 {THEME_INIT}
@@ -637,6 +637,7 @@ def generate_html_page(title, description, canonical, side, content_html, is_ind
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" />
 {CSS_TEMPLATE}
 <script src="search-index.js" defer></script>
+<link rel="stylesheet" href="../portfolio.css" />
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
