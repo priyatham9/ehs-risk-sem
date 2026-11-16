@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#142c43" />
+    <title>Row-bootstrap inference under stress · SEM research note</title>
+    <meta
+      name="description"
+      content="A separate simulated null experiment tests naive and bootstrap inference in one joint lower-loading, smaller-sample condition. Inspect rejection frequencies, uncertainty, paired decisions, and fit accounting."
+    />
+    <link
+      rel="canonical"
+      href="https://ehs-risk-sem.vercel.app/weak-measurement-audit.html"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Row-bootstrap inference under stress" />
+    <meta
+      property="og:description"
+      content="A separate simulated null experiment tests inference in one joint lower-loading, smaller-sample condition, with explicit denominators and uncertainty."
+    />
+    <meta
+      property="og:url"
+      content="https://ehs-risk-sem.vercel.app/weak-measurement-audit.html"
+    />
+    <meta name="twitter:card" content="summary" />
+    <link rel="stylesheet" href="weak-measurement-audit.css" />
+    <script src="weak-measurement-audit.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#experiment">Skip to the experiment</a>
+    <header class="masthead wrap">
+      <a href="model-audit.html">PRIYATHAM <span>/ METHODS</span></a
+      ><a href="#provenance">Protocol & evidence ↗</a>
+    </header>
+    <main>
+      <section class="opening wrap" aria-labelledby="title">
+        <div class="eyebrow">
+          <span>FOLLOW-UP NOTE / A JOINT STRESS CONDITION</span
+          ><span class="badge">SIMULATED DATA</span>
+        </div>
+        <h1 id="title">Row-bootstrap inference <br /><em>under stress.</em></h1>
+        <p class="lead">
+          Resampling can account for uncertainty that a two-step estimator
+          overlooks. Whether it controls false positives is a separate empirical
+          question.
+        </p>
+        <div class="premise">
+          <p>
+            This experiment tests one jointly lower-loading, smaller-sample
+            condition (λ = 0.50, N = 385). The two coefficients being compared
+            are equal by construction. Every rejection is therefore a false
+            positive in this simulated condition.
+          </p>
+          <p>
+            It follows the
+            <a href="model-audit.html#bootstrap">original inference audit</a>,
+            using fresh surveys. Both loading and sample size differ from the
+            earlier positive-pair bootstrap study; a cross-study difference
+            cannot isolate a loading effect. Rates are neither pooled nor paired
+            with the earlier studies.
+          </p>
+        </div>
+      </section>
+      <section
+        class="experiment wrap"
+        id="experiment"
+        aria-labelledby="experiment-title"
+      >
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">01 / THE FIXED EXPERIMENT</span>
+            <h2 id="experiment-title">
+              Specify the condition.<br />Keep the null explicit.
+            </h2>
+          </div>
+          <span id="study-status" class="status" role="status"
+            >Loading study artifact</span
+          >
+        </div>
+        <div id="design" class="design" hidden></div>
+        <p id="design-description" class="context"></p>
+        <div id="pending" class="notice">
+          <strong>Results are not available in this view yet.</strong>
+          <p>
+            The page requires a complete, verified study artifact. No partial
+            rejection rates are displayed.
+          </p>
+        </div>
+        <div id="failure" class="notice failure" role="alert" hidden>
+          <strong>Study artifact unavailable.</strong>
+          <p>
+            The source could not be verified. Numerical findings and exports are
+            disabled; reload or return to the original audit.
+          </p>
+        </div>
+        <div id="findings" hidden>
+          <div class="results-heading">
+            <div>
+              <span class="eyebrow">FALSE POSITIVES / NOMINAL RATE 5%</span>
+              <h3>Three procedures. The same surveys.</h3>
+            </div>
+            <label class="denominator-label" for="denominator"
+              >Rate denominator<select id="denominator">
+                <option value="all">All attempted surveys</option>
+                <option value="computable">Computable tests only</option>
+              </select></label
+            >
+          </div>
+          <p id="denominator-note" class="denominator-note"></p>
+          <div class="plot-key">
+            <span
+              ><i class="key-point" aria-hidden="true"></i> Observed rejection
+              frequency</span
+            ><span
+              ><i class="key-interval" aria-hidden="true"></i> 95% exact Monte
+              Carlo interval</span
+            ><span
+              ><i class="key-target" aria-hidden="true"></i> Nominal 5%</span
+            >
+          </div>
+          <div
+            id="rate-rows"
+            class="rate-rows"
+            aria-label="False-positive rates and exact Monte Carlo intervals"
+          ></div>
+          <p id="rate-reading" class="reading"></p>
+          <p id="fit-reading" class="reading"></p>
+          <p class="small">
+            These intervals describe simulation uncertainty in a rejection
+            frequency. They are different from the coefficient intervals used to
+            decide whether each survey rejects the null. Compatibility with 5%
+            does not establish equivalence or certify calibration.
+          </p>
+          <section class="paired" aria-labelledby="paired-title">
+            <div class="paired-heading">
+              <div>
+                <span class="eyebrow">02 / WITHIN-SURVEY COMPARISON</span>
+                <h3 id="paired-title">Which decisions changed?</h3>
+              </div>
+              <label for="pair"
+                >Compare procedures<select id="pair"></select
+              ></label>
+            </div>
+            <p id="pair-definition"></p>
+            <div class="paired-result">
+              <div>
+                <span class="eyebrow">PAIRED REJECTION-RATE DIFFERENCE</span
+                ><strong id="paired-difference"></strong>
+                <p id="paired-interval"></p>
+              </div>
+              <div id="decision-grid" class="decision-grid"></div>
+            </div>
+            <p id="paired-reading" class="small"></p>
+          </section>
+          <section class="accounting" aria-labelledby="accounting-title">
+            <span class="eyebrow">03 / KEEP FAILURES IN VIEW</span>
+            <h3 id="accounting-title">
+              An interval can be computable<br />without validating the
+              inference.
+            </h3>
+            <div id="accounting-grid" class="accounting-grid"></div>
+            <p id="accounting-note" class="small"></p>
+          </section>
+        </div>
+      </section>
+      <section
+        id="provenance"
+        class="provenance wrap"
+        aria-labelledby="provenance-title"
+      >
+        <div>
+          <span class="eyebrow">04 / SCOPE & REPLICATION</span>
+          <h2 id="provenance-title">
+            One deliberate stress test. <br />One bounded inference.
+          </h2>
+          <p>
+            These are synthetic Gaussian surveys from a specified measurement
+            and structural model. This condition cannot establish performance
+            under other loadings, sample sizes, nonnormal data,
+            misspecification, or real workplace measurement.
+          </p>
+          <p>
+            Neither a lower rejection rate nor a successful numerical fit makes
+            the procedure universally reliable. Interpret rejection frequency
+            alongside its uncertainty, failures, and the exact condition tested.
+          </p>
+        </div>
+        <div class="evidence-record">
+          <p id="protocol-record">
+            The protocol record will appear when its artifact is verified.
+          </p>
+          <p id="artifact-record" class="fingerprint"></p>
+          <div id="downloads" hidden></div>
+          <button id="export" type="button" disabled>
+            Export this evidence record ↓
+          </button>
+          <p id="export-status" class="small" role="status"></p>
+        </div>
+      </section>
+    </main>
+    <footer class="wrap">
+      <a href="model-audit.html">← Return to the original model audit</a
+      ><span>Independent follow-up · no pooled estimates</span>
+    </footer>
+  </body>
+</html>

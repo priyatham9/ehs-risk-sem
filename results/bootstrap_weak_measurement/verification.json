@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "previous_stream_ids_checked": 58430,
+  "new_stream_ids": 1000,
+  "no_overlap_with_previous_studies_or_pilot": true,
+  "outer_reps": 500,
+  "checkpoint_sha256": {
+    "chunk_0000_0125.jsonl": "71d505cda388b5a818c232e624d89c21be37094a82d968dd1cc409e53ba29753",
+    "chunk_0125_0250.jsonl": "e19b39ba6e3f37b1d1e3b2c2c1043a4fca7e6b81dcf3da922ebcd020d7b0f58a",
+    "chunk_0250_0375.jsonl": "a57b3b467e62700e4f82a464604903f8f9cbef1023f28dd08f852ea8ceed62ec",
+    "chunk_0375_0500.jsonl": "0d6736f0c607b1416f8d75e1c8348199c1f1491d6402eb8ce8fb97153a2a9c84"
+  },
+  "summary_sha256": "e26f4ae6a2a8ba48c493a56b93e1ddb3e77bdac5d2508e89dd8c0c627013b93a"
+}

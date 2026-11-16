@@ -1,0 +1,24 @@
+{
+  "percentile": {
+    "bootstrap_minus_naive": -0.414,
+    "paired_mcse": 0.022049497969827858,
+    "paired_bootstrap_low": -0.458,
+    "paired_bootstrap_high": -0.37,
+    "neither_reject": 267,
+    "bootstrap_only_reject": 0,
+    "naive_only_reject": 207,
+    "both_reject": 26,
+    "attempts": 500
+  },
+  "normal": {
+    "bootstrap_minus_naive": -0.43,
+    "paired_mcse": 0.022162634426652866,
+    "paired_bootstrap_low": -0.474,
+    "paired_bootstrap_high": -0.386,
+    "neither_reject": 267,
+    "bootstrap_only_reject": 0,
+    "naive_only_reject": 215,
+    "both_reject": 18,
+    "attempts": 500
+  }
+}
