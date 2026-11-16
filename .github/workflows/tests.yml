@@ -64,3 +64,9 @@ jobs:
         run: OPENBLAS_NUM_THREADS=1 python tools/check_inference_audit.py
       - name: Verify independent validation and all paired bootstrap intervals
         run: OPENBLAS_NUM_THREADS=1 python tools/check_bootstrap_null_validation.py
+      - name: Verify the separate weak-measurement stress study
+        run: OPENBLAS_NUM_THREADS=1 python tools/check_bootstrap_weak_measurement.py
+      - name: Verify stress-study public data and methods bindings
+        run: |
+          OPENBLAS_NUM_THREADS=1 python tools/export_weak_measurement_audit.py --check
+          OPENBLAS_NUM_THREADS=1 python tools/build_weak_measurement_note.py --check

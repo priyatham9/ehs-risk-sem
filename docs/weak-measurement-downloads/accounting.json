@@ -1,0 +1,39 @@
+{
+  "outer_attempts": 500,
+  "inner_planned": 199500,
+  "inner_attempted": 199500,
+  "inner_computable": 199500,
+  "invalid_intervals": 0,
+  "observed_completed": 500,
+  "observed_valid": 500,
+  "observed_proper": 500,
+  "observed_converged": 474,
+  "bootstrap_valid": 500,
+  "bootstrap_failed": 0,
+  "bootstrap_improper": 5715,
+  "bootstrap_nonconverged": 61722,
+  "outer_with_bootstrap_failed": {
+    "rate": 0.0,
+    "rate_count": 0,
+    "rate_denominator": 500,
+    "rate_mcse": 0.0,
+    "rate_low": 4.336808689942018e-19,
+    "rate_high": 0.007624340461552241
+  },
+  "outer_with_bootstrap_improper": {
+    "rate": 0.902,
+    "rate_count": 451,
+    "rate_denominator": 500,
+    "rate_mcse": 0.013296315279053816,
+    "rate_low": 0.8727939491335183,
+    "rate_high": 0.9250760811353939
+  },
+  "outer_with_bootstrap_nonconverged": {
+    "rate": 1.0,
+    "rate_count": 500,
+    "rate_denominator": 500,
+    "rate_mcse": 0.0,
+    "rate_low": 0.9923756595384479,
+    "rate_high": 1.0
+  }
+}

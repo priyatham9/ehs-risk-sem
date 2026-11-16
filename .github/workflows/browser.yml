@@ -21,3 +21,5 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Verify research interface against checked-in artifacts
         run: python scripts/check_model_audit_ui.py
+      - name: Verify separate weak-measurement note
+        run: python scripts/check_weak_measurement_ui.py

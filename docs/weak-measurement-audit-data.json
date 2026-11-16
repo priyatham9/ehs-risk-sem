@@ -1,0 +1,286 @@
+{
+  "schema": "sem-weak-measurement-audit-v1",
+  "simulation_only": true,
+  "complete": true,
+  "manifest": {
+    "schema": "sem-bootstrap-weak-measurement-v1",
+    "simulation_only": true,
+    "motivation": "Single-condition implementation stress test selected from the original weakest-measurement cell (loading .50,N385), which had measurement nonconvergence; not selected using new outcomes.",
+    "primary_estimand": "All-attempt null rejection probability of the399-resample percentile procedure.",
+    "secondary_estimands": [
+      "Naive and bootstrap-SE normal null rejection",
+      "Computable-conditional rejection, separately from all-attempt rates",
+      "Paired percentile-minus-naive and normal-minus-naive rejection differences",
+      "Outer and inner computability, propriety and convergence accounting"
+    ],
+    "pair": "positive",
+    "loading": 0.5,
+    "multiplier": 0.5,
+    "n": 385,
+    "stage": "null_validation",
+    "null_coefficients": [
+      0.375,
+      0.375,
+      -0.25,
+      -0.2
+    ],
+    "predictor_correlation": 0.35,
+    "indicators_per_factor": 3,
+    "outer_reps": 500,
+    "inner_reps": 399,
+    "seed": 20261116091,
+    "pilot_seed": 20261116092,
+    "chunks": [
+      [
+        0,
+        125
+      ],
+      [
+        125,
+        250
+      ],
+      [
+        250,
+        375
+      ],
+      [
+        375,
+        500
+      ]
+    ],
+    "sample_size_rule": "Before inspecting outcomes:500 if four-worker forecast with25% allowance<=60min; otherwise250 if<=60min; otherwise no run. No outcome-dependent extension or early stopping.",
+    "timing_pilot_sha256": "f7ab6d5abc1c19255d2a6d6a9749e279fec3275e8351e478d65662c5c1241877",
+    "forecast_seconds": 1128.7184784061992,
+    "estimator": "Unchanged study06.bootstrap_replicate, public two-step fit,399 whole-row resamples; only unused inner global fit diagnostics suppressed.",
+    "interval_rule": "Frozen study06 rule: at least95% finite refits (380 of399) for computable percentile/normal intervals; NumPy linear quantiles, strict exclusion of zero.",
+    "failure_rule": "Failed/noncomputable tests count as nonrejections in all-attempt rates. Conditional denominators include only the relevant computable tests. Improper and nonconverged finite fits remain included, with separate flags; no filtered estimator is substituted.",
+    "uncertainty": "Pointwise95% Wilson and exact Clopper-Pearson outer-survey intervals; paired20,000-multinomial-resample intervals. Inner fit counts are descriptive nested counts, not independent trials for binomial intervals.",
+    "interpretation": "One exploratory Gaussian null stress condition; no power, equivalence or universal calibration claims. No pooling or paired comparison with separate loading.75 experiments.",
+    "previous_studies": [
+      "results/inference_audit",
+      "results/bootstrap_ranking",
+      "results/bootstrap_null_validation"
+    ],
+    "source_sha256": {
+      "ehs_risk_sem/__init__.py": "e8ab21b11e8b9be4313d8b14493240b88b196ce50b892ddd7867bcf023204ee5",
+      "ehs_risk_sem/calibration.py": "2d86209a84dd2a861a51c65a30c7a5a26d84646e42dd28ba7b244b04676fc805",
+      "ehs_risk_sem/compat.py": "042b78c95b97a9620fab831f913551f0f246482c9231a942ed49e21b57a8cae7",
+      "ehs_risk_sem/diagnostics.py": "c7b99629638758cae0fde0d35af9f2c876d56a70f438fad1eacfb86fc4a4cce2",
+      "ehs_risk_sem/fit_indices.py": "c78382d7ec7360612ae5945b51919978613f43bc002b14c3834708457776d805",
+      "ehs_risk_sem/glm.py": "67e061d6a5bf06175743c91cd099e05853365d25b0b75f701d4d3a8d0920cd8f",
+      "ehs_risk_sem/identification.py": "eb930a176665093df01571fbfa056483e3f442016c6981210f442ce7504383d3",
+      "ehs_risk_sem/linalg.py": "3997c6f467607d68ec73535d4914005d7636e2ddd566d9af735387767012973d",
+      "ehs_risk_sem/measurement.py": "6ef407df8d4fc19c4ec02578dff86690369f84acaa4aca9009c058e3953d4ff7",
+      "ehs_risk_sem/model.py": "081ca1ceff34bd279ef1480a09dfe629125a72bffc07ac625786b831fd473031",
+      "ehs_risk_sem/power.py": "8f09fd31e5218d1c4d1b76fbfd05a4ff32a7b71c1f30a5af09ef6094344682d4",
+      "ehs_risk_sem/rare_events.py": "653d464a4f11dc7d752cfdaedf3bc6c9e1ea0733d822b5b902d9c1b3b84821eb",
+      "ehs_risk_sem/special.py": "250914bb6f2764d35eaedde91b0941bbfc620752e1c4d9b0a7a40cfe8ba9b9b1",
+      "ehs_risk_sem/structural.py": "c18d63b58246bf595af8a1f0562cff954efd8d0489171aa7d6eb5a2d1039edc2",
+      "simulations/dgp.py": "ab7499fe406cdd28d2fbff988b4adca3ae85ddbbbce40e49124c137d20533e94",
+      "simulations/inference_distributions.py": "5861c6e0781f7dcfc54d792588c007a7bf5dcdd2e8e723b0cb84f6efb9f4e6c0",
+      "simulations/study_05_inference_audit.py": "286b9d0fb6fdf8e9922073af9d06267853e10ef171421b313f6fc592fe608180",
+      "simulations/study_06_bootstrap_ranking.py": "dc071b0694c4835179a76b5222b55183c90e81ca95a3cd7b15d2372d859a8330",
+      "simulations/study_08_bootstrap_null_validation.py": "a0fd0d3fdbcf04774664617ac54b3abf5421dd35fb05540dc63d943d35bc5da5",
+      "simulations/study_09_bootstrap_weak_measurement.py": "de4bc44bfc4e0652ae7d040f667a76d309e3af879de8fa4929d3292e06f7c5e7"
+    },
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "recorded_before_main_computation_utc": "2026-11-16T15:17:17.649714+00:00"
+  },
+  "rows": [
+    {
+      "method": "naive",
+      "conditioning": "all_attempts",
+      "rejection_rate": 0.466,
+      "rejection_rate_count": 233,
+      "rejection_rate_denominator": 500,
+      "rejection_rate_mcse": 0.022308921982023246,
+      "rejection_rate_low": 0.42270077745690987,
+      "rejection_rate_high": 0.5098176776944758,
+      "exact_cp_low": 0.42158862703865785,
+      "exact_cp_high": 0.5108156167067051
+    },
+    {
+      "method": "naive",
+      "conditioning": "computable_only",
+      "rejection_rate": 0.466,
+      "rejection_rate_count": 233,
+      "rejection_rate_denominator": 500,
+      "rejection_rate_mcse": 0.022308921982023246,
+      "rejection_rate_low": 0.42270077745690987,
+      "rejection_rate_high": 0.5098176776944758,
+      "exact_cp_low": 0.42158862703865785,
+      "exact_cp_high": 0.5108156167067051
+    },
+    {
+      "method": "percentile",
+      "conditioning": "all_attempts",
+      "rejection_rate": 0.052,
+      "rejection_rate_count": 26,
+      "rejection_rate_denominator": 500,
+      "rejection_rate_mcse": 0.00992935043192655,
+      "rejection_rate_low": 0.035730265115705276,
+      "rejection_rate_high": 0.07510114393784553,
+      "exact_cp_low": 0.03424569808276731,
+      "exact_cp_high": 0.07526637103062303
+    },
+    {
+      "method": "percentile",
+      "conditioning": "computable_only",
+      "rejection_rate": 0.052,
+      "rejection_rate_count": 26,
+      "rejection_rate_denominator": 500,
+      "rejection_rate_mcse": 0.00992935043192655,
+      "rejection_rate_low": 0.035730265115705276,
+      "rejection_rate_high": 0.07510114393784553,
+      "exact_cp_low": 0.03424569808276731,
+      "exact_cp_high": 0.07526637103062303
+    },
+    {
+      "method": "normal",
+      "conditioning": "all_attempts",
+      "rejection_rate": 0.036,
+      "rejection_rate_count": 18,
+      "rejection_rate_denominator": 500,
+      "rejection_rate_mcse": 0.008331146379700696,
+      "rejection_rate_low": 0.02289106098029272,
+      "rejection_rate_high": 0.056184326968027755,
+      "exact_cp_low": 0.021472856586093464,
+      "exact_cp_high": 0.05630017620179187
+    },
+    {
+      "method": "normal",
+      "conditioning": "computable_only",
+      "rejection_rate": 0.036,
+      "rejection_rate_count": 18,
+      "rejection_rate_denominator": 500,
+      "rejection_rate_mcse": 0.008331146379700696,
+      "rejection_rate_low": 0.02289106098029272,
+      "rejection_rate_high": 0.056184326968027755,
+      "exact_cp_low": 0.021472856586093464,
+      "exact_cp_high": 0.05630017620179187
+    }
+  ],
+  "paired": {
+    "percentile": {
+      "bootstrap_minus_naive": -0.414,
+      "paired_mcse": 0.022049497969827858,
+      "paired_bootstrap_low": -0.458,
+      "paired_bootstrap_high": -0.37,
+      "neither_reject": 267,
+      "bootstrap_only_reject": 0,
+      "naive_only_reject": 207,
+      "both_reject": 26,
+      "attempts": 500
+    },
+    "normal": {
+      "bootstrap_minus_naive": -0.43,
+      "paired_mcse": 0.022162634426652866,
+      "paired_bootstrap_low": -0.474,
+      "paired_bootstrap_high": -0.386,
+      "neither_reject": 267,
+      "bootstrap_only_reject": 0,
+      "naive_only_reject": 215,
+      "both_reject": 18,
+      "attempts": 500
+    }
+  },
+  "accounting": {
+    "outer_attempts": 500,
+    "inner_planned": 199500,
+    "inner_attempted": 199500,
+    "inner_computable": 199500,
+    "invalid_intervals": 0,
+    "observed_completed": 500,
+    "observed_valid": 500,
+    "observed_proper": 500,
+    "observed_converged": 474,
+    "bootstrap_valid": 500,
+    "bootstrap_failed": 0,
+    "bootstrap_improper": 5715,
+    "bootstrap_nonconverged": 61722,
+    "outer_with_bootstrap_failed": {
+      "rate": 0.0,
+      "rate_count": 0,
+      "rate_denominator": 500,
+      "rate_mcse": 0.0,
+      "rate_low": 4.336808689942018e-19,
+      "rate_high": 0.007624340461552241
+    },
+    "outer_with_bootstrap_improper": {
+      "rate": 0.902,
+      "rate_count": 451,
+      "rate_denominator": 500,
+      "rate_mcse": 0.013296315279053816,
+      "rate_low": 0.8727939491335183,
+      "rate_high": 0.9250760811353939
+    },
+    "outer_with_bootstrap_nonconverged": {
+      "rate": 1.0,
+      "rate_count": 500,
+      "rate_denominator": 500,
+      "rate_mcse": 0.0,
+      "rate_low": 0.9923756595384479,
+      "rate_high": 1.0
+    }
+  },
+  "verification": {
+    "status": "passed",
+    "outer_reps": 500,
+    "inner_attempted": 199500,
+    "checks": [
+      "source and prospective timing/protocol hashes",
+      "fixed scope and deterministic unique seeds",
+      "no overlap with packaged previous-study and timing-pilot stream identities",
+      "every saved bootstrap interval and rejection recomputed",
+      "six all-attempt and conditional rate rows recomputed",
+      "paired discordance and Monte Carlo intervals recomputed",
+      "failure, improper and nonconverged accounting recomputed"
+    ],
+    "prior_stream_reference_sha256": "e361298571671c426ef477470a6a9bc1f23728347bc7530c9804b2f9810a7df6",
+    "previous_checkpoint_files_available_and_verified": 63,
+    "checkpoint_sha256": {
+      "chunk_0000_0125.jsonl": "71d505cda388b5a818c232e624d89c21be37094a82d968dd1cc409e53ba29753",
+      "chunk_0125_0250.jsonl": "e19b39ba6e3f37b1d1e3b2c2c1043a4fca7e6b81dcf3da922ebcd020d7b0f58a",
+      "chunk_0250_0375.jsonl": "a57b3b467e62700e4f82a464604903f8f9cbef1023f28dd08f852ea8ceed62ec",
+      "chunk_0375_0500.jsonl": "0d6736f0c607b1416f8d75e1c8348199c1f1491d6402eb8ce8fb97153a2a9c84"
+    },
+    "summary_sha256": "e26f4ae6a2a8ba48c493a56b93e1ddb3e77bdac5d2508e89dd8c0c627013b93a"
+  },
+  "study_verification": {
+    "status": "passed",
+    "previous_stream_ids_checked": 58430,
+    "new_stream_ids": 1000,
+    "no_overlap_with_previous_studies_or_pilot": true,
+    "outer_reps": 500,
+    "checkpoint_sha256": {
+      "chunk_0000_0125.jsonl": "71d505cda388b5a818c232e624d89c21be37094a82d968dd1cc409e53ba29753",
+      "chunk_0125_0250.jsonl": "e19b39ba6e3f37b1d1e3b2c2c1043a4fca7e6b81dcf3da922ebcd020d7b0f58a",
+      "chunk_0250_0375.jsonl": "a57b3b467e62700e4f82a464604903f8f9cbef1023f28dd08f852ea8ceed62ec",
+      "chunk_0375_0500.jsonl": "0d6736f0c607b1416f8d75e1c8348199c1f1491d6402eb8ce8fb97153a2a9c84"
+    },
+    "summary_sha256": "e26f4ae6a2a8ba48c493a56b93e1ddb3e77bdac5d2508e89dd8c0c627013b93a"
+  },
+  "source_sha256": {
+    "results/bootstrap_weak_measurement/protocol.json": "5a79dfc018ade187a827342c3364edb5300a646fea1944d512dd58385b561a04",
+    "results/bootstrap_weak_measurement/timing_pilot.json": "f7ab6d5abc1c19255d2a6d6a9749e279fec3275e8351e478d65662c5c1241877",
+    "results/bootstrap_weak_measurement/prior_stream_reference.json": "e361298571671c426ef477470a6a9bc1f23728347bc7530c9804b2f9810a7df6",
+    "tools/export_weak_measurement_audit.py": "986e81ac8e854e7b9ae9a234a647ec554d9eabb341bbdc9d6739807eea15796a",
+    "tools/check_bootstrap_weak_measurement.py": "c5d2780864c4d74771f3c65914fd470cc88289094f257dbfdda0e4bd0d9ae1b9",
+    "results/bootstrap_weak_measurement/summary.csv": "e26f4ae6a2a8ba48c493a56b93e1ddb3e77bdac5d2508e89dd8c0c627013b93a",
+    "results/bootstrap_weak_measurement/paired.json": "377f8db1d1cb2e32a7347a33fd0fc011bda3829b9d1b29afd513ebec25786693",
+    "results/bootstrap_weak_measurement/accounting.json": "9f9b24e65d4c0bede8edd5e755c38597e3a4846a7f39a6c994e311af3dad13d2",
+    "results/bootstrap_weak_measurement/verification.json": "f3fc9c20e5eef1f91bed00708ad3842a40e725f3bc48bb40ed4b40ef092fa620",
+    "results/bootstrap_weak_measurement/recomputed_verification.json": "b98e27316c47887b5a018042fcaebc4a58c8acdf137b0f325fc7b14f3b3e5b8f"
+  },
+  "interpretation": [
+    "One prospectively specified stress condition chosen from the original weakest-measurement cell, not from these outcomes.",
+    "All observations are generated; this is not evidence from a real workforce.",
+    "All-attempt rejection includes skipped or invalid tests as nonrejections. Computable-only rejection has a different, selected denominator.",
+    "Bootstrap refits are attempted only when the outer estimate and naive standard error are finite and the standard error is positive.",
+    "Finite improper and nonconverged fits remain in the unchanged procedure. Their flags may overlap; computational completion is not calibration.",
+    "Inner counts are nested within surveys and are descriptive, not independent binomial trials.",
+    "Pointwise Monte Carlo intervals containing 5% do not establish equivalence or certify calibration. No alternative power is estimated.",
+    "This experiment is separate from loading .75 studies; no pooling or paired comparison across experiments. Both loading and sample size differ, so cross-study differences do not isolate a loading effect."
+  ]
+}

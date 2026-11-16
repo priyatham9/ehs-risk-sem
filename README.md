@@ -80,10 +80,22 @@ points (95% interval −1.3 to +0.1). This is compatible with 5% in that one
 Gaussian null condition, without certifying calibration. These fresh results
 remain separate from the original study.
 
+The separate [weak-measurement stress study](https://ehs-risk-sem.vercel.app/weak-measurement-audit.html)
+tests the positive equality null at jointly lower loading (.50) and smaller
+N (385), using 500 fresh surveys and 399 resamples each. Naive rejection is
+46.6%; percentile-bootstrap rejection is 5.2% (exact 95% Monte Carlo interval
+3.4%–7.5%). All 500 intervals are computable, but 61,722 of 199,500 inner refits
+did not converge and 5,715 were flagged improper; those finite fits are retained
+by the unchanged procedure. Compatibility with 5% in this condition does not
+certify calibration or refit reliability. The
+[separate methods and replication note](docs/weak-measurement-methods.md)
+reports normal-bootstrap results, paired comparisons, and complete accounting.
+
 ```bash
 OPENBLAS_NUM_THREADS=1 python -m simulations.study_05_inference_audit --reps 1000 --workers 2
 OPENBLAS_NUM_THREADS=1 python -m simulations.study_06_bootstrap_ranking --reps 300 --n-boot 399 --workers 4
 OPENBLAS_NUM_THREADS=1 python -m simulations.study_07_information_bound
+OPENBLAS_NUM_THREADS=1 python tools/check_bootstrap_weak_measurement.py
 ```
 
 ---
