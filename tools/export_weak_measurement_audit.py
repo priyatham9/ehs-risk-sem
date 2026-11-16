@@ -1,11 +1,10 @@
 """Export only the isolated weak-measurement stress study; older audits stay frozen."""
 from pathlib import Path
+import csv
 import hashlib
 import json
 import shutil
 import sys
-
-import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -14,6 +13,22 @@ from tools.check_bootstrap_weak_measurement import check
 
 def read_json(path):
     return json.loads(path.read_text())
+
+
+def read_summary(path):
+    """Preserve CSV numbers without version-dependent pandas JSON rounding."""
+    strings = {'method', 'conditioning'}
+    integers = {'rejection_rate_count', 'rejection_rate_denominator'}
+    expected = strings | integers | {
+        'rejection_rate', 'rejection_rate_mcse', 'rejection_rate_low',
+        'rejection_rate_high', 'exact_cp_low', 'exact_cp_high',
+    }
+    with path.open(newline='') as stream:
+        reader = csv.DictReader(stream)
+        assert set(reader.fieldnames or []) == expected
+        return [{key: value if key in strings else
+                 None if value == '' else int(value) if key in integers else float(value)
+                 for key, value in row.items()} for row in reader]
 
 
 def export(check_only=False):
@@ -31,7 +46,7 @@ def export(check_only=False):
     payload = {
         'schema': 'sem-weak-measurement-audit-v1', 'simulation_only': True, 'complete': complete,
         'manifest': protocol,
-        'rows': json.loads(pd.read_csv(folder / 'summary.csv').to_json(orient='records', double_precision=15)) if complete else [],
+        'rows': read_summary(folder / 'summary.csv') if complete else [],
         'paired': read_json(folder / 'paired.json') if complete else None,
         'accounting': read_json(folder / 'accounting.json') if complete else None,
         'verification': verification,

@@ -18,7 +18,8 @@ def package():
         'study_09_bootstrap_weak_measurement.py')]
     paths += [ROOT / 'tests' / name for name in (
         'test_inference_audit.py', 'test_inference_distributions.py', 'test_bootstrap_ranking.py',
-        'test_bootstrap_null_validation.py', 'test_bootstrap_weak_measurement.py')]
+        'test_bootstrap_null_validation.py', 'test_bootstrap_weak_measurement.py',
+        'test_weak_measurement_export.py')]
     paths += [ROOT / 'tools' / name for name in (
         'check_bootstrap_weak_measurement.py', 'package_weak_measurement_audit.py',
         'export_weak_measurement_audit.py', 'build_weak_measurement_note.py')]

@@ -94,11 +94,11 @@
       "rejection_rate": 0.466,
       "rejection_rate_count": 233,
       "rejection_rate_denominator": 500,
-      "rejection_rate_mcse": 0.022308921982023,
-      "rejection_rate_low": 0.42270077745691,
-      "rejection_rate_high": 0.509817677694476,
-      "exact_cp_low": 0.421588627038658,
-      "exact_cp_high": 0.510815616706705
+      "rejection_rate_mcse": 0.022308921982023246,
+      "rejection_rate_low": 0.42270077745690987,
+      "rejection_rate_high": 0.5098176776944758,
+      "exact_cp_low": 0.42158862703865785,
+      "exact_cp_high": 0.5108156167067051
     },
     {
       "method": "naive",
@@ -106,11 +106,11 @@
       "rejection_rate": 0.466,
       "rejection_rate_count": 233,
       "rejection_rate_denominator": 500,
-      "rejection_rate_mcse": 0.022308921982023,
-      "rejection_rate_low": 0.42270077745691,
-      "rejection_rate_high": 0.509817677694476,
-      "exact_cp_low": 0.421588627038658,
-      "exact_cp_high": 0.510815616706705
+      "rejection_rate_mcse": 0.022308921982023246,
+      "rejection_rate_low": 0.42270077745690987,
+      "rejection_rate_high": 0.5098176776944758,
+      "exact_cp_low": 0.42158862703865785,
+      "exact_cp_high": 0.5108156167067051
     },
     {
       "method": "percentile",
@@ -118,11 +118,11 @@
       "rejection_rate": 0.052,
       "rejection_rate_count": 26,
       "rejection_rate_denominator": 500,
-      "rejection_rate_mcse": 0.009929350431926,
-      "rejection_rate_low": 0.035730265115705,
-      "rejection_rate_high": 0.075101143937846,
-      "exact_cp_low": 0.034245698082767,
-      "exact_cp_high": 0.075266371030623
+      "rejection_rate_mcse": 0.00992935043192655,
+      "rejection_rate_low": 0.035730265115705276,
+      "rejection_rate_high": 0.07510114393784553,
+      "exact_cp_low": 0.03424569808276731,
+      "exact_cp_high": 0.07526637103062303
     },
     {
       "method": "percentile",
@@ -130,11 +130,11 @@
       "rejection_rate": 0.052,
       "rejection_rate_count": 26,
       "rejection_rate_denominator": 500,
-      "rejection_rate_mcse": 0.009929350431926,
-      "rejection_rate_low": 0.035730265115705,
-      "rejection_rate_high": 0.075101143937846,
-      "exact_cp_low": 0.034245698082767,
-      "exact_cp_high": 0.075266371030623
+      "rejection_rate_mcse": 0.00992935043192655,
+      "rejection_rate_low": 0.035730265115705276,
+      "rejection_rate_high": 0.07510114393784553,
+      "exact_cp_low": 0.03424569808276731,
+      "exact_cp_high": 0.07526637103062303
     },
     {
       "method": "normal",
@@ -142,11 +142,11 @@
       "rejection_rate": 0.036,
       "rejection_rate_count": 18,
       "rejection_rate_denominator": 500,
-      "rejection_rate_mcse": 0.008331146379701,
-      "rejection_rate_low": 0.022891060980293,
-      "rejection_rate_high": 0.056184326968028,
-      "exact_cp_low": 0.021472856586093,
-      "exact_cp_high": 0.056300176201792
+      "rejection_rate_mcse": 0.008331146379700696,
+      "rejection_rate_low": 0.02289106098029272,
+      "rejection_rate_high": 0.056184326968027755,
+      "exact_cp_low": 0.021472856586093464,
+      "exact_cp_high": 0.05630017620179187
     },
     {
       "method": "normal",
@@ -154,11 +154,11 @@
       "rejection_rate": 0.036,
       "rejection_rate_count": 18,
       "rejection_rate_denominator": 500,
-      "rejection_rate_mcse": 0.008331146379701,
-      "rejection_rate_low": 0.022891060980293,
-      "rejection_rate_high": 0.056184326968028,
-      "exact_cp_low": 0.021472856586093,
-      "exact_cp_high": 0.056300176201792
+      "rejection_rate_mcse": 0.008331146379700696,
+      "rejection_rate_low": 0.02289106098029272,
+      "rejection_rate_high": 0.056184326968027755,
+      "exact_cp_low": 0.021472856586093464,
+      "exact_cp_high": 0.05630017620179187
     }
   ],
   "paired": {
@@ -265,7 +265,7 @@
     "results/bootstrap_weak_measurement/protocol.json": "5a79dfc018ade187a827342c3364edb5300a646fea1944d512dd58385b561a04",
     "results/bootstrap_weak_measurement/timing_pilot.json": "f7ab6d5abc1c19255d2a6d6a9749e279fec3275e8351e478d65662c5c1241877",
     "results/bootstrap_weak_measurement/prior_stream_reference.json": "e361298571671c426ef477470a6a9bc1f23728347bc7530c9804b2f9810a7df6",
-    "tools/export_weak_measurement_audit.py": "098e2d22a9a10a2000894639e4abf34e71f30c2d6832a4b7bbc4bfc097bd134a",
+    "tools/export_weak_measurement_audit.py": "986e81ac8e854e7b9ae9a234a647ec554d9eabb341bbdc9d6739807eea15796a",
     "tools/check_bootstrap_weak_measurement.py": "c5d2780864c4d74771f3c65914fd470cc88289094f257dbfdda0e4bd0d9ae1b9",
     "results/bootstrap_weak_measurement/summary.csv": "e26f4ae6a2a8ba48c493a56b93e1ddb3e77bdac5d2508e89dd8c0c627013b93a",
     "results/bootstrap_weak_measurement/paired.json": "377f8db1d1cb2e32a7347a33fd0fc011bda3829b9d1b29afd513ebec25786693",
